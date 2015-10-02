@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" tools:context="edu.pitt.videoapp.StageActivity">
+    <item android:id="@+id/add_camera" android:title="@string/menu_add_camera"
+        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/add_stage" android:title="@string/menu_add_stage"
+        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/return_home" android:title="@string/menu_return_home"
+        android:orderInCategory="100" app:showAsAction="never" />
+</menu>
