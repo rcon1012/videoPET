@@ -5,7 +5,9 @@
     <string name="main_string_2">Load XML</string>
     <string name="main_string_3">Project</string>
 
-    <string name="title_activity_stage">StageActivity</string>
+    <string name="blank"></string>
+    <string name="rename_hint">Name Stage</string>
+    <string name="rename_label">Name Stage</string>
     <string name="menu_add_camera">Add Camera</string>
     <string name="menu_add_stage">Add Stage</string>
     <string name="menu_return_home">Home</string>

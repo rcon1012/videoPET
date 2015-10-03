@@ -4,8 +4,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
+
 
 public class StageActivity extends AppCompatActivity {
+
+    private Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,9 +21,16 @@ public class StageActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        this.menu = menu;
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_stage, menu);
-        return true;
+
+        int i = 1;
+        View v = menu.findItem(R.id.rename).getActionView();
+        EditText txtrename = ( EditText ) v.findViewById(R.id.txt_rename);
+        txtrename.setText("Sequence" + i, TextView.BufferType.EDITABLE); // Have it increment based on known sequences
+
+        return super.onCreateOptionsMenu( menu );
     }
 
     @Override
@@ -28,6 +41,13 @@ public class StageActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         switch(id){
+            case R.id.pause_play_btn:
+                MenuItem settingsItem = menu.findItem(R.id.pause_play_btn);
+                if ( settingsItem.getIcon().getConstantState().equals(getResources().getDrawable(R.drawable.ic_action_play).getConstantState()))
+                    settingsItem.setIcon(getResources().getDrawable(R.drawable.ic_action_pause));
+                else
+                    settingsItem.setIcon(getResources().getDrawable(R.drawable.ic_action_play));
+
             case R.id.add_camera:
                 return true;
             case R.id.add_stage:
@@ -37,4 +57,5 @@ public class StageActivity extends AppCompatActivity {
         }
     return super.onOptionsItemSelected(item);
     }
+
 }
