@@ -1,12 +1,14 @@
 package edu.pitt.videoapp;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class XMLActivity extends AppCompatActivity {
 
@@ -32,7 +34,20 @@ public class XMLActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String subject = ((EditText) textEntryView.findViewById(R.id.emailSubjectText)).getText().toString();
                 String email = ((EditText) textEntryView.findViewById(R.id.emailText)).getText().toString();
+                String[] emails = new String[1];
+                emails[0] = email;
                 String body = ((EditText) textEntryView.findViewById(R.id.emailBodyText)).getText().toString();
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setType("message/rfc822");
+                i.putExtra(Intent.EXTRA_EMAIL  , emails);
+                i.putExtra(Intent.EXTRA_SUBJECT, subject);
+                i.putExtra(Intent.EXTRA_TEXT   , body);
+                //i.putExtra(Intent.EXTRA_STREAM, Uri.parse("file:///sdcard/MyFile.csv"));
+                try {
+                    startActivity(Intent.createChooser(i, "Send"));
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(XMLActivity.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+                }
                 emailDialog.dismiss();
             }
         });
