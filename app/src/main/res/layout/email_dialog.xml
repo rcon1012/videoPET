@@ -57,5 +57,6 @@
         android:text="Email"
         android:id="@+id/emailTextView"
         android:layout_above="@+id/emailSubjectText"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+         />
 </RelativeLayout>
