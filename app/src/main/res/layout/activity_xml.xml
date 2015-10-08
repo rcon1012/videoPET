@@ -19,14 +19,9 @@
             android:orientation="vertical"
             android:id="@+id/linearLayout">
 
-            <ListView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/listView" />
-
             <Space
                 android:layout_width="fill_parent"
-                android:layout_height="400px"
+                android:layout_height="400dp"
                 android:layout_above="@+id/linearLayout"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true" />
@@ -40,9 +35,10 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Load Stage"
-                    android:id="@+id/loadStageButton"
-                    android:layout_weight="0.1"/>
+                    android:text="Email"
+                    android:id="@+id/emailXMLButton"
+                    android:layout_weight="0.1"
+                    android:onClick="showEmailDialog"/>
 
                 <Button
                     android:layout_width="wrap_content"

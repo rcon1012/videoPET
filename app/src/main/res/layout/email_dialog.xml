@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content" android:layout_height="wrap_content">
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/emailText"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:text="Email"
+        android:layout_margin="10dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/emailSubjectText"
+        android:layout_below="@+id/emailText"
+        android:text="Subject"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_alignRight="@+id/emailText"
+        android:layout_alignEnd="@+id/emailText"
+        android:layout_alignLeft="@+id/emailText"
+        android:layout_alignStart="@+id/emailText" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:id="@+id/emailBodyText"
+        android:layout_below="@+id/emailSubjectText"
+        android:text="Body"
+        android:layout_marginTop="10dp"
+        android:layout_alignLeft="@+id/emailSubjectText"
+        android:layout_alignStart="@+id/emailSubjectText"
+        android:layout_alignRight="@+id/emailSubjectText"
+        android:layout_alignEnd="@+id/emailSubjectText"
+        android:lines="3" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Send"
+        android:id="@+id/emailSendButton"
+        android:layout_below="@+id/emailBodyText"
+        android:layout_centerHorizontal="true"
+        android:onClick="sendEmail" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Email"
+        android:id="@+id/emailTextView"
+        android:layout_above="@+id/emailSubjectText"
+        android:layout_centerHorizontal="true" />
+</RelativeLayout>
