@@ -12,6 +12,7 @@ import android.widget.TextView;
 public class StageActivity extends AppCompatActivity {
 
     private Menu menu;
+    private CameraManager cameraManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,7 @@ public class StageActivity extends AppCompatActivity {
                     settingsItem.setIcon(getResources().getDrawable(R.drawable.ic_action_play));
 
             case R.id.add_camera:
+                cameraManager.addCamera();
                 return true;
             case R.id.add_stage:
                 return true;

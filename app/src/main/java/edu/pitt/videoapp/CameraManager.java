@@ -13,7 +13,8 @@ public class CameraManager {
         cm = new ArrayList<Camera>();
     }
 
-    public void addCamera ( Camera c) {
+    public void addCamera () {
+        Camera c = new Camera();
         cm.add(c);
     }
 
