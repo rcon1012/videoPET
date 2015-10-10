@@ -1,5 +1,7 @@
 package edu.pitt.videoapp;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 
 /**
@@ -7,19 +9,20 @@ import java.util.ArrayList;
  */
 public class CameraManager {
 
-    ArrayList<Camera> cm;
+    ArrayList<Camera> cameraArrayList;
 
     public CameraManager (){
-        cm = new ArrayList<Camera>();
+        cameraArrayList = new ArrayList<Camera>();
     }
 
-    public void addCamera () {
-        Camera c = new Camera();
-        cm.add(c);
+    public Camera addCamera (Context context) {
+        Camera c = new Camera(context);
+        cameraArrayList.add(c);
+        return c;
     }
 
     public void removeCamera ( Camera c ) {
-        cm.remove(c);
+        cameraArrayList.remove(c);
     }
 
 }
