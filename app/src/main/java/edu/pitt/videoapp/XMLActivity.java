@@ -3,6 +3,7 @@ package edu.pitt.videoapp;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.File;
+
 public class XMLActivity extends AppCompatActivity {
 
     @Override
@@ -19,14 +22,18 @@ public class XMLActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_xml);
 
+        // open xml file directory
+        File sequencesDir = new File(Environment.getExternalStorageDirectory(), "sequences");
+        // create directory if does not exist
+        if (!sequencesDir.exists()) {
+            sequencesDir.mkdirs();
+        }
+
         // xml list view skeleton
         // Get a handle to the list view
         ListView lv = (ListView) findViewById(R.id.XMLlistView);
-
-        // mock data
-        String[] lv_arr = {"test1", "test2", "test3"};
         lv.setAdapter(new ArrayAdapter<String>(XMLActivity.this,
-                android.R.layout.simple_list_item_1, lv_arr));
+                android.R.layout.simple_list_item_1, sequencesDir.list()));
     }
 
     // shows the email dialog to email the xml
