@@ -35,7 +35,9 @@
             android:id="@+id/XMLlistView"
             android:layout_centerHorizontal="true"
             android:layout_above="@+id/deleteButton"
-            android:layout_marginTop="50dp" />
+            android:layout_marginTop="50dp"
+            android:choiceMode="singleChoice"
+            android:listSelector="#666666" />
 
         <Button
             android:layout_width="wrap_content"

@@ -7,15 +7,19 @@ import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
 
 public class XMLActivity extends AppCompatActivity {
+
+    private String selectedFile = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +38,13 @@ public class XMLActivity extends AppCompatActivity {
         ListView lv = (ListView) findViewById(R.id.XMLlistView);
         lv.setAdapter(new ArrayAdapter<String>(XMLActivity.this,
                 android.R.layout.simple_list_item_1, sequencesDir.list()));
+        // set on click listener for each item
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                selectedFile = ((TextView)view).getText().toString();
+            }
+        });
     }
 
     // shows the email dialog to email the xml
