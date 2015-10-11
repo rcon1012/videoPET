@@ -1,6 +1,8 @@
 package edu.pitt.videoapp;
 
+import android.app.Activity;
 import android.content.Context;
+import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 
@@ -15,9 +17,13 @@ public class CameraManager {
         cameraArrayList = new ArrayList<Camera>();
     }
 
-    public Camera addCamera (Context context) {
+    public Camera addCamera (Activity context) {
         Camera c = new Camera(context);
         cameraArrayList.add(c);
+
+        RelativeLayout parent = (RelativeLayout) context.findViewById(R.id.stageActivityLayout);
+        CameraView cv = new CameraView(context);
+        parent.addView(cv);
         return c;
     }
 

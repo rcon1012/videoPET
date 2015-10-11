@@ -10,23 +10,19 @@ import android.widget.ImageView;
 public class Camera {
     final int DEFAULT_X_COORDINATE = 100;
     final int DEFAULT_Y_COORDINATE = 100;
-    Drawable CAMERA_IMAGE;
 
     private int xCoord;
     private int yCoord;
-    private ImageView image;
+    private CameraView cameraView;
 
-    public Camera (Context ctx){
+    public Camera (Context ctx) {
         // Assign image variable to drawable resource when we have one
 
         xCoord = DEFAULT_X_COORDINATE;
         yCoord = DEFAULT_Y_COORDINATE;
-
-        image = new ImageView(ctx.getApplicationContext());
-        image.setImageDrawable(CAMERA_IMAGE);
     }
 
-    public ImageView getImageInstance() {
-        return image;
+    public void setView(CameraView cv) {
+        cameraView = cv;
     }
 }
