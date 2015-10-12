@@ -39,12 +39,15 @@ public class XMLActivity extends AppCompatActivity {
             sequencesDir.mkdirs();
         }
 
+        // this file is for testing purposes only
         File file = new File(Environment.getExternalStorageDirectory() + "/" + xmlFolder, "test.xml");
         try {
             file.createNewFile();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        // end test file
+
         // xml list view skeleton
         // Get a handle to the list view
         lv = (ListView) findViewById(R.id.XMLlistView);
