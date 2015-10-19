@@ -4,10 +4,14 @@ import android.content.Context;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.v4.view.MotionEventCompat;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 /**
  * Created by jake on 10/11/15.
@@ -18,6 +22,10 @@ public class CameraView extends ImageView {
 
     private float initialX;
     private float initialY;
+
+    RelativeLayout.LayoutParams parms;
+    LinearLayout.LayoutParams par;
+    float dx=0,dy=0,x=0,y=0;
 
     public CameraView(Context context) {
         super(context);
@@ -33,64 +41,6 @@ public class CameraView extends ImageView {
         }
 
         super.setImageDrawable(cameraDrawable);
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        int action = event.getActionMasked();
-
-        switch (action) {
-
-            case MotionEvent.ACTION_DOWN:
-                initialX = event.getX();
-                initialY = event.getY();
-
-                Log.d(TAG, "Action was DOWN");
-                break;
-
-            case MotionEvent.ACTION_MOVE:
-                Log.d(TAG, "Action was MOVE");
-                break;
-
-            case MotionEvent.ACTION_UP:
-                float finalX = event.getX();
-                float finalY = event.getY();
-
-                Log.d(TAG, "Action was UP");
-
-                if (initialX < finalX) {
-                    Log.d(TAG, "Left to Right swipe performed");
-                }
-
-                if (initialX > finalX) {
-                    Log.d(TAG, "Right to Left swipe performed");
-                }
-
-                if (initialY < finalY) {
-                    Log.d(TAG, "Up to Down swipe performed");
-                }
-
-                if (initialY > finalY) {
-                    Log.d(TAG, "Down to Up swipe performed");
-                }
-
-                break;
-
-            case MotionEvent.ACTION_CANCEL:
-                Log.d(TAG,"Action was CANCEL");
-                break;
-
-            case MotionEvent.ACTION_OUTSIDE:
-                Log.d(TAG, "Movement occurred outside bounds of current screen element");
-                break;
-        }
-
-        return super.onTouchEvent(event);
-    }
-
-    @Override
-    public boolean onDragEvent(DragEvent event) {
-        return super.onDragEvent(event);
     }
 
 }
