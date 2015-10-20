@@ -19,40 +19,47 @@
             android:orientation="vertical"
             android:id="@+id/linearLayout">
 
-            <Space
-                android:layout_width="fill_parent"
-                android:layout_height="400px"
-                android:layout_above="@+id/linearLayout"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
-
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal">
 
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress"
-                    android:ems="10"
-                    android:id="@+id/emailText"
-                    android:layout_weight="0.5"
-                    android:text="example@gmail.com" />
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Send Email"
-                    android:id="@+id/emailButton"
-                    android:layout_toRightOf="@+id/emailText"
-                    android:layout_toEndOf="@+id/emailText"
-                    android:layout_weight="0.1"/>
-
             </LinearLayout>
 
         </LinearLayout>
+
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/setupListView"
+            android:layout_centerHorizontal="true"
+            android:layout_above="@+id/deleteSetupButton"
+            android:layout_marginTop="50dp"
+            android:choiceMode="singleChoice"
+            android:listSelector="#666666" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit"
+            android:id="@+id/editSetupButton"
+            android:layout_weight="0.1"
+            android:layout_marginBottom="61dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delete"
+            android:id="@+id/deleteSetupButton"
+            android:layout_weight="0.1"
+            android:onClick="deleteSetup"
+            android:layout_alignTop="@+id/editSetupButton"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
 
     </RelativeLayout>
 
