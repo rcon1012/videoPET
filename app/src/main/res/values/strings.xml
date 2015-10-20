@@ -1,6 +1,17 @@
 <resources>
     <string name="app_name">VideoApp</string>
 
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="main_string_1">New</string>
+    <string name="main_string_2">Load XML</string>
+    <string name="main_string_3">Project</string>
+
+    <string name="blank"></string>
+    <string name="rename_hint">Name Stage</string>
+    <string name="rename_label">Name Stage</string>
+    <string name="menu_add_camera">Add Camera</string>
+    <string name="menu_add_stage">Add Stage</string>
+    <string name="menu_return_home">Home</string>
+
+    <string name="title_activity_project">ProjectActivity</string>
+    <string name="title_activity_xml">XMLActivity</string>
 </resources>
