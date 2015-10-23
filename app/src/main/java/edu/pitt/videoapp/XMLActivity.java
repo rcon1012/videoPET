@@ -2,6 +2,7 @@ package edu.pitt.videoapp;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
@@ -91,7 +92,8 @@ public class XMLActivity extends AppCompatActivity {
                 i.putExtra(Intent.EXTRA_SUBJECT, subject);
                 i.putExtra(Intent.EXTRA_TEXT, body);
                 // to attach files to email
-                //i.putExtra(Intent.EXTRA_STREAM, Uri.parse("file:///sdcard/MyFile.csv"));
+                Uri uri = Uri.fromFile(new File(Environment.getExternalStorageDirectory() + "/" + xmlFolder, selectedFile));
+                i.putExtra(Intent.EXTRA_STREAM, uri);
                 try {
                     startActivity(Intent.createChooser(i, "Send"));
                 } catch (android.content.ActivityNotFoundException ex) {
