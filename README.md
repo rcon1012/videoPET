@@ -1,2 +1,2 @@
-# video-app
-A cut above the rest
+# Video PET
+Video Pre-Edit Tool
