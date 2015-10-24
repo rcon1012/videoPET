@@ -2,15 +2,18 @@ package edu.pitt.videoapp;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.PopupMenu;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ActionMenuView;
 import android.widget.EditText;
 import android.widget.TextView;
 
 
 public class StageActivity extends AppCompatActivity {
-
+    private static final String TAG = StageActivity.class.getSimpleName();
     private Menu menu;
     private CameraManager cameraManager;
 
@@ -57,8 +60,11 @@ public class StageActivity extends AppCompatActivity {
                 return true;
             case R.id.return_home:
                 return true;
+
         }
     return super.onOptionsItemSelected(item);
     }
+
+
 
 }
