@@ -22,7 +22,23 @@ public class Camera {
         yCoord = DEFAULT_Y_COORDINATE;
     }
 
-    public void setView(CameraView cv) {
+    public void setCoordinates(int x, int y) {
+        xCoord = x;
+        yCoord = y;
+    }
+
+    public int getX() {
+        return xCoord;
+    }
+
+    public int getY() {
+        return yCoord;
+    }
+
+    public void setCameraView(CameraView cv) {
         cameraView = cv;
+    }
+    public CameraView getCameraView() {
+        return cameraView;
     }
 }
