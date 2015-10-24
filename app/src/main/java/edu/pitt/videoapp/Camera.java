@@ -1,13 +1,13 @@
 package edu.pitt.videoapp;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.widget.ImageView;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
  * Created by Christopher on 10/3/2015.
  */
-public class Camera {
+public class Camera implements Parcelable {
     final int DEFAULT_X_COORDINATE = 100;
     final int DEFAULT_Y_COORDINATE = 100;
 
@@ -22,7 +22,39 @@ public class Camera {
         yCoord = DEFAULT_Y_COORDINATE;
     }
 
+    public Camera (int xCoord, int yCoord)
+    {
+        this.xCoord = xCoord;
+        this.yCoord = yCoord;
+    }
+
     public void setView(CameraView cv) {
         cameraView = cv;
     }
+
+    // Parcelling part
+    public Camera(Parcel in){
+        xCoord = in.readInt();
+        yCoord = in.readInt();
+    }
+
+    @Override
+    public int describeContents(){
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(xCoord);
+        dest.writeInt(yCoord);
+    }
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public Camera createFromParcel(Parcel in) {
+            return new Camera(in);
+        }
+
+        public Camera[] newArray(int size) {
+            return new Camera[size];
+        }
+    };
 }

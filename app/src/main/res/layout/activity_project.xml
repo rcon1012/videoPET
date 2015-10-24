@@ -42,13 +42,14 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Edit"
-            android:id="@+id/editSetupButton"
+            android:text="Load"
+            android:id="@+id/loadSetupButton"
             android:layout_weight="0.1"
             android:layout_marginBottom="61dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:onClick="loadSetup" />
 
         <Button
             android:layout_width="wrap_content"
@@ -57,7 +58,7 @@
             android:id="@+id/deleteSetupButton"
             android:layout_weight="0.1"
             android:onClick="deleteSetup"
-            android:layout_alignTop="@+id/editSetupButton"
+            android:layout_alignTop="@+id/loadSetupButton"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
 

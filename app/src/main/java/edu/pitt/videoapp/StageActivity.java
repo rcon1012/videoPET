@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 
 public class StageActivity extends AppCompatActivity {
 
@@ -19,6 +21,15 @@ public class StageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stage);
         cameraManager = new CameraManager();
+
+        if(savedInstanceState != null)
+        {
+            ArrayList<Camera> loadCameras = savedInstanceState.getParcelableArrayList("cameras");
+            for(Camera cameras : loadCameras)
+            {
+                cameraManager.addCamera(this);
+            }
+        }
     }
 
     @Override
