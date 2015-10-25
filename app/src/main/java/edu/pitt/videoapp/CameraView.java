@@ -23,6 +23,7 @@ public class CameraView extends ImageView {
     public CameraView(Context context, Camera cam) {
         super(context);
 
+        this.cam = cam;
         Drawable cameraDrawable;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             cameraDrawable = getResources().getDrawable(R.drawable.camera, context.getTheme());
@@ -54,8 +55,8 @@ public class CameraView extends ImageView {
 
             public CameraTouchListener(CameraView cameraView, int screenHeight, int screenWidth) {
                 cv = cameraView;
-                windowX = screenWidth;
-                windowY = screenHeight;
+                windowX = screenWidth + 100;
+                windowY = screenHeight + 150;
             }
 
             @Override
@@ -66,13 +67,17 @@ public class CameraView extends ImageView {
                 switch (event.getAction())
                 {
                     case MotionEvent.ACTION_MOVE:
-                        int xCoord = (int) event.getRawX();
-                        int yCoord = (int) event.getRawY();
+                        int xCoord = (int) event.getRawX() - 100;
+                        int yCoord = (int) event.getRawY() - 150;
                         if(xCoord > windowX) {
                             xCoord = windowX;
+                        } else if(xCoord < 0) {
+                            xCoord = 0;
                         }
                         if(yCoord > windowY) {
                             yCoord = windowY;
+                        } else if(yCoord < 0) {
+                            yCoord = 0;
                         }
                         params.leftMargin = xCoord;
                         params.topMargin = yCoord;
