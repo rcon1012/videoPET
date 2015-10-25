@@ -31,8 +31,8 @@ public class CameraManager implements PopupMenu.OnMenuItemClickListener {
         Camera c = new Camera(context);
         cameraArrayList.add(c);
 
-        FrameLayout parent = (FrameLayout) context.findViewById(R.id.stageActivityLayout);
-        CameraView cv = new CameraView(context);
+        RelativeLayout parent = (RelativeLayout) context.findViewById(R.id.stageActivityLayout);
+        CameraView cv = new CameraView(context, c);
         parent.addView(cv);
         cv.setOnLongClickListener(new View.OnLongClickListener() {
             public boolean onLongClick(View v) {

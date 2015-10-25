@@ -1,9 +1,11 @@
 package edu.pitt.videoapp;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -16,8 +18,9 @@ import android.widget.RelativeLayout;
  */
 public class CameraView extends ImageView {
     private final String TAG = CameraView.class.getSimpleName();
+    private Camera cam;
 
-    public CameraView(Context context) {
+    public CameraView(Context context, Camera cam) {
         super(context);
 
         Drawable cameraDrawable;
@@ -27,7 +30,10 @@ public class CameraView extends ImageView {
             cameraDrawable = getResources().getDrawable(R.drawable.camera);
         }
 
-        setOnTouchListener(new CameraTouchListener());
+        Activity act = (Activity) context;
+        int screenWidth = act.getWindowManager().getDefaultDisplay().getWidth();
+        int screenHeight = act.getWindowManager().getDefaultDisplay().getHeight();
+        setOnTouchListener(new CameraTouchListener(this, screenHeight, screenWidth));
 
 
         setOnLongClickListener(new OnLongClickListener() {
@@ -42,39 +48,46 @@ public class CameraView extends ImageView {
     }
 
     private class CameraTouchListener implements OnTouchListener {
-            int prevX;
-            int prevY;
+            int windowX;
+            int windowY;
+            CameraView cv;
+
+            public CameraTouchListener(CameraView cameraView, int screenHeight, int screenWidth) {
+                cv = cameraView;
+                windowX = screenWidth;
+                windowY = screenHeight;
+            }
+
             @Override
             public boolean onTouch(View view, MotionEvent event) {
 
-                FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) view.getLayoutParams();
+                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) cv.getLayoutParams();
 
                 switch (event.getAction())
                 {
                     case MotionEvent.ACTION_MOVE:
-                        params.topMargin += (int) event.getRawY() - prevY;
-                        prevY = (int) event.getRawY();
-                        params.leftMargin = (int) event.getRawX() - prevX;
-                        prevX = (int) event.getRawX();
-                        view.setLayoutParams(params);
-                        return true;
-
-                    case MotionEvent.ACTION_UP:
-                        params.topMargin += (int) event.getRawY() - prevY;
-                        params.leftMargin += (int) event.getRawX() - prevX;
-                        view.setLayoutParams(params);
-                        return true;
-
+                        int xCoord = (int) event.getRawX();
+                        int yCoord = (int) event.getRawY();
+                        if(xCoord > windowX) {
+                            xCoord = windowX;
+                        }
+                        if(yCoord > windowY) {
+                            yCoord = windowY;
+                        }
+                        params.leftMargin = xCoord;
+                        params.topMargin = yCoord;
+                        Log.d(TAG, "onTouch x = " + xCoord + "; y = " + yCoord);
+                        if(cam != null) {
+                            cam.setCoordinates(xCoord, yCoord);
+                        } else {
+                            Log.d(TAG, "onTouch cam is null");
+                        }
+                        cv.setLayoutParams(params);
+                        break;
                     case MotionEvent.ACTION_DOWN:
-                        prevX = (int) event.getRawX();
-                        prevY = (int) event.getRawY();
-                        params.bottomMargin = -2 * view.getHeight();
-                        params.rightMargin = -2 *view.getWidth();
-                        view.setLayoutParams(params);
-                        return true;
+                        break;
                 }
-
-                return false;
+                return true;
             }
         }
 
