@@ -67,7 +67,11 @@ public class XMLActivity extends AppCompatActivity {
         });
     }
 
-    // shows the email dialog to email the xml
+    /*
+    *   Shows the email dialog
+    *   called via onClick of emailXMLButton
+    *   @param view     emailXMLButton view
+     */
     public void showEmailDialog(View view) {
         // setup custom dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(XMLActivity.this);
@@ -105,7 +109,10 @@ public class XMLActivity extends AppCompatActivity {
         emailDialog.show();
     }
 
-    // delete the selected xml file
+    /*
+    *   Deletes the selected XML file
+    *   @param view     deleteXMLButton view
+     */
     public void deleteXML(View view)
     {
         // check if item is selected

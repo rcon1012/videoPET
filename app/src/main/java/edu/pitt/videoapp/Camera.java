@@ -1,14 +1,9 @@
 package edu.pitt.videoapp;
 
 import android.app.Activity;
-import android.util.Log;
-import android.view.MenuInflater;
-import android.view.View;
-import android.widget.PopupMenu;
-import android.widget.RelativeLayout;
-import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.widget.RelativeLayout;
 
 /**
  * Created by Christopher on 10/3/2015.
@@ -77,7 +72,7 @@ public class Camera implements Parcelable {
         cameraView = cv;
     }
 
-    // Parcelling part
+    // Parcel functions for Camera object so it can be passed to other Activites
     public Camera(Parcel in){
         xCoord = in.readInt();
         yCoord = in.readInt();
@@ -102,6 +97,7 @@ public class Camera implements Parcelable {
             return new Camera[size];
         }
     };
+    // END: parcel functions
 
     @Override
     public boolean equals(Object o) {

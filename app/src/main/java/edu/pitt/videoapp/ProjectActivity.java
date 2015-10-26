@@ -59,6 +59,10 @@ public class ProjectActivity extends AppCompatActivity {
         });
     }
 
+    /*
+    *   Deletes the selected setup file from external storage
+    *   @param view     deleteSetupButton view
+     */
     public void deleteSetup(View view)
     {
         // check if item is selected
@@ -106,6 +110,10 @@ public class ProjectActivity extends AppCompatActivity {
         }
     }
 
+    /*
+    *   Parses the selected text file and returns a Setup object (currently ArrayList<Camera>)
+    *   @return     the parsed object representation of the setup
+     */
     public ArrayList<Camera> parseSetupFile()
     {
         ArrayList<Camera> cameras = new ArrayList<Camera>();
@@ -200,6 +208,10 @@ public class ProjectActivity extends AppCompatActivity {
         return cameras;
     }
 
+    /*
+    *   Loads the selected set-up to StageActivity
+    *   @param view     loadSetupButton view
+     */
     public void loadSetup(View view)
     {
         // check if item is selected
@@ -222,7 +234,10 @@ public class ProjectActivity extends AppCompatActivity {
         finish();
     }
 
-    // this is for testing purposes only
+    /*
+     *  creates a hard-coded set-up file
+     *  this is for testing purposes only
+      */
     public void createTestFile()
     {
         // this file is for testing purposes only

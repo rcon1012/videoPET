@@ -28,6 +28,10 @@ public class ProjectActivityTest extends ActivityInstrumentationTestCase2<Projec
         super.tearDown();
     }
 
+    /*
+    *   Test deleting a set-up file
+    *   Create test file with ProjectActivity.createTestFile()
+     */
     @SmallTest
     public void testDeleteSetupFile() {
         try {
@@ -50,6 +54,9 @@ public class ProjectActivityTest extends ActivityInstrumentationTestCase2<Projec
     }
 
     /*
+        *   Test set-up file parsed correctly
+        *   using file created by ProjectActivity.createTestFile()
+        *
         *   Camera
         *       xCoord = 200
         *       yCoord = 300
