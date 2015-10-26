@@ -11,6 +11,8 @@ import android.widget.ActionMenuView;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 
 public class StageActivity extends AppCompatActivity {
     private static final String TAG = StageActivity.class.getSimpleName();
@@ -22,6 +24,15 @@ public class StageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stage);
         cameraManager = new CameraManager();
+
+        if(savedInstanceState != null)
+        {
+            ArrayList<Camera> loadCameras = savedInstanceState.getParcelableArrayList("cameras");
+            for(Camera cameras : loadCameras)
+            {
+                cameraManager.addCamera(this);
+            }
+        }
     }
 
     @Override
