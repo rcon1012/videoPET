@@ -54,7 +54,7 @@ public class ProjectActivity extends AppCompatActivity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                selectedFile = ((TextView)view).getText().toString();
+                selectedFile = ((TextView) view).getText().toString();
             }
         });
     }
@@ -74,9 +74,22 @@ public class ProjectActivity extends AppCompatActivity {
             if(file.delete())
             {
                 Toast.makeText(ProjectActivity.this, selectedFile + " deleted", Toast.LENGTH_SHORT).show();
+
                 // refresh listview
                 lvAdapter.remove(new String(selectedFile));
                 lvAdapter.notifyDataSetChanged();
+
+
+                /*
+                *   reinitialize listview from directory
+                *   this is necessary for testing
+                */
+                File sequencesDir = new File(Environment.getExternalStorageDirectory(), setupsFolder);
+                lvAdapter = new ArrayAdapter<String>(ProjectActivity.this,
+                        android.R.layout.simple_list_item_1,
+                        new ArrayList<String>(Arrays.asList(sequencesDir.list())));
+                lv.setAdapter(lvAdapter);
+
                 // reset selectedFile to empty string
                 selectedFile = "";
             }
@@ -97,12 +110,6 @@ public class ProjectActivity extends AppCompatActivity {
     {
         ArrayList<Camera> cameras = new ArrayList<Camera>();
         // open file
-        // check if item is selected
-        if(selectedFile.equals(""))
-        {
-            Toast.makeText(ProjectActivity.this, "No item selected", Toast.LENGTH_SHORT).show();
-            return cameras;
-        }
         File file = new File(Environment.getExternalStorageDirectory() + "/" + setupsFolder, selectedFile);
 
         // parse text file for set-up data (cameras and stage\s)
@@ -195,6 +202,12 @@ public class ProjectActivity extends AppCompatActivity {
 
     public void loadSetup(View view)
     {
+        // check if item is selected
+        if(selectedFile.equals(""))
+        {
+            Toast.makeText(ProjectActivity.this, "No item selected", Toast.LENGTH_SHORT).show();
+            return;
+        }
         // parse the selected setup file
         ArrayList<Camera> cameras = parseSetupFile();
 

@@ -102,4 +102,23 @@ public class Camera implements Parcelable {
             return new Camera[size];
         }
     };
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Camera)) return false;
+
+        Camera camera = (Camera) o;
+
+        if (xCoord != camera.xCoord) return false;
+        return yCoord == camera.yCoord;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = xCoord;
+        result = 31 * result + yCoord;
+        return result;
+    }
 }
