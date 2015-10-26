@@ -4,6 +4,8 @@ import android.test.ActivityInstrumentationTestCase2;
 import android.test.suitebuilder.annotation.SmallTest;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+
 /**
  * Created by Ryan on 10/26/2015.
  */
@@ -34,8 +36,8 @@ public class ProjectActivityTest extends ActivityInstrumentationTestCase2<Projec
                 public void run() {
                     pa.createTestFile();
                     ListView lv = (ListView) pa.findViewById(R.id.setupListView);
-                    lv.performItemClick(lv.getAdapter().getView(0, null, null), 0, lv.getAdapter().getItemId(0));
-                    pa.deleteSetup(pa.findViewById(R.id.deleteSetupButton));
+                    lv.performItemClick(lv.getChildAt(0), 0, lv.getAdapter().getItemId(0));
+                    pa.findViewById(R.id.deleteSetupButton).performClick();
                     assertEquals(0, lv.getCount());
                 }
             });
@@ -45,6 +47,39 @@ public class ProjectActivityTest extends ActivityInstrumentationTestCase2<Projec
             throwable.printStackTrace();
             assertTrue(false);
         }
+    }
 
+    /*
+        *   Camera
+        *       xCoord = 200
+        *       yCoord = 300
+        *   Camera
+        *       xCoord = 400
+        *       yCoord = 500
+         */
+    @SmallTest
+    public void testParseSetupFile() {
+        try {
+            runTestOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    pa.createTestFile();
+                    ListView lv = (ListView) pa.findViewById(R.id.setupListView);
+                    lv.performItemClick(lv.getAdapter().getView(0, null, null), 0, lv.getAdapter().getItemId(0));
+                    ArrayList<Camera> actual = pa.parseSetupFile();
+                    ArrayList<Camera> expected = new ArrayList<Camera>();
+                    Camera c1 = new Camera(200, 300);
+                    Camera c2 = new Camera(400, 500);
+                    expected.add(c1);
+                    expected.add(c2);
+                    assertTrue(expected.equals(actual));
+                }
+            });
+        }
+        catch (Throwable throwable)
+        {
+            throwable.printStackTrace();
+            assertTrue(false);
+        }
     }
 }
