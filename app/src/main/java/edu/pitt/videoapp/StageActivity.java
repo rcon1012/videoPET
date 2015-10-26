@@ -48,11 +48,11 @@ public class StageActivity extends AppCompatActivity {
         switch(id){
             case R.id.pause_play_btn:
                 MenuItem settingsItem = menu.findItem(R.id.pause_play_btn);
-                if ( settingsItem.getIcon().getConstantState().equals(getResources().getDrawable(R.drawable.ic_action_play).getConstantState()))
-                    settingsItem.setIcon(getResources().getDrawable(R.drawable.ic_action_pause));
-                else
+                if ( settingsItem.getIcon().getConstantState().equals(getResources().getDrawable(R.drawable.ic_action_pause).getConstantState()))
                     settingsItem.setIcon(getResources().getDrawable(R.drawable.ic_action_play));
-
+                else
+                    settingsItem.setIcon(getResources().getDrawable(R.drawable.ic_action_pause));
+                return true;
             case R.id.add_camera:
                 cameraManager.addCamera(this);
                 return true;

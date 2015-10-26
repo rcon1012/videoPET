@@ -4,7 +4,7 @@
 
     <item android:id="@+id/pause_play_btn"
         android:title="Play/Pause"
-        android:icon="@drawable/ic_action_pause"
+        android:icon="@drawable/ic_action_play"
         app:showAsAction="always"/>
 
     <item
