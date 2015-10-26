@@ -41,20 +41,6 @@ public class ProjectActivity extends AppCompatActivity {
             sequencesDir.mkdirs();
         }
 
-        // this file is for testing purposes only
-        File file = new File(Environment.getExternalStorageDirectory() + "/" + setupsFolder, "test.txt");
-        try {
-            file.createNewFile();
-            String text = "Camera\n\txCoord = 200\n\tyCoord = 300\nCamera\n\txCoord = 400\n" +
-                    "\tyCoord = 500";
-            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
-            bw.write(text);
-            bw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        // end test file
-
         // setup list view skeleton
         // Get a handle to the list view
         lv = (ListView) findViewById(R.id.setupListView);
@@ -107,7 +93,7 @@ public class ProjectActivity extends AppCompatActivity {
         }
     }
 
-    public ArrayList<Camera> loadSetup(View view)
+    public ArrayList<Camera> parseSetupFile()
     {
         ArrayList<Camera> cameras = new ArrayList<Camera>();
         // open file
@@ -140,6 +126,7 @@ public class ProjectActivity extends AppCompatActivity {
                         *       yCoord = y
                         */
                         // parse camera data
+                        // initialize x and y coordinates to default position
                         int xCoord = 100;
                         int yCoord = 100;
                         line = br.readLine();
@@ -149,9 +136,8 @@ public class ProjectActivity extends AppCompatActivity {
                         if(xLine.length < 1)
                         {
                             Toast.makeText(ProjectActivity.this, "Error parsing file at line " + lineNumber +
-                                    ":\n" + line,
+                                            ":\n" + line,
                                     Toast.LENGTH_SHORT).show();
-                            return cameras;
                         }
                         // parse xCoord
                         try{
@@ -160,7 +146,7 @@ public class ProjectActivity extends AppCompatActivity {
                         catch(NumberFormatException e)
                         {
                             Toast.makeText(ProjectActivity.this, "Number format exception at line " + lineNumber +
-                                    ":\n" + line,
+                                            ":\n" + line,
                                     Toast.LENGTH_SHORT).show();
                             Log.e(TAG, e.getMessage());
                         }
@@ -173,7 +159,6 @@ public class ProjectActivity extends AppCompatActivity {
                             Toast.makeText(ProjectActivity.this, "Error parsing file at line " + lineNumber +
                                             ":\n" + line,
                                     Toast.LENGTH_SHORT).show();
-                            return cameras;
                         }
                         // parse yCoord
                         try{
@@ -195,7 +180,7 @@ public class ProjectActivity extends AppCompatActivity {
             }
             catch (IOException e) {
                 Toast.makeText(ProjectActivity.this, "IOException at line " + lineNumber +
-                        ":\n" + line,
+                                ":\n" + line,
                         Toast.LENGTH_SHORT).show();
                 Log.e(TAG, e.getMessage());
             }
@@ -204,8 +189,14 @@ public class ProjectActivity extends AppCompatActivity {
         else
         {
             Toast.makeText(ProjectActivity.this, "Could not locate file " + selectedFile, Toast.LENGTH_SHORT).show();
-            return cameras;
         }
+        return cameras;
+    }
+
+    public void loadSetup(View view)
+    {
+        // parse the selected setup file
+        ArrayList<Camera> cameras = parseSetupFile();
 
         // set intent to change to stage activity
         Intent intent = new Intent(ProjectActivity.this, StageActivity.class);
@@ -216,7 +207,33 @@ public class ProjectActivity extends AppCompatActivity {
         // change to stage activity
         startActivity(intent);
         finish();
+    }
 
-        return cameras;
+    // this is for testing purposes only
+    public void createTestFile()
+    {
+        // this file is for testing purposes only
+        /*
+        *   Camera
+        *       xCoord = 200
+        *       yCoord = 300
+        *   Camera
+        *       xCoord = 400
+        *       yCoord = 500
+         */
+        File file = new File(Environment.getExternalStorageDirectory() + "/" + setupsFolder, "test.txt");
+        try {
+            file.createNewFile();
+            String text = "Camera\n\txCoord = 200\n\tyCoord = 300\nCamera\n\txCoord = 400\n" +
+                    "\tyCoord = 500";
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+            bw.write(text);
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // end test file
+        lvAdapter.add(new String("test.txt"));
+        lvAdapter.notifyDataSetChanged();
     }
 }
