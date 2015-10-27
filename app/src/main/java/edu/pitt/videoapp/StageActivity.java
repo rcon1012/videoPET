@@ -30,7 +30,7 @@ public class StageActivity extends AppCompatActivity {
             ArrayList<Camera> loadCameras = savedInstanceState.getParcelableArrayList("cameras");
             for(Camera cameras : loadCameras)
             {
-                cameraManager.addCamera(this);
+                cameraManager.addCamera(cameras);
             }
         }
     }
@@ -67,7 +67,8 @@ public class StageActivity extends AppCompatActivity {
                     settingsItem.setIcon(getResources().getDrawable(R.drawable.ic_action_pause));
                 return true;
             case R.id.add_camera:
-                cameraManager.addCamera(this);
+                Camera c = new Camera(this, cameraManager);
+                cameraManager.addCamera(c);
                 return true;
             case R.id.add_stage:
                 return true;
