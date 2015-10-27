@@ -2,18 +2,22 @@ package edu.pitt.videoapp;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
-import android.test.ActivityUnitTestCase;
+import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.Espresso;
+import android.support.test.espresso.matcher.ViewMatchers;
+import android.test.ActivityInstrumentationTestCase2;
 import android.test.suitebuilder.annotation.MediumTest;
 import android.test.suitebuilder.annotation.SmallTest;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import org.junit.Before;
+
 /**
  * Created by jake on 10/9/15.
  */
-public class StageActivityTest extends ActivityUnitTestCase<StageActivity> {
+public class StageActivityTest extends ActivityInstrumentationTestCase2<StageActivity> {
 
     private StageActivity stageActivity;
     private CameraManager cm;
@@ -23,13 +27,12 @@ public class StageActivityTest extends ActivityUnitTestCase<StageActivity> {
         super(StageActivity.class);
     }
 
-    @Override
+    @Before
     protected void setUp() throws Exception {
         super.setUp();
 
-        // Start and retrieve a reference to the Activity under test
-        startActivity(new Intent(getInstrumentation().getTargetContext(), StageActivity.class), null, null);
         stageActivity = (StageActivity) getActivity();
+        injectInstrumentation(InstrumentationRegistry.getInstrumentation());
         cm = new CameraManager();
     }
 
@@ -41,7 +44,7 @@ public class StageActivityTest extends ActivityUnitTestCase<StageActivity> {
     @SmallTest
     public void testCameraIconPresence() {
         Camera c = cm.addCamera(stageActivity);
-
+        Espresso.onView(ViewMatchers.isAssignableFrom(CameraView.class));
     }
 
     @MediumTest

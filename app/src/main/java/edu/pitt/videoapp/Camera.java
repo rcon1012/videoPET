@@ -30,8 +30,14 @@ public class Camera implements Parcelable {
 
         cameraView = new CameraView(activity, this);
 
-        RelativeLayout parent = (RelativeLayout) activity.findViewById(R.id.stageActivityLayout);
-        parent.addView(cameraView);
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                RelativeLayout parent = (RelativeLayout) activity.findViewById(R.id.stageActivityLayout);
+                parent.addView(cameraView);
+            }
+        });
+
     }
 
     public void setCoordinates(int x, int y) {
