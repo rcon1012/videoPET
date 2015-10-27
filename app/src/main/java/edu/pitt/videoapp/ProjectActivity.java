@@ -59,7 +59,7 @@ public class ProjectActivity extends AppCompatActivity {
         });
     }
 
-    /*
+    /**
     *   Deletes the selected setup file from external storage
     *   @param view     deleteSetupButton view
      */
@@ -110,7 +110,7 @@ public class ProjectActivity extends AppCompatActivity {
         }
     }
 
-    /*
+    /**
     *   Parses the selected text file and returns a Setup object (currently ArrayList<Camera>)
     *   @return     the parsed object representation of the setup
      */
@@ -208,7 +208,7 @@ public class ProjectActivity extends AppCompatActivity {
         return cameras;
     }
 
-    /*
+    /**
     *   Loads the selected set-up to StageActivity
     *   @param view     loadSetupButton view
      */
@@ -234,7 +234,7 @@ public class ProjectActivity extends AppCompatActivity {
         finish();
     }
 
-    /*
+    /**
      *  creates a hard-coded set-up file
      *  this is for testing purposes only
       */

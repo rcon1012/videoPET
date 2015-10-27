@@ -67,7 +67,7 @@ public class XMLActivity extends AppCompatActivity {
         });
     }
 
-    /*
+    /**
     *   Shows the email dialog
     *   called via onClick of emailXMLButton
     *   @param view     emailXMLButton view
@@ -109,7 +109,7 @@ public class XMLActivity extends AppCompatActivity {
         emailDialog.show();
     }
 
-    /*
+    /**
     *   Deletes the selected XML file
     *   @param view     deleteXMLButton view
      */
