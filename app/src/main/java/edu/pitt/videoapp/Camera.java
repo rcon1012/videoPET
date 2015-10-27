@@ -17,9 +17,14 @@ public class Camera implements Parcelable {
     private int yCoord;
     private CameraView cameraView;
     private boolean active;
-    private CameraManager manager; 
+    private CameraManager manager;
+    private String camLabel;
+
+    // Not sure if this is the best approach for accessing the activity from CameraView.java
+    public Activity stage_activity;
 
     public Camera (final Activity activity, final CameraManager manager) {
+        this.stage_activity = activity;
         xCoord = DEFAULT_X_COORDINATE;
         yCoord = DEFAULT_Y_COORDINATE;
 
@@ -60,6 +65,14 @@ public class Camera implements Parcelable {
 
     public CameraManager getManager() {
         return manager;
+    }
+
+    public void setCamLabel(String newLabel){
+        this.camLabel = newLabel;
+    }
+
+    public String getCamLabel(){
+        return this.camLabel;
     }
 
     public Camera (int xCoord, int yCoord)

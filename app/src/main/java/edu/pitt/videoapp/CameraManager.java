@@ -9,7 +9,7 @@ import android.util.Log;
 /**
  * Created by Christopher on 10/3/2015.
  */
-public class CameraManager implements PopupMenu.OnMenuItemClickListener {
+public class CameraManager  {
 
     ArrayList<Camera> cameraArrayList;
     private static final String TAG = CameraManager.class.getSimpleName();
@@ -27,16 +27,5 @@ public class CameraManager implements PopupMenu.OnMenuItemClickListener {
 
     public void removeCamera ( Camera c ) {
         cameraArrayList.remove(c);
-    }
-
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        int id = item.getItemId();
-        switch(id){
-            case R.id.add_camera_label:
-                Log.d(TAG, "LABEL CLICKED");
-                return true;
-        }
-        return true;
     }
 }

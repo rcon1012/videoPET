@@ -1,12 +1,18 @@
 package edu.pitt.videoapp;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
@@ -14,12 +20,12 @@ import android.widget.RelativeLayout;
 /**
  * Created by jake on 10/11/15.
  */
-public class CameraView extends ImageView {
+public class CameraView extends ImageView implements PopupMenu.OnMenuItemClickListener{
     private static final String TAG = CameraView.class.getSimpleName();
     private Camera cam;
 
     public CameraView(final Activity activity, Camera cam) {
-        super(activity);
+       super(activity);
 
         this.cam = cam;
         Drawable cameraDrawable;
@@ -98,7 +104,7 @@ public class CameraView extends ImageView {
             Log.d(TAG, "Long click worked!!!!");
 
             PopupMenu popup = new PopupMenu(activity, v);
-            popup.setOnMenuItemClickListener(cam.getManager());
+            popup.setOnMenuItemClickListener(cam.getCameraView());
 
             MenuInflater inflater = popup.getMenuInflater();
             inflater.inflate(R.menu.menu_camera, popup.getMenu());
@@ -107,4 +113,54 @@ public class CameraView extends ImageView {
             return false;
         }
     }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        int id = item.getItemId();
+        switch(id){
+            case R.id.add_camera_label:
+                final Dialog dialog = new Dialog(cam.stage_activity);
+                dialog.setContentView(R.layout.camera_add_label_dialog);
+                final Button ok_button = (Button) dialog.findViewById(R.id.dialog_ok);
+                ok_button.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        EditText dedit   = (EditText) dialog.findViewById(R.id.change_camera_label);
+                        String new_camera_label = dedit.getText().toString();
+                        cam.setCamLabel(new_camera_label);
+                        dialog.hide();
+                    }
+                });
+                final Button cancel_button = (Button) dialog.findViewById(R.id.dialog_cancel);
+                cancel_button.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        dialog.hide();
+                    }
+                });
+
+                dialog.show();
+                break;
+            case R.id.add_camera_photo:
+                Log.d(TAG, "add_camera_photo clicked.");
+                dispatchTakePictureIntent();
+                break;
+        }
+        return true;
+    }
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(cam.stage_activity.getPackageManager()) != null) {
+            cam.stage_activity.startActivityForResult(takePictureIntent, 1);
+        }
+    }
+
+    /* TODO another sprint
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            //mImageView.setImageBitmap(imageBitmap);
+        }
+    }*/
 }
