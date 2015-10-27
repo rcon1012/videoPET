@@ -90,6 +90,7 @@ public class CameraView extends ImageView implements PopupMenu.OnMenuItemClickLi
         }
     }
 
+    // On a long click...
     private class CameraLongClickListener implements View.OnLongClickListener{
         private CameraView cameraView;
         private Activity activity;
@@ -102,15 +103,14 @@ public class CameraView extends ImageView implements PopupMenu.OnMenuItemClickLi
         @Override
         public boolean onLongClick(View v) {
             Log.d(TAG, "Long click worked!!!!");
-
+            // Create a popup at camera location
             PopupMenu popup = new PopupMenu(activity, v);
             popup.setOnMenuItemClickListener(cam.getCameraView());
-
+            // Inflate menu options
             MenuInflater inflater = popup.getMenuInflater();
             inflater.inflate(R.menu.menu_camera, popup.getMenu());
             popup.show();
-
-            return false;
+            return true;
         }
     }
 
@@ -119,34 +119,44 @@ public class CameraView extends ImageView implements PopupMenu.OnMenuItemClickLi
         int id = item.getItemId();
         switch(id){
             case R.id.add_camera_label:
-                final Dialog dialog = new Dialog(cam.stage_activity);
-                dialog.setContentView(R.layout.camera_add_label_dialog);
-                final Button ok_button = (Button) dialog.findViewById(R.id.dialog_ok);
-                ok_button.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View v) {
-                        EditText dedit   = (EditText) dialog.findViewById(R.id.change_camera_label);
-                        String new_camera_label = dedit.getText().toString();
-                        cam.setCamLabel(new_camera_label);
-                        dialog.hide();
-                    }
-                });
-                final Button cancel_button = (Button) dialog.findViewById(R.id.dialog_cancel);
-                cancel_button.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View v) {
-                        dialog.hide();
-                    }
-                });
-
-                dialog.show();
+                activateLabelDialog();
                 break;
             case R.id.add_camera_photo:
                 Log.d(TAG, "add_camera_photo clicked.");
+                // Start camera intent
                 dispatchTakePictureIntent();
                 break;
         }
         return true;
     }
 
+    public Dialog activateLabelDialog() {
+        // Create a new dialog to get new camera label
+        final Dialog dialog = new Dialog(cam.stage_activity);
+        dialog.setContentView(R.layout.camera_add_label_dialog);
+        final Button ok_button = (Button) dialog.findViewById(R.id.dialog_ok);
+        // If okay is clicked, get text from EditText and set it to the camera's label
+        ok_button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                EditText dedit   = (EditText) dialog.findViewById(R.id.change_camera_label);
+                String new_camera_label = dedit.getText().toString();
+                cam.setCamLabel(new_camera_label);
+                dialog.hide();
+            }
+        });
+        final Button cancel_button = (Button) dialog.findViewById(R.id.dialog_cancel);
+        // If cancel is clicked, close dialog, do not change camera label
+        cancel_button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                dialog.hide();
+            }
+        });
+        return dialog;
+    }
+
+    /**
+     * Launch camera application to take a photo
+     */
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(cam.stage_activity.getPackageManager()) != null) {
@@ -154,7 +164,7 @@ public class CameraView extends ImageView implements PopupMenu.OnMenuItemClickLi
         }
     }
 
-    /* TODO another sprint
+    /* TODO another sprint - Retrives the intent from dispatch and places it into an imageView
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {

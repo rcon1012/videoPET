@@ -58,7 +58,9 @@ public class StageActivity extends AppCompatActivity {
 
         switch(id){
             case R.id.pause_play_btn:
+                // TODO Start / end sequence
                 MenuItem settingsItem = menu.findItem(R.id.pause_play_btn);
+                // Changes button icon to play/pause
                 if ( settingsItem.getIcon().getConstantState().equals(getResources().getDrawable(R.drawable.ic_action_pause).getConstantState()))
                     settingsItem.setIcon(getResources().getDrawable(R.drawable.ic_action_play));
                 else
