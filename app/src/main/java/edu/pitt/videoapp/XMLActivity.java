@@ -40,15 +40,6 @@ public class XMLActivity extends AppCompatActivity {
             sequencesDir.mkdirs();
         }
 
-        // this file is for testing purposes only
-        File file = new File(Environment.getExternalStorageDirectory() + "/" + xmlFolder, "test.xml");
-        try {
-            file.createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        // end test file
-
         // xml list view skeleton
         // Get a handle to the list view
         lv = (ListView) findViewById(R.id.XMLlistView);
@@ -131,6 +122,17 @@ public class XMLActivity extends AppCompatActivity {
                 // refresh listview
                 lvAdapter.remove(new String(selectedFile));
                 lvAdapter.notifyDataSetChanged();
+
+                /*
+                *   reinitialize listview from directory
+                *   this is necessary for testing
+                */
+                File xmlDir = new File(Environment.getExternalStorageDirectory(), xmlFolder);
+                lvAdapter = new ArrayAdapter<String>(XMLActivity.this,
+                        android.R.layout.simple_list_item_1,
+                        new ArrayList<String>(Arrays.asList(xmlDir.list())));
+                lv.setAdapter(lvAdapter);
+
                 // reset selectedFile to empty string
                 selectedFile = "";
             }
@@ -146,4 +148,21 @@ public class XMLActivity extends AppCompatActivity {
             Toast.makeText(XMLActivity.this, "Could not locate file", Toast.LENGTH_SHORT).show();
         }
     }
+
+    /**
+     * creates a blank xml file called "test.xml"
+     * this is for testing purposes
+     */
+    public void creatTestFile()
+    {
+        // this file is for testing purposes only
+        File file = new File(Environment.getExternalStorageDirectory() + "/" + xmlFolder, "test.xml");
+        try {
+            file.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // end test file
+    }
 }
+
