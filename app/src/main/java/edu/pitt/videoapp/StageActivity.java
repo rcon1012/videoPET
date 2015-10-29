@@ -24,6 +24,7 @@ public class StageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stage);
         cameraManager = new CameraManager();
+        Rig rig = new Rig(this);
 
         if(savedInstanceState != null)
         {
