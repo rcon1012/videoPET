@@ -43,7 +43,9 @@ public class StageActivityTest extends ActivityInstrumentationTestCase2<StageAct
 
     @SmallTest
     public void testCameraIconPresence() {
-        Camera c = cm.addCamera(stageActivity);
+        Camera c = new Camera(stageActivity, cm);
+        cm.addCamera(c);
+
         Espresso.onView(ViewMatchers.isAssignableFrom(CameraView.class));
     }
 
