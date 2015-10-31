@@ -24,7 +24,10 @@ public class StageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stage);
         cameraManager = new CameraManager();
+        /*
         Rig rig = new Rig(this);
+        Rig rig2 = new Rig(this);
+        Rig rig3 = new Rig(this);*/
 
         if(savedInstanceState != null)
         {
@@ -62,10 +65,10 @@ public class StageActivity extends AppCompatActivity {
                 // TODO Start / end sequence
                 MenuItem settingsItem = menu.findItem(R.id.pause_play_btn);
                 // Changes button icon to play/pause
-                if ( settingsItem.getIcon().getConstantState().equals(getResources().getDrawable(R.drawable.ic_action_pause).getConstantState()))
-                    settingsItem.setIcon(getResources().getDrawable(R.drawable.ic_action_play));
-                else
-                    settingsItem.setIcon(getResources().getDrawable(R.drawable.ic_action_pause));
+                //if ( settingsItem.getIcon().getConstantState().equals(getResources().getDrawable(R.drawable.ic_action_pause).getConstantState()))
+                 //   settingsItem.setIcon(getResources().getDrawable(R.drawable.ic_action_play));
+                //else
+                  //  settingsItem.setIcon(getResources().getDrawable(R.drawable.ic_action_pause));
                 return true;
             case R.id.add_camera:
                 Camera c = new Camera(this, cameraManager);

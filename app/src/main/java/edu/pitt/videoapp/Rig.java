@@ -14,20 +14,31 @@ import android.widget.RelativeLayout;
  */
 public class Rig extends RelativeLayout{
 
-    float dX, dY;
+    private ImageButton moveLayoutButton;
+
 
 
     public Rig(Activity activity) {
         super(activity);
-        RelativeLayout parent = (RelativeLayout) activity.findViewById(R.id.stageActivityLayout);
-        inflate(getContext(), R.layout.rig_layout, parent);
-        ImageButton x = (ImageButton) activity.findViewById(R.id.imageButton);
+        init(activity);
+        setupDrag();
         //int screenWidth = activity.getWindowManager().getDefaultDisplay().getWidth();
         //int screenHeight = activity.getWindowManager().getDefaultDisplay().getHeight();
-        Log.d("Rig", "Before Touched");
-        x.setOnTouchListener(new View.OnTouchListener() {
+        Log.d("Rig", "layoutId = " + getId());
+    }
+
+    private void init(Activity activity){
+        RelativeLayout parent = (RelativeLayout) activity.findViewById(R.id.stageActivityLayout);
+        inflate(getContext(), R.layout.rig_layout, parent);
+        // Generate a new id for each item so the next rig can access default xml ids
+        this.moveLayoutButton = (ImageButton) activity.findViewById(R.id.moveButton);
+        this.moveLayoutButton.setId(View.generateViewId());
+    }
+    private void setupDrag() {
+        this.moveLayoutButton.setOnTouchListener(new View.OnTouchListener() {
+            float dX, dY;
             public boolean onTouch(View view, MotionEvent event) {
-                view = (View) view.getParent();
+                view = (View) view.getParent().getParent().getParent().getParent().getParent(); // This line needs to be altered depending on the xml structure
                 Log.d("Rig", "Touched");
                 switch (event.getActionMasked()) {
 

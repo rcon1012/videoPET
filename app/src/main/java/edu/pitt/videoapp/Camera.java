@@ -13,30 +13,36 @@ public class Camera implements Parcelable {
     final int DEFAULT_Y_COORDINATE = 100;
     private static final String TAG = Camera.class.getSimpleName();
 
-    private int xCoord;
-    private int yCoord;
-    private CameraView cameraView;
+    private int xCoord; // remove
+    private int yCoord; // remove
+    //private CameraView cameraView;
     private boolean active;
     private CameraManager manager;
-    private String camLabel;
+    private String camLabel; // remove
+
+    private Rig camRig;
 
     // Not sure if this is the best approach for accessing the activity from CameraView.java
     public Activity stage_activity;
 
     public Camera (final Activity activity, final CameraManager manager) {
         this.stage_activity = activity;
+        this.camRig = new Rig(activity);
+
+
         xCoord = DEFAULT_X_COORDINATE;
         yCoord = DEFAULT_Y_COORDINATE;
 
-        cameraView = new CameraView(activity, this);
+        //cameraView = new CameraView(activity, this);
 
+        /*
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 RelativeLayout parent = (RelativeLayout) activity.findViewById(R.id.stageActivityLayout);
                 parent.addView(cameraView);
             }
-        });
+        });*/
 
     }
 
@@ -53,6 +59,7 @@ public class Camera implements Parcelable {
         return yCoord;
     }
 
+    /*
     public void setCameraView(CameraView cv) {
         cameraView = cv;
     }
@@ -60,6 +67,7 @@ public class Camera implements Parcelable {
     public CameraView getCameraView() {
         return cameraView;
     }
+    */
 
     public void setActive(boolean active) {
         this.active = active;
@@ -87,9 +95,6 @@ public class Camera implements Parcelable {
         this.yCoord = yCoord;
     }
 
-    public void setView(CameraView cv) {
-        cameraView = cv;
-    }
 
     // Parcel functions for Camera object so it can be passed to other Activites
     public Camera(Parcel in){

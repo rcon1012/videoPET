@@ -30,9 +30,9 @@ public class CameraView extends ImageView implements PopupMenu.OnMenuItemClickLi
         this.cam = cam;
         Drawable cameraDrawable;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            cameraDrawable = getResources().getDrawable(R.drawable.camera, activity.getTheme());
+            //cameraDrawable = getResources().getDrawable(R.drawable.camera, activity.getTheme());
         } else {
-            cameraDrawable = getResources().getDrawable(R.drawable.camera);
+            //cameraDrawable = getResources().getDrawable(R.drawable.camera);
         }
 
         int screenWidth = activity.getWindowManager().getDefaultDisplay().getWidth();
@@ -41,7 +41,7 @@ public class CameraView extends ImageView implements PopupMenu.OnMenuItemClickLi
         setOnTouchListener(new CameraTouchListener(this, screenHeight, screenWidth));
         setOnLongClickListener(new CameraLongClickListener(this, activity));
 
-        super.setImageDrawable(cameraDrawable);
+        //super.setImageDrawable(cameraDrawable);
     }
 
     private class CameraTouchListener implements View.OnTouchListener {
@@ -105,7 +105,7 @@ public class CameraView extends ImageView implements PopupMenu.OnMenuItemClickLi
             Log.d(TAG, "Long click worked!!!!");
             // Create a popup at camera location
             PopupMenu popup = new PopupMenu(activity, v);
-            popup.setOnMenuItemClickListener(cam.getCameraView());
+            //popup.setOnMenuItemClickListener(cam.getCameraView());
             // Inflate menu options
             MenuInflater inflater = popup.getMenuInflater();
             inflater.inflate(R.menu.menu_camera, popup.getMenu());
