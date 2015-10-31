@@ -24,10 +24,6 @@ public class StageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stage);
         cameraManager = new CameraManager();
-        /*
-        Rig rig = new Rig(this);
-        Rig rig2 = new Rig(this);
-        Rig rig3 = new Rig(this);*/
 
         if(savedInstanceState != null)
         {
@@ -71,7 +67,11 @@ public class StageActivity extends AppCompatActivity {
                   //  settingsItem.setIcon(getResources().getDrawable(R.drawable.ic_action_pause));
                 return true;
             case R.id.add_camera:
+                int screenWidth = this.getWindowManager().getDefaultDisplay().getWidth();
+                int screenHeight = this.getWindowManager().getDefaultDisplay().getHeight();
                 Camera c = new Camera(this, cameraManager);
+                // 250 / 150 is width and height of rig... TODO getters for height and width of center of rig
+                c.setXY((float)screenWidth/2 - 250/2, (float)screenHeight/2 - 150/2);
                 cameraManager.addCamera(c);
                 return true;
             case R.id.add_stage:

@@ -21,6 +21,7 @@ public class Camera implements Parcelable {
     private String camLabel; // remove
 
     private Rig camRig;
+    private String desc;
 
     // Not sure if this is the best approach for accessing the activity from CameraView.java
     public Activity stage_activity;
@@ -44,6 +45,36 @@ public class Camera implements Parcelable {
             }
         });*/
 
+    }
+
+    // New get position
+    public float[] getXY(){
+        return camRig.getXY();
+    }
+
+    // New set position
+    public void setXY(float x, float y){
+        camRig.setXY(x, y);
+    }
+
+    // New set label
+    public void setLabel(String s){
+        camRig.setLabel(s);
+    }
+
+    // New get label
+    public String getLabel(){
+        return camRig.getLabel();
+    }
+
+    // New set desc
+    public void setDesc(String s){
+        this.desc = s;
+    }
+
+    // get desc
+    public String getDesc(){
+        return this.desc;
     }
 
     public void setCoordinates(int x, int y) {

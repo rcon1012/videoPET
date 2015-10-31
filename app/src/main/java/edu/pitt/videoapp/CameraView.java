@@ -138,7 +138,7 @@ public class CameraView extends ImageView implements PopupMenu.OnMenuItemClickLi
         // If okay is clicked, get text from EditText and set it to the camera's label
         ok_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                EditText dedit   = (EditText) dialog.findViewById(R.id.change_camera_label);
+                EditText dedit = (EditText) dialog.findViewById(R.id.change_camera_label);
                 String new_camera_label = dedit.getText().toString();
                 cam.setCamLabel(new_camera_label);
                 dialog.hide();
