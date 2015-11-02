@@ -70,8 +70,8 @@ public class StageActivity extends AppCompatActivity {
                 return true;
             case R.id.add_camera:
                 // DO NOT COMMIT THIS
-                Timer t = new Timer();
-                t.start();
+                //Timer t = new Timer();
+                //t.start();
                 // DO NOT COMMIT ABOVE
                 int screenWidth = this.getWindowManager().getDefaultDisplay().getWidth();
                 int screenHeight = this.getWindowManager().getDefaultDisplay().getHeight();

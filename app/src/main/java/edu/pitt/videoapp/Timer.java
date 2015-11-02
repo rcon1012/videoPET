@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -18,7 +19,7 @@ import android.os.CountDownTimer;
 /**
  * Created by Luke on 10/27/2015.
  */
-public class Timer
+public class Timer //extends TextClock
 {
 
     CountDownTimer newTimer;
@@ -27,9 +28,8 @@ public class Timer
     long timer=100000;
     long message = 9000;
 
-
-
-    public Timer() {
+    public Timer()
+    {
         newTimer = new CountDownTimer(timer, 1000) {
             public void onTick(long msLeft) {
                 Log.d("Timer", msLeft/60000 + ": " + (msLeft/1000) % 60);

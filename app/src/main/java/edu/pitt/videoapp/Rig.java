@@ -84,7 +84,7 @@ public class Rig extends RelativeLayout implements PopupMenu.OnMenuItemClickList
 
         this.clock = (TextClock) activity.findViewById(R.id.textClock);
         this.clock.setId(View.generateViewId());
-
+        //this.clock.setText;
     }
 
     // Sets the drag listener
