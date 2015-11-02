@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
+import android.widget.TextClock;
 import android.widget.TextView;
 
 /**
@@ -33,6 +34,7 @@ public class Rig extends RelativeLayout implements PopupMenu.OnMenuItemClickList
     private ImageButton moveLayoutButton;
     private LinearLayout centerLayout;
     private TextView camLabel;
+    private TextClock clock;
 
     public Rig(Activity activity) {
         super(activity);
@@ -79,6 +81,9 @@ public class Rig extends RelativeLayout implements PopupMenu.OnMenuItemClickList
 
         this.camLabel = (TextView) activity.findViewById(R.id.camera_label);
         this.camLabel.setId(View.generateViewId());
+
+        this.clock = (TextClock) activity.findViewById(R.id.textClock);
+        this.clock.setId(View.generateViewId());
 
     }
 

@@ -58,6 +58,8 @@ public class StageActivity extends AppCompatActivity {
 
         switch(id){
             case R.id.pause_play_btn:
+
+
                 // TODO Start / end sequence
                 MenuItem settingsItem = menu.findItem(R.id.pause_play_btn);
                 // Changes button icon to play/pause
@@ -67,6 +69,10 @@ public class StageActivity extends AppCompatActivity {
                   //  settingsItem.setIcon(getResources().getDrawable(R.drawable.ic_action_pause));
                 return true;
             case R.id.add_camera:
+                // DO NOT COMMIT THIS
+                Timer t = new Timer();
+                t.start();
+                // DO NOT COMMIT ABOVE
                 int screenWidth = this.getWindowManager().getDefaultDisplay().getWidth();
                 int screenHeight = this.getWindowManager().getDefaultDisplay().getHeight();
                 Camera c = new Camera(this, cameraManager);
