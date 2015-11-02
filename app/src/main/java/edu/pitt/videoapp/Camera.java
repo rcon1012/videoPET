@@ -3,7 +3,6 @@ package edu.pitt.videoapp;
 import android.app.Activity;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.widget.RelativeLayout;
 
 /**
  * Created by Christopher on 10/3/2015.
@@ -45,6 +44,9 @@ public class Camera implements Parcelable {
             }
         });*/
 
+    }
+
+    public Camera() {
     }
 
     // New get position
@@ -118,12 +120,6 @@ public class Camera implements Parcelable {
 
     public String getCamLabel(){
         return this.camLabel;
-    }
-
-    public Camera (int xCoord, int yCoord)
-    {
-        this.xCoord = xCoord;
-        this.yCoord = yCoord;
     }
 
 

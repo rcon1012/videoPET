@@ -1,13 +1,10 @@
 package edu.pitt.videoapp;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.PopupMenu;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ActionMenuView;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -28,9 +25,13 @@ public class StageActivity extends AppCompatActivity {
         if(savedInstanceState != null)
         {
             ArrayList<Camera> loadCameras = savedInstanceState.getParcelableArrayList("cameras");
-            for(Camera cameras : loadCameras)
+            for(Camera camera : loadCameras)
             {
-                cameraManager.addCamera(cameras);
+                Camera c = new Camera(this, cameraManager);
+                c.setXY((float)camera.getX(), (float)camera.getY());
+                c.setDesc(camera.getLabel());
+                c.setLabel(camera.getLabel());
+                cameraManager.addCamera(c);
             }
         }
     }
