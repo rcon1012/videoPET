@@ -29,7 +29,7 @@ public class Timer //extends TextClock
     CountDownTimer newTimer;
     Handler Alarm;
     String Message;
-    long timer=100000;
+    long timer=1800000;                         //set to 30 minutes
     long message = 9000;
 
     public Timer()
@@ -37,7 +37,7 @@ public class Timer //extends TextClock
         newTimer = new CountDownTimer(timer, 1000) {
             public void onTick(long msLeft) {
                 Log.d("Timer", msLeft / 60000 + ": " + (msLeft / 1000) % 60);
-                TextClock.S
+                //TextClock.setText(("Timer")+ msLeft / 60000 + ": " + (msLeft / 1000) % 60);
                 if (msLeft < 60000) {
                     //mTextField.setText("One Minute left");
                     Log.d("Timer", "One minute left");
@@ -56,15 +56,18 @@ public class Timer //extends TextClock
         Message alarmMessage=new Message();
         Message="1 minute left";*/
     }
-
+    //public void stop()
+    //{
+    //
+    //}
     public void start()
     {
         newTimer.start();
-    }
+    }                 //starts the countdown
     public void cancel()
     {
         newTimer.cancel();
-    }
+    }               //cancels countdown
     //if( postDelayed(Alarm, 17400));
     /*public boolean setAlarmTime()
     {
