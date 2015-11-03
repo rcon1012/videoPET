@@ -37,7 +37,7 @@ public class Timer //extends TextClock
         newTimer = new CountDownTimer(timer, 1000) {
             public void onTick(long msLeft) {
                 Log.d("Timer", msLeft / 60000 + ": " + (msLeft / 1000) % 60);
-                //TextClock.setText(("Timer")+ msLeft / 60000 + ": " + (msLeft / 1000) % 60);
+                //textClock.text(("Timer")+ msLeft / 60000 + ": " + (msLeft / 1000) % 60);
                 if (msLeft < 60000) {
                     //mTextField.setText("One Minute left");
                     Log.d("Timer", "One minute left");

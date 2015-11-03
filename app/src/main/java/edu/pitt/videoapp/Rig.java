@@ -26,7 +26,7 @@ public class Rig extends RelativeLayout {
 
     // Used to access activity
     private Activity stageActivity;
-
+    private Timer t=new Timer();
     // Rig listeners
     private ImageButton moveLayoutButton;
     private LinearLayout centerLayout;
@@ -208,7 +208,7 @@ public class Rig extends RelativeLayout {
             @Override
             public void onClick(View v) {
                 centerLayout.setBackgroundColor(Color.parseColor("#FF0000"));
-                Timer t=new Timer();
+                //Timer t=new Timer();
                 t.start();
             }
         });
@@ -225,7 +225,7 @@ public class Rig extends RelativeLayout {
             @Override
             public void onClick(View v) {
                 centerLayout.setBackgroundColor(Color.parseColor("#FFFFFF"));
-
+                t.cancel();
             }
         });
     }
