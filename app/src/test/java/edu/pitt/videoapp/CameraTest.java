@@ -1,5 +1,7 @@
 package edu.pitt.videoapp;
 
+import android.app.Activity;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,7 +20,7 @@ public class CameraTest {
         int x = 100;
         int y = 100;
         cameraManager = new CameraManager();
-        camera = new Camera(100, 100);
+        camera = new Camera();                  //Was camera=new Camera(100,100); changed due to errors
     }
 
     @Test public void hash() {
