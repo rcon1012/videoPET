@@ -25,7 +25,7 @@ import android.widget.LinearLayout;
  * With the help of Jake
  */
 //@TargetAPI(Build.VERSION_CODES.GINGERBREAD)
-@SuppressLint("NewAPI")
+//@SuppressLint("NewAPI")
 
 
 public class Timer extends Activity
