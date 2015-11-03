@@ -74,7 +74,8 @@
                 <TextClock
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textClock" />
+                    android:id="@+id/textClock"
+                    android:textSize="30sp"/>
             </LinearLayout>
 
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
