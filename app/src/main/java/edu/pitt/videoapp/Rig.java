@@ -198,6 +198,7 @@ public class Rig extends RelativeLayout {
     */
     private void setupPlayClick() {
         this.playButton.setOnClickListener(new View.OnClickListener() {
+            //Timer t=new Timer();
 
             /**
              * Called when a view has been clicked.
@@ -207,6 +208,8 @@ public class Rig extends RelativeLayout {
             @Override
             public void onClick(View v) {
                 centerLayout.setBackgroundColor(Color.parseColor("#FF0000"));
+                Timer t=new Timer();
+                t.start();
             }
         });
     }
@@ -222,6 +225,7 @@ public class Rig extends RelativeLayout {
             @Override
             public void onClick(View v) {
                 centerLayout.setBackgroundColor(Color.parseColor("#FFFFFF"));
+
             }
         });
     }
