@@ -2,10 +2,8 @@ package edu.pitt.videoapp;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Intent;
-import android.provider.MediaStore;
+import android.graphics.Color;
 import android.util.Log;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -21,10 +19,9 @@ import android.widget.TextView;
 /**
  * Created by Christopher on 10/29/2015.
  */
-public class Rig extends RelativeLayout implements PopupMenu.OnMenuItemClickListener{
+public class Rig extends RelativeLayout {
 
     // Used to traverse this view's hierarchy
-    private View root;
     private View mainView;
 
     // Used to access activity
@@ -35,12 +32,16 @@ public class Rig extends RelativeLayout implements PopupMenu.OnMenuItemClickList
     private LinearLayout centerLayout;
     private TextView camLabel;
     private TextClock clock;
+    private ImageButton playButton;
+    private ImageButton stopButton;
 
     public Rig(Activity activity) {
         super(activity);
         init(activity);
         setupDrag();
         setupLongClick();
+        setupPlayClick();
+        setupStopClick();
     }
 
     // Returns the x and y of this layout
@@ -84,7 +85,12 @@ public class Rig extends RelativeLayout implements PopupMenu.OnMenuItemClickList
 
         this.clock = (TextClock) activity.findViewById(R.id.textClock);
         this.clock.setId(View.generateViewId());
-        //this.clock.setText;
+
+        this.playButton = (ImageButton) activity.findViewById(R.id.playButton);
+        this.playButton.setId(View.generateViewId());
+
+        this.stopButton = (ImageButton) activity.findViewById(R.id.stopButton);
+        this.stopButton.setId(View.generateViewId());
     }
 
     // Sets the drag listener
@@ -125,12 +131,29 @@ public class Rig extends RelativeLayout implements PopupMenu.OnMenuItemClickList
             @Override
             public boolean onLongClick(View view) {
                 Log.d("Rig", "Long click worked!!!!");
-                // Create a popup at camera location
+
+                //Creating the instance of PopupMenu
                 PopupMenu popup = new PopupMenu(getContext(), view);
-                popup.setOnMenuItemClickListener((PopupMenu.OnMenuItemClickListener) mainView);
-                // Inflate menu options
-                MenuInflater inflater = popup.getMenuInflater();
-                inflater.inflate(R.menu.menu_camera, popup.getMenu());
+                //Inflating the Popup using xml file
+                popup.getMenuInflater().inflate(R.menu.menu_camera, popup.getMenu());
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+                        int id = item.getItemId();
+                        switch (id) {
+                            case R.id.add_camera_label:
+                                Log.d("Rig", "add_camera_label clicked.");
+                                final Dialog dialog = new Dialog(getContext());
+                                activateLabelDialog();
+                                break;
+                            case R.id.add_camera_photo:
+                                Log.d("Rig", "add_camera_photo clicked.");
+                                // Start camera intent
+                                //dispatchTakePictureIntent();
+                                break;
+                        }
+                        return true;
+                    }
+                });
                 popup.show();
                 return true;
             }
@@ -139,33 +162,16 @@ public class Rig extends RelativeLayout implements PopupMenu.OnMenuItemClickList
         });
     }
 
-    public boolean onMenuItemClick(MenuItem item) {
-        int id = item.getItemId();
-        switch(id){
-            case R.id.add_camera_label:
-                Log.d("Rig", "add_camera_label clicked.");
-                activateLabelDialog();
-                break;
-            case R.id.add_camera_photo:
-                Log.d("Rig", "add_camera_photo clicked.");
-                // Start camera intent
-                dispatchTakePictureIntent();
-                break;
-        }
-        return true;
-    }
-
     public Dialog activateLabelDialog() {
         // Create a new dialog to get new camera label
-        final Dialog dialog = new Dialog(this.stageActivity);
+        final Dialog dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.camera_add_label_dialog);
         final Button ok_button = (Button) dialog.findViewById(R.id.dialog_ok);
         // If okay is clicked, get text from EditText and set it to the camera's label
         ok_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 EditText dedit   = (EditText) dialog.findViewById(R.id.change_camera_label);
-                String new_camera_label = dedit.getText().toString();
-
+                camLabel.setText(dedit.getText().toString());
                 dialog.hide();
             }
         });
@@ -176,16 +182,47 @@ public class Rig extends RelativeLayout implements PopupMenu.OnMenuItemClickList
                 dialog.hide();
             }
         });
+        dialog.show();
         return dialog;
     }
 
     /**
      * Launch camera application to take a photo
-     */
+
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(stageActivity.getPackageManager()) != null) {
             stageActivity.startActivityForResult(takePictureIntent, 1);
         }
+    }
+    */
+    private void setupPlayClick() {
+        this.playButton.setOnClickListener(new View.OnClickListener() {
+
+            /**
+             * Called when a view has been clicked.
+             *
+             * @param v The view that was clicked.
+             */
+            @Override
+            public void onClick(View v) {
+                centerLayout.setBackgroundColor(Color.parseColor("#FF0000"));
+            }
+        });
+    }
+
+    private void setupStopClick() {
+        this.stopButton.setOnClickListener(new View.OnClickListener() {
+
+            /**
+             * Called when a view has been clicked.
+             *
+             * @param v The view that was clicked.
+             */
+            @Override
+            public void onClick(View v) {
+                centerLayout.setBackgroundColor(Color.parseColor("#FFFFFF"));
+            }
+        });
     }
 }
