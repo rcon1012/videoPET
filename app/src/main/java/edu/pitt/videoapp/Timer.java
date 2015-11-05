@@ -36,15 +36,17 @@ public class Timer extends Activity
     String Message;
     long timer=1800000;                         //set to 30 minutes
     long message = 9000;
-    //TextClock textClock;
+    TextView camera_text_label;
 
-    public Timer()
+    public Timer(TextView camera)
     {
+        camera_text_label=camera;
         //textClock=(TextClock) findViewById(R.id.textClock);
         newTimer = new CountDownTimer(timer, 1000) {
             public void onTick(long msLeft) {
-                Log.d("Timer", msLeft / 60000 + ": " + (msLeft / 1000) % 60);
-                //textClock.setText(("Timer")+ msLeft / 60000 + ": " + (msLeft / 1000) % 60);
+                //Log.d("Timer", msLeft / 60000 + ": " + (msLeft / 1000) % 60);
+
+                camera_text_label.setText( msLeft / 60000 + ": " + (msLeft / 1000) % 60);
                 //super.clock = (TextClock) activity.findViewById(R.id.textClock);
                 //super.clock.setId(View.generateViewId());
                 //TextClock.setText(("Timer")+ msLeft / 60000 + ": " + (msLeft / 1000) % 60);

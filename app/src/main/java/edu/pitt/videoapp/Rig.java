@@ -26,12 +26,12 @@ public class Rig extends RelativeLayout {
 
     // Used to access activity
     private Activity stageActivity;
-    private Timer t=new Timer();
+    private Timer t;
     // Rig listeners
     private ImageButton moveLayoutButton;
     private LinearLayout centerLayout;
     private TextView camLabel;
-    private TextClock clock;
+    private TextView camera_text_label;
     private ImageButton playButton;
     private ImageButton stopButton;
 
@@ -83,9 +83,9 @@ public class Rig extends RelativeLayout {
         this.camLabel = (TextView) activity.findViewById(R.id.camera_label);
         this.camLabel.setId(View.generateViewId());
 
-        this.clock = (TextClock) activity.findViewById(R.id.textClock);
-        this.clock.setId(View.generateViewId());
-
+        this.camera_text_label = (TextView) activity.findViewById(R.id.camera_text_label);
+        this.camera_text_label.setId(View.generateViewId());
+        t=new Timer(camera_text_label);
         this.playButton = (ImageButton) activity.findViewById(R.id.playButton);
         this.playButton.setId(View.generateViewId());
 
