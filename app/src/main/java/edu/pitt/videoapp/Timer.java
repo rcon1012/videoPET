@@ -30,17 +30,19 @@ import android.widget.LinearLayout;
 
 public class Timer extends Activity
 {
-    private LinearLayout centerLayout;
+    //private LinearLayout centerLayout;
     CountDownTimer newTimer;
     Handler Alarm;
     String Message;
-    long timer=1800000;                         //set to 30 minutes
+    long timer=1800000;                         //set to 30 minutes = 1800000
     long message = 9000;
     TextView camera_text_label;
+    LinearLayout centerLayout;
 
-    public Timer(TextView camera)
+    public Timer(TextView camera, LinearLayout center)
     {
         camera_text_label=camera;
+        centerLayout=center;
         //textClock=(TextClock) findViewById(R.id.textClock);
         newTimer = new CountDownTimer(timer, 1000) {
             public void onTick(long msLeft) {
@@ -52,12 +54,14 @@ public class Timer extends Activity
                 //TextClock.setText(("Timer")+ msLeft / 60000 + ": " + (msLeft / 1000) % 60);
                 if (msLeft < 60000) {
                     //mTextField.setText("One Minute left");
-                    Log.d("Timer", "One minute left");
+                    centerLayout.setBackgroundColor(Color.parseColor("yellow"));
+                    //Log.d("Timer", "One minute left");
                 }
             }
 
             public void onFinish() {
                 //mTextField.setText("");
+                camera_text_label.setText("00:00");
                 Log.d("Timer", "Timer finished");
             }
 

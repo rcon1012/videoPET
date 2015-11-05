@@ -85,7 +85,7 @@ public class Rig extends RelativeLayout {
 
         this.camera_text_label = (TextView) activity.findViewById(R.id.camera_text_label);
         this.camera_text_label.setId(View.generateViewId());
-        t=new Timer(camera_text_label);
+        t=new Timer(camera_text_label,centerLayout);
         this.playButton = (ImageButton) activity.findViewById(R.id.playButton);
         this.playButton.setId(View.generateViewId());
 
