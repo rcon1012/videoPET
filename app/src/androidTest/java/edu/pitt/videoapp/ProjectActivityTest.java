@@ -75,8 +75,8 @@ public class ProjectActivityTest extends ActivityInstrumentationTestCase2<Projec
                     lv.performItemClick(lv.getAdapter().getView(0, null, null), 0, lv.getAdapter().getItemId(0));
                     ArrayList<Camera> actual = pa.parseSetupFile();
                     ArrayList<Camera> expected = new ArrayList<Camera>();
-                    Camera c1 = new Camera(200, 300);
-                    Camera c2 = new Camera(400, 500);
+                    Camera c1 = new Camera();                   //was Camera c1 = new Camera(200, 300); changed due to errors by Luke
+                    Camera c2 = new Camera();                   //was Camera c2 = new Camera(400, 500); changed due to errors by Luke
                     expected.add(c1);
                     expected.add(c2);
                     assertTrue(expected.equals(actual));
