@@ -19,8 +19,15 @@ public class StageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        int screenWidth = this.getWindowManager().getDefaultDisplay().getWidth();
+        int screenHeight = this.getWindowManager().getDefaultDisplay().getHeight();
+
         setContentView(R.layout.activity_stage);
         cameraManager = new CameraManager();
+        Rig stage = new Rig(this, Rig.STAGE);
+        stage.setLock(true);
+        stage.setXY((float)screenWidth/2 - 300/2 + 24, 10);
 
         if(savedInstanceState != null)
         {

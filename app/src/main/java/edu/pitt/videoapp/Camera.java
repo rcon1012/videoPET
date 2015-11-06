@@ -49,34 +49,54 @@ public class Camera implements Parcelable {
     public Camera() {
     }
 
-    // New get position
+    // New Camera constructor -final
+    public Camera(Activity activity){
+
+    }
+
+    // New get position -final
     public float[] getXY(){
         return camRig.getXY();
     }
 
-    // New set position
+    // New set position -final
     public void setXY(float x, float y){
         camRig.setXY(x, y);
     }
 
-    // New set label
+    // New set label -final
     public void setLabel(String s){
         camRig.setLabel(s);
     }
 
-    // New get label
+    // New get label -final
     public String getLabel(){
         return camRig.getLabel();
     }
 
-    // New set desc
+    // New set desc -final
     public void setDesc(String s){
         this.desc = s;
     }
 
-    // get desc
+    // get desc -final
     public String getDesc(){
         return this.desc;
+    }
+
+    // get lock -final
+    public boolean getLock(){
+        return camRig.getLock();
+    }
+
+    // set lick -final
+    public void setLock(boolean lock){
+        camRig.setLock(lock);
+    }
+
+    // Asks if camera is alive or deleted -final
+    public boolean isAlive(){
+        return !camRig.wasDeleted();
     }
 
     public void setCoordinates(int x, int y) {
