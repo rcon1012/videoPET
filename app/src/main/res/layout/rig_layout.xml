@@ -70,6 +70,27 @@
                 android:background="#FFFFFF"
                 android:id="@+id/center_layout">
 
+                <RadioGroup
+                    android:layout_width="200sp"
+                    android:layout_height="25sp"
+                    android:orientation="horizontal">
+
+
+                <RadioButton
+                        android:layout_width="25sp"
+                        android:layout_height="25sp"
+                        android:id="@+id/cameraLockButton"
+                        android:layout_marginLeft="50sp"
+                        />
+                    <RadioButton
+                        android:layout_width="25sp"
+                        android:layout_height="25sp"
+                        android:id="@+id/cameraUnlockButton"
+                        android:layout_marginRight="0sp"
+                        />
+
+                </RadioGroup>
+
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -77,8 +98,7 @@
                     android:text="30:00"
                     android:textSize="55sp"
                     android:id="@+id/camera_text_label"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="20sp"/>
+                    android:layout_gravity="center_horizontal" />
             </LinearLayout>
 
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
