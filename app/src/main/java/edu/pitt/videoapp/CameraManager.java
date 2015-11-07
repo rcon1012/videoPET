@@ -5,6 +5,8 @@ import android.view.MenuItem;
 import android.widget.PopupMenu;
 
 import java.util.ArrayList;
+import java.util.Collections;
+
 import android.util.Log;
 /**
  * A singleton class for holding all instances of the camera objects.
@@ -52,9 +54,17 @@ public class CameraManager  {
     }
 
     public void removeActive() {
-        for (Camera c : cameraArrayList ) {
-            if ( c.isActive() )
+        for (Camera c : cameraArrayList) {
+            if (c.isActive())
                 c.removeActive();
         }
+    }
+    public ArrayList<Cut> getCutlist() {
+        ArrayList<Cut> cuts = new ArrayList<Cut>();
+        for(Camera c: cameraArrayList) {
+            cuts.addAll(c.getAllCuts());
+        }
+        Collections.sort(cuts);
+        return cuts;
     }
 }

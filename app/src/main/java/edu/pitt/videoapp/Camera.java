@@ -3,6 +3,9 @@ package edu.pitt.videoapp;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 /**
  * Created by Christopher on 10/3/2015.
  */
@@ -192,6 +195,8 @@ public class Camera implements Parcelable {
         result = 31 * result + (desc != null ? desc.hashCode() : 0);
         return result;
     }
-    // END: parcel functions
 
+    public Collection<? extends Cut> getAllCuts() {
+        return cutList;
+    }
 }
