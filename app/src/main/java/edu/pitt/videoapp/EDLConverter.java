@@ -26,6 +26,7 @@ public class EDLConverter {
     }
 
     private static File convert(CameraManager cm, String path) throws IOException {
+
         File file = new File(path);
         BufferedWriter writer = new BufferedWriter(new FileWriter(file));
 
