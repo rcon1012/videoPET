@@ -1,8 +1,10 @@
 package edu.pitt.videoapp;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.Color;
+import android.os.Build;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -118,6 +120,7 @@ public class Rig extends RelativeLayout {
     }
 
     // Initializes the rig
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void init(Activity activity){
         RelativeLayout parent = (RelativeLayout) activity.findViewById(R.id.stageActivityLayout);
         this.stageActivity = activity;
@@ -328,6 +331,7 @@ public class Rig extends RelativeLayout {
     }
 
     // Below are stage specific methods
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void initStage(Activity activity){
         RelativeLayout parent = (RelativeLayout) activity.findViewById(R.id.stageActivityLayout);
         this.stageActivity = activity;

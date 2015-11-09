@@ -8,8 +8,8 @@ import android.os.Parcelable;
  * Created by Christopher on 10/3/2015.
  */
 public class Camera implements Parcelable {
-    final int DEFAULT_X_COORDINATE = 100;
-    final int DEFAULT_Y_COORDINATE = 100;
+    final int DEFAULT_X_COORDINATE = 0;
+    final int DEFAULT_Y_COORDINATE = 0;
     private static final String TAG = Camera.class.getSimpleName();
 
     private int xCoord; // remove
@@ -20,7 +20,7 @@ public class Camera implements Parcelable {
     private String camLabel; // remove
 
     private Rig camRig;
-    private String desc;
+    private String desc = "";
 
     // Not sure if this is the best approach for accessing the activity from CameraView.java
     public Activity stage_activity;
@@ -51,7 +51,7 @@ public class Camera implements Parcelable {
 
     // New Camera constructor -final
     public Camera(Activity activity){
-
+        this.camRig = new Rig(activity);
     }
 
     // New get position -final
