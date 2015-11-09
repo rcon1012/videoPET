@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">VideoApp</string>
+    <string name="app_name">VideoPET</string>
 
     <string name="main_string_1">New</string>
     <string name="main_string_2">Load XML</string>
