@@ -24,9 +24,8 @@ public class Camera implements Parcelable {
     private Rig camRig;
 
     public StageActivity stage_activity;
-
-    public Camera() {
-    }
+    private ArrayList<Cut> cutList;
+    private long startTime;
 
     // New Camera constructor -final
     public Camera(StageActivity activity){
@@ -68,7 +67,7 @@ public class Camera implements Parcelable {
         return camRig.getLock();
     }
 
-    // set lick -final
+    // set lock -final
     public void setLock(boolean lock){
         camRig.setLock(lock);
     }
@@ -130,15 +129,26 @@ public class Camera implements Parcelable {
         return this.stageTarget;
     }
 
-    /*
-    public void setCameraView(CameraView cv) {
-        cameraView = cv;
+    public void setActive(boolean active) {
+        this.active = active;
+
+        long cutTime = System.currentTimeMillis();
+        long timestamp = cutTime - startTime;
+
+        cutList.add(new Cut(timestamp));
     }
 
-    public CameraView getCameraView() {
-        return cameraView;
+    public CameraManager getManager() {
+        return manager;
     }
-    */
+
+    public void setCamLabel(String newLabel){
+        this.camLabel = newLabel;
+    }
+
+    public String getCamLabel(){
+        return this.camLabel;
+    }
 
     // Parcel functions for Camera object so it can be passed to other Activites
     public Camera(Parcel in){
