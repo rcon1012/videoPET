@@ -12,7 +12,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
-import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -41,8 +40,6 @@ public class Rig extends RelativeLayout {
     private TextView camera_text_label;
     private ImageButton playButton;
     private ImageButton stopButton;
-    private RadioButton cameraLockButton;
-    private RadioButton cameraUnlockButton;
 
     // misc
     private boolean lock;
@@ -55,7 +52,6 @@ public class Rig extends RelativeLayout {
         setupLongClick();
         setupPlayClick();
         setupStopClick();
-        onRadioButtonClicked();
     }
 
     public Rig(Activity activity, int type){
@@ -148,23 +144,11 @@ public class Rig extends RelativeLayout {
         // Implements Timer
         this.camera_text_label = (TextView) activity.findViewById(R.id.camera_text_label);
         this.camera_text_label.setId(View.generateViewId());
-
         t=new Timer(camera_text_label,centerLayout);
-        
+
         this.playButton = (ImageButton) activity.findViewById(R.id.playButton);
         this.playButton.setId(View.generateViewId());
 
-        this.cameraLockButton = (RadioButton) activity.findViewById(R.id.cameraLockButton);
-        this.cameraLockButton.setId(View.generateViewId());
-
-        this.cameraUnlockButton = (RadioButton) activity.findViewById(R.id.cameraUnlockButton);
-        this.cameraUnlockButton.setId(View.generateViewId());
-
-        // Implements the play button
-        this.playButton = (ImageButton) activity.findViewById(R.id.playButton);
-        this.playButton.setId(View.generateViewId());
-
-        // Implements the stop button
         this.stopButton = (ImageButton) activity.findViewById(R.id.stopButton);
         this.stopButton.setId(View.generateViewId());
 
@@ -309,70 +293,6 @@ public class Rig extends RelativeLayout {
         }
     }
     */
-
-    //private void setupCameraLockButtonClick() {
-        //this.cameraLockButton.setOnClickListener(new View.OnClickListener() {
-            //Timer t=new Timer();
-
-            /**
-             * Called when a view has been clicked.
-             *
-            // * @param v The view that was clicked.
-             */
-            private void onRadioButtonClicked() {
-                this.cameraLockButton.setOnClickListener(new View.OnClickListener() {
-                    //Timer t=new Timer();
-
-                    /**
-                     * Called when a view has been clicked.
-                     *
-                     * @param v The view that was clicked.
-                     */
-                    @Override
-                    public void onClick(View v) {
-                    //Timer t=new Timer();
-
-                    /**
-                     * Called when a view has been clicked.
-                     *
-                     * @param v The view that was clicked.
-                     */
-                        // Is the button now checked?
-                        boolean checked = ((RadioButton) v).isChecked();
-
-                        // Check which radio button was clicked
-                        switch (v.getId()) {
-                            case R.id.cameraLockButton:
-                                if (checked) {
-                                    // lock camera
-                                    moveLayoutButton.setEnabled(false);
-                                    break;
-                                }
-                            case R.id.cameraUnlockButton:
-                                if (checked) {
-                                    // unlock camera
-                                    moveLayoutButton.setEnabled(true);
-                                    break;
-                                }
-                        }
-                    }
-                });
-            }
-    //}
-                /*switch(v.getId()) {
-                    case R.id.cameraLockButton:
-                        if (checked) {
-                            // Lock camera
-                            this.moveLayoutButton.setEnabled(false);
-                            break;
-                        }
-                    case R.id.cameraUnlockButton:
-                        if (checked) {
-                            // Unlock camera
-                            this.moveLayoutButton.setEnabled(true);
-                            break;
-                        }
-                }*/
     private void setupPlayClick() {
         this.playButton.setOnClickListener(new View.OnClickListener() {
             //Timer t=new Timer();
