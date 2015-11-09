@@ -11,7 +11,7 @@ import java.util.ArrayList;
  */
 public class EDLConverter {
     // Default path in the event that one is not passed to the function
-    private static final String path = "/sdcard/exportfile.edl";
+    private static final String defaultPath = "/sdcard/exportfile.edl";
 
     /**
      * This method takes a list of cuts stored in a camera manager, retrieves them, and writes them
@@ -21,7 +21,11 @@ public class EDLConverter {
      * @return The file that was written to
      * @throws IOException in the event of an error writing to the SD card
      */
-    public static File convert(CameraManager cm) throws IOException {
+    public static File convert(CameraManager cm) throws IOException{
+        return convert(cm, defaultPath);
+    }
+
+    private static File convert(CameraManager cm, String path) throws IOException {
         File file = new File(path);
         BufferedWriter writer = new BufferedWriter(new FileWriter(file));
 
@@ -31,9 +35,5 @@ public class EDLConverter {
             writer.write("format" + cut.getTimestamp());
         }
         return file;
-    }
-
-    private static File convert(CameraManager cm, String path) {
-
     }
 }
