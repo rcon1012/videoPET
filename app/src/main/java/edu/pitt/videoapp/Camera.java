@@ -8,12 +8,12 @@ import android.os.Parcelable;
  * Created by Christopher on 10/3/2015.
  */
 public class Camera implements Parcelable {
-    final int DEFAULT_X_COORDINATE = 0;
-    final int DEFAULT_Y_COORDINATE = 0;
+    final float DEFAULT_X_COORDINATE = 0;
+    final float DEFAULT_Y_COORDINATE = 0;
     private static final String TAG = Camera.class.getSimpleName();
 
-    private int xCoord; // remove
-    private int yCoord; // remove
+    private float xCoord; // remove
+    private float yCoord; // remove
     //private CameraView cameraView;
     private boolean active;
     private CameraManager manager;
@@ -99,18 +99,6 @@ public class Camera implements Parcelable {
         return !camRig.wasDeleted();
     }
 
-    public void setCoordinates(int x, int y) {
-        xCoord = x;
-        yCoord = y;
-    }
-
-    public int getX() {
-        return xCoord;
-    }
-
-    public int getY() {
-        return yCoord;
-    }
 
     /*
     public void setCameraView(CameraView cv) {
@@ -145,8 +133,8 @@ public class Camera implements Parcelable {
 
     // Parcel functions for Camera object so it can be passed to other Activites
     public Camera(Parcel in){
-        xCoord = in.readInt();
-        yCoord = in.readInt();
+        xCoord = in.readFloat();
+        yCoord = in.readFloat();
     }
 
     @Override
@@ -156,8 +144,8 @@ public class Camera implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(xCoord);
-        dest.writeInt(yCoord);
+        dest.writeFloat(xCoord);
+        dest.writeFloat(yCoord);
     }
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
         public Camera createFromParcel(Parcel in) {
@@ -184,8 +172,8 @@ public class Camera implements Parcelable {
 
     @Override
     public int hashCode() {
-        int result = xCoord;
+        float result = xCoord;
         result = 31 * result + yCoord;
-        return result;
+        return (int)result;
     }
 }

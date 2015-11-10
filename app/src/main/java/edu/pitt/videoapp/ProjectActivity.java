@@ -62,8 +62,8 @@ public class ProjectActivity extends AppCompatActivity {
     }
 
     /**
-    *   Deletes the selected setup file from external storage
-    *   @param view     deleteSetupButton view
+     *   Deletes the selected setup file from external storage
+     *   @param view     deleteSetupButton view
      */
     public void deleteSetup(View view)
     {
@@ -113,8 +113,8 @@ public class ProjectActivity extends AppCompatActivity {
     }
 
     /**
-    *   Parses the selected text file and returns a Setup object (currently ArrayList<Camera>)
-    *   @return     the parsed object representation of the setup
+     *   Parses the selected text file and returns a Setup object (currently ArrayList<Camera>)
+     *   @return     the parsed object representation of the setup
      */
     public ArrayList<Camera> parseSetupFile()
     {
@@ -149,8 +149,8 @@ public class ProjectActivity extends AppCompatActivity {
                         // parse camera data
                         // initialize x and y coordinates to default position
                         Camera c = new Camera();
-                        int xCoord = 100;
-                        int yCoord = 100;
+                        float xCoord = 100;
+                        float yCoord = 100;
                         String label = "";
                         String notes = "";
                         // label
@@ -186,7 +186,7 @@ public class ProjectActivity extends AppCompatActivity {
                         }
                         // parse xCoord
                         try{
-                            xCoord = Integer.parseInt(xLine[1]);
+                            xCoord = Float.parseFloat(xLine[1]);
                         }
                         catch(NumberFormatException e)
                         {
@@ -208,7 +208,7 @@ public class ProjectActivity extends AppCompatActivity {
                         }
                         // parse yCoord
                         try{
-                            yCoord = Integer.parseInt(yLine[1]);
+                            yCoord = Float.parseFloat(yLine[1]);
                         }
                         catch(NumberFormatException e)
                         {
@@ -240,10 +240,10 @@ public class ProjectActivity extends AppCompatActivity {
                         }
 
                         // TO-DO: uncomment and refactor when camera and stage classes are finished
-                        /*c.setLabel(label);
-                        c.setCoordinates(xCoord, yCoord);
+                        c.setLabel(label);
+                        c.setXY(xCoord, yCoord);
                         c.setDesc(notes);
-                        cameras.add(c);*/
+                        cameras.add(c);
                         Log.d(TAG, "Label: " + label + "xCoord = " + xCoord + " " + "yCoord = " + yCoord + "Notes: " + notes);
                     }
                     /**
@@ -278,8 +278,8 @@ public class ProjectActivity extends AppCompatActivity {
     }
 
     /**
-    *   Loads the selected set-up to StageActivity
-    *   @param view     loadSetupButton view
+     *   Loads the selected set-up to StageActivity
+     *   @param view     loadSetupButton view
      */
     public void loadSetup(View view)
     {
@@ -306,7 +306,7 @@ public class ProjectActivity extends AppCompatActivity {
     /**
      *  creates a hard-coded set-up file
      *  this is for testing purposes only
-      */
+     */
     public void createTestFile()
     {
         // this file is for testing purposes only
