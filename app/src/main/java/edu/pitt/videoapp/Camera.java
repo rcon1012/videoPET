@@ -99,6 +99,22 @@ public class Camera implements Parcelable {
         return !camRig.wasDeleted();
     }
 
+    /*
+        These setters only set the value, they do not set
+        the screen. Used for loading set-up configurations.
+     */
+    public void inactiveSetXY(float xCoord, float yCoord) {
+        this.xCoord = xCoord;
+        this.yCoord = yCoord;
+    }
+
+    public void inactiveSetLabel(String label) {
+        this.camLabel = label;
+    }
+
+    public void inactiveSetNotes(String notes) {
+        this.desc = notes;
+    }
 
     /*
     public void setCameraView(CameraView cv) {
@@ -135,6 +151,8 @@ public class Camera implements Parcelable {
     public Camera(Parcel in){
         xCoord = in.readFloat();
         yCoord = in.readFloat();
+        camLabel = in.readString();
+        desc = in.readString();
     }
 
     @Override
@@ -146,6 +164,8 @@ public class Camera implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeFloat(xCoord);
         dest.writeFloat(yCoord);
+        dest.writeString(camLabel);
+        dest.writeString(desc);
     }
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
         public Camera createFromParcel(Parcel in) {

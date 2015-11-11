@@ -240,9 +240,9 @@ public class ProjectActivity extends AppCompatActivity {
                         }
 
                         // TO-DO: uncomment and refactor when camera and stage classes are finished
-                        c.setLabel(label);
-                        c.setXY(xCoord, yCoord);
-                        c.setDesc(notes);
+                        c.inactiveSetLabel(label);
+                        c.inactiveSetXY(xCoord, yCoord);
+                        c.inactiveSetNotes(notes);
                         cameras.add(c);
                         Log.d(TAG, "Label: " + label + "xCoord = " + xCoord + " " + "yCoord = " + yCoord + "Notes: " + notes);
                     }
@@ -295,9 +295,7 @@ public class ProjectActivity extends AppCompatActivity {
         // set intent to change to stage activity
         Intent intent = new Intent(ProjectActivity.this, StageActivity.class);
         // add arraylist of 'Camera' to bundle
-        Bundle b = new Bundle();
-        b.putParcelableArrayList("cameras", cameras);
-        intent.putExtras(b);
+        intent.putExtra("cameras", cameras.toArray());
         // change to stage activity
         startActivity(intent);
         finish();

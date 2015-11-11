@@ -27,15 +27,16 @@ public class StageActivity extends AppCompatActivity {
         cameraManager = new CameraManager();
         Rig stage = new Rig(this, Rig.STAGE);
         stage.setLock(true);
-        stage.setXY((float)screenWidth/2 - 300/2 + 24, 10);
+        stage.setXY((float) screenWidth / 2 - 300 / 2 + 24, 10);
 
+        ArrayList<Camera> b = getIntent().getParcelableArrayListExtra("cameras");
         if(savedInstanceState != null)
         {
             ArrayList<Camera> loadCameras = savedInstanceState.getParcelableArrayList("cameras");
             for(Camera camera : loadCameras)
             {
                 Camera c = new Camera(this, cameraManager);
-                c.setXY((float)camera.getX(), (float)camera.getY());
+                c.setXY(camera.getXY()[0], camera.getXY()[1]);
                 c.setDesc(camera.getLabel());
                 c.setLabel(camera.getLabel());
                 cameraManager.addCamera(c);
