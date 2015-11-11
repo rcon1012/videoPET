@@ -32,7 +32,7 @@ public class Rig extends RelativeLayout {
     private View mainView;
 
     // Used to access activity
-    private Activity stageActivity;
+    private StageActivity stageActivity;
     private Timer t;
 
     // Rig listeners
@@ -47,7 +47,7 @@ public class Rig extends RelativeLayout {
     private boolean lock;
     private boolean deleted;
 
-    public Rig(Activity activity) {
+    public Rig(StageActivity activity) {
         super(activity);
         init(activity);
         setupDrag();
@@ -56,7 +56,7 @@ public class Rig extends RelativeLayout {
         setupStopClick();
     }
 
-    public Rig(Activity activity, int type){
+    public Rig(StageActivity activity, int type){
         super(activity);
         this.rigType = type;
         if (type == STAGE){
@@ -119,9 +119,14 @@ public class Rig extends RelativeLayout {
         return this.deleted;
     }
 
+    // the main view has an unique id - use this to get it.
+    public int getId () {
+        return this.mainView.getId();
+    }
+
     // Initializes the rig
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-    private void init(Activity activity){
+    private void init(StageActivity activity){
         RelativeLayout parent = (RelativeLayout) activity.findViewById(R.id.stageActivityLayout);
         this.stageActivity = activity;
         inflate(getContext(), R.layout.rig_layout, parent);
@@ -232,9 +237,8 @@ public class Rig extends RelativeLayout {
                                 break;
 
                             // Changes to the camera to take a photo
-                            case R.id.add_camera_photo:
-                                // Start camera intent
-                                //dispatchTakePictureIntent();
+                            case R.id.cam_angle:
+                                activateStagePickerDialog();
                                 break;
 
                             // Locks/Unclocks the camera
@@ -286,16 +290,22 @@ public class Rig extends RelativeLayout {
         return dialog;
     }
 
-    /**
-     * Launch camera application to take a photo
+    public Dialog activateStagePickerDialog() {
 
-    private void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(stageActivity.getPackageManager()) != null) {
-            stageActivity.startActivityForResult(takePictureIntent, 1);
-        }
+        // Create a new dialog to get stage picker
+        final Dialog dialog = new Dialog(getContext());
+        dialog.setContentView(R.layout.angle_stage_chooser);
+        final Button close_button = (Button) dialog.findViewById(R.id.close_stage_list);
+        // If cancel is clicked, close dialog, do not change camera label
+        close_button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                dialog.hide();
+            }
+        });
+        dialog.show();
+        return dialog;
     }
-    */
+
     private void setupPlayClick() {
         this.playButton.setOnClickListener(new View.OnClickListener() {
             //Timer t=new Timer();
@@ -332,7 +342,7 @@ public class Rig extends RelativeLayout {
 
     // Below are stage specific methods
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-    private void initStage(Activity activity){
+    private void initStage(StageActivity activity){
         RelativeLayout parent = (RelativeLayout) activity.findViewById(R.id.stageActivityLayout);
         this.stageActivity = activity;
         inflate(getContext(), R.layout.stage_layout, parent);
