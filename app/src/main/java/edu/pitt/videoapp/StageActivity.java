@@ -12,29 +12,39 @@ import java.util.ArrayList;
 
 
 public class StageActivity extends AppCompatActivity {
-    private static final String TAG = StageActivity.class.getSimpleName();
+
     private Menu menu;
+
+    private int screenWidth;
+    private int screenHeight;
+
     private CameraManager cameraManager;
+    private StageManager stageManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        int screenWidth = this.getWindowManager().getDefaultDisplay().getWidth();
-        int screenHeight = this.getWindowManager().getDefaultDisplay().getHeight();
+        screenWidth = this.getWindowManager().getDefaultDisplay().getWidth();
+        screenHeight = this.getWindowManager().getDefaultDisplay().getHeight();
+
+        cameraManager = new CameraManager();
+        stageManager = new StageManager();
 
         setContentView(R.layout.activity_stage);
-        cameraManager = new CameraManager();
+
         Rig stage = new Rig(this, Rig.STAGE);
         stage.setLock(true);
-        stage.setXY((float)screenWidth/2 - 300/2 + 24, 10);
+        stage.setXY((float) screenWidth / 2 - 300 / 2 + 24, 10);
+        stageManager.addStage(stage);
 
         if(savedInstanceState != null)
         {
             ArrayList<Camera> loadCameras = savedInstanceState.getParcelableArrayList("cameras");
             for(Camera camera : loadCameras)
             {
-                Camera c = new Camera(this, cameraManager);
+                Camera c = new Camera(this);
                 c.setXY((float)camera.getX(), (float)camera.getY());
                 c.setDesc(camera.getLabel());
                 c.setLabel(camera.getLabel());
@@ -49,10 +59,8 @@ public class StageActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_stage, menu);
 
-        int i = 1;
         View v = menu.findItem(R.id.rename).getActionView();
         EditText txtrename = ( EditText ) v.findViewById(R.id.txt_rename);
-        txtrename.setText("Sequence" + i, TextView.BufferType.EDITABLE); // Have it increment based on known sequences
 
         return super.onCreateOptionsMenu( menu );
     }
@@ -81,14 +89,15 @@ public class StageActivity extends AppCompatActivity {
                 //Timer t = new Timer();
                 //t.start();
                 // DO NOT COMMIT ABOVE
-                int screenWidth = this.getWindowManager().getDefaultDisplay().getWidth();
-                int screenHeight = this.getWindowManager().getDefaultDisplay().getHeight();
-                Camera c = new Camera(this, cameraManager);
+                Camera c = new Camera(this);
                 // 250 / 150 is width and height of rig... TODO getters for height and width of center of rig
                 c.setXY((float)screenWidth/2 - 250/2, (float)screenHeight/2 - 150/2);
                 cameraManager.addCamera(c);
                 return true;
             case R.id.add_stage:
+                Rig stage = new Rig(this, Rig.STAGE);
+                stage.setXY((float)screenWidth/2 - 300/2 + 24, 10);
+                stageManager.addStage(stage);
                 return true;
             case R.id.return_home:
                 return true;
@@ -97,6 +106,11 @@ public class StageActivity extends AppCompatActivity {
     return super.onOptionsItemSelected(item);
     }
 
+    public CameraManager getCameraManager() {
+        return cameraManager;
+    }
 
-
+    public StageManager getStageManager() {
+        return stageManager;
+    }
 }

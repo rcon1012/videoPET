@@ -22,35 +22,13 @@ public class Camera implements Parcelable {
     private Rig camRig;
     private String desc = "";
 
-    // Not sure if this is the best approach for accessing the activity from CameraView.java
-    public Activity stage_activity;
-
-    public Camera (final Activity activity, final CameraManager manager) {
-        this.stage_activity = activity;
-        this.camRig = new Rig(activity);
-
-
-        xCoord = DEFAULT_X_COORDINATE;
-        yCoord = DEFAULT_Y_COORDINATE;
-
-        //cameraView = new CameraView(activity, this);
-
-        /*
-        activity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                RelativeLayout parent = (RelativeLayout) activity.findViewById(R.id.stageActivityLayout);
-                parent.addView(cameraView);
-            }
-        });*/
-
-    }
+    public StageActivity stage_activity;
 
     public Camera() {
     }
 
     // New Camera constructor -final
-    public Camera(Activity activity){
+    public Camera(StageActivity activity){
         this.camRig = new Rig(activity);
     }
 
@@ -97,6 +75,11 @@ public class Camera implements Parcelable {
     // Asks if camera is alive or deleted -final
     public boolean isAlive(){
         return !camRig.wasDeleted();
+    }
+
+    // Gets the cameras id
+    public int getId () {
+        return camRig.getId();
     }
 
     public void setCoordinates(int x, int y) {
