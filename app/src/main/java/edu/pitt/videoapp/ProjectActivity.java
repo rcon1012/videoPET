@@ -295,7 +295,7 @@ public class ProjectActivity extends AppCompatActivity {
         // set intent to change to stage activity
         Intent intent = new Intent(ProjectActivity.this, StageActivity.class);
         // add arraylist of 'Camera' to bundle
-        intent.putExtra("cameras", cameras.toArray());
+        intent.putParcelableArrayListExtra("cameras", cameras);
         // change to stage activity
         startActivity(intent);
         finish();

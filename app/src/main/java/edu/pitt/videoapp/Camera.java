@@ -108,12 +108,22 @@ public class Camera implements Parcelable {
         this.yCoord = yCoord;
     }
 
+    public float[]inActiveGetXY() {
+        return new float[] {this.xCoord, this.yCoord};
+    }
+
     public void inactiveSetLabel(String label) {
         this.camLabel = label;
+    }
+    public String inactiveGetLabel() {
+        return this.camLabel;
     }
 
     public void inactiveSetNotes(String notes) {
         this.desc = notes;
+    }
+    public String inactiveGetNote() {
+        return this.desc;
     }
 
     /*
