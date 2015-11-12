@@ -40,4 +40,12 @@ public class StageManager  {
     public void removeCamera ( Rig r ) {
         stageArrayList.remove(r);
     }
+
+    public int size () {
+        return stageArrayList.size();
+    }
+
+    public Rig get ( int index ) {
+        return stageArrayList.get(index);
+    }
 }

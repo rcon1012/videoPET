@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -16,6 +17,9 @@ import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 /**
  * Created by Christopher on 10/29/2015.
@@ -43,6 +47,11 @@ public class Rig extends RelativeLayout {
     private ImageButton playButton;
     private ImageButton stopButton;
 
+    // Stage that it draws a line to
+    private Rig drawToThisStage;
+    private CameraLine previousLine;
+    private ArrayList<Rig> lineRigList;
+
     // misc
     private boolean lock;
     private boolean deleted;
@@ -60,6 +69,7 @@ public class Rig extends RelativeLayout {
         super(activity);
         this.rigType = type;
         if (type == STAGE){
+            this.rigType = STAGE;
             initStage(activity);
             // put stage only things here
             setupDrag();
@@ -67,12 +77,22 @@ public class Rig extends RelativeLayout {
         }
         else{
             // default to a camera rig
+            this.rigType = CAMERA;
             init(activity);
             setupDrag();
             setupLongClick();
             setupPlayClick();
             setupStopClick();
         }
+    }
+
+    public float[] getMidXY(){
+        float[] xy = getXY();
+        float x = mainView.getWidth() / 2 ;
+        float y = mainView.getHeight() / 2;
+        xy[0]+=x;
+        xy[1]+=y;
+        return xy;
     }
 
     // Returns the x and y of this layout
@@ -122,6 +142,31 @@ public class Rig extends RelativeLayout {
     // the main view has an unique id - use this to get it.
     public int getId () {
         return this.mainView.getId();
+    }
+
+    public void setPreviousLine ( CameraLine prevLine ) {
+        this.previousLine = prevLine;
+    }
+
+    public void setDrawToThisStage(Rig r){
+        this.drawToThisStage = r;
+    }
+
+    public void drawLine () {
+        CameraLine cameraLine = new CameraLine( stageActivity, this, drawToThisStage );
+        RelativeLayout screen = (RelativeLayout) stageActivity.findViewById(R.id.stageActivityLayout);
+        screen.removeView(previousLine);
+        screen.addView(cameraLine);
+        previousLine = cameraLine ;
+        drawToThisStage.setPreviousLine(previousLine);
+    }
+
+    public void addToLineRigList(Rig r){
+        this.lineRigList.add(r);
+    }
+
+    public int getRigType(){
+        return this.rigType;
     }
 
     // Initializes the rig
@@ -185,6 +230,17 @@ public class Rig extends RelativeLayout {
                     // Animate the change in x and y
                     case MotionEvent.ACTION_MOVE:
 
+                        if ( drawToThisStage != null && rigType == CAMERA) {
+                            drawLine();
+                        }
+                        else if ( drawToThisStage != null && lineRigList.size() > 0 && rigType == STAGE ) {
+                            for (int i = 0; i < lineRigList.size();i++){
+                                if ( !lineRigList.get(i).wasDeleted() )
+                                    lineRigList.get(i).drawLine();
+                                else
+                                    lineRigList.remove(lineRigList.get(i));
+                            }
+                        }
                         mainView.animate()
                                 .x(event.getRawX() + dX)
                                 .y(event.getRawY() + dY)
@@ -236,7 +292,7 @@ public class Rig extends RelativeLayout {
                                 //activateDescDialog();
                                 break;
 
-                            // Changes to the camera to take a photo
+                            // Pick a stage to point to
                             case R.id.cam_angle:
                                 activateStagePickerDialog();
                                 break;
@@ -250,6 +306,8 @@ public class Rig extends RelativeLayout {
                             case R.id.cam_delete:
                                 // Ask before delete
                                 mainView.setVisibility(View.GONE);
+                                RelativeLayout screen = (RelativeLayout) stageActivity.findViewById(R.id.stageActivityLayout);
+                                screen.removeView(previousLine);
                                 deleted = true;
                                 break;
 
@@ -290,11 +348,38 @@ public class Rig extends RelativeLayout {
         return dialog;
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     public Dialog activateStagePickerDialog() {
 
         // Create a new dialog to get stage picker
         final Dialog dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.angle_stage_chooser);
+
+        LinearLayout list = (LinearLayout) dialog.findViewById(R.id.choose_stage_btn_place);
+
+        StageManager sm = stageActivity.getStageManager();
+        for ( int i = 0; i < sm.size(); i++ ) {
+            if ( !sm.get(i).wasDeleted() ){
+                final Rig stage = sm.get(i);
+                Button bt = new Button(stageActivity);
+                bt.setText(sm.get(i).getLabel());
+                bt.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,
+                        LayoutParams.WRAP_CONTENT));
+                bt.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        drawToThisStage = stage;
+                        drawToThisStage.setDrawToThisStage(Rig.this);
+                        drawToThisStage.addToLineRigList(Rig.this);
+                        drawLine () ;
+                        dialog.hide();
+                    }
+                });
+                list.addView(bt);
+            }
+        }
+
         final Button close_button = (Button) dialog.findViewById(R.id.close_stage_list);
         // If cancel is clicked, close dialog, do not change camera label
         close_button.setOnClickListener(new View.OnClickListener() {
@@ -370,5 +455,7 @@ public class Rig extends RelativeLayout {
 
         // Used to check if the stage has been removed
         this.deleted = false;
+
+        this.lineRigList = new ArrayList<Rig>();
     }
 }

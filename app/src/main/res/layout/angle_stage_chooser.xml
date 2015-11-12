@@ -1,57 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent" android:layout_height="fill_parent"
-    android:id="@+id/layoutContainerStagePicker" android:orientation="horizontal">
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Choose a stage to set the angle:"
+        android:id="@+id/choose_stage_label" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/choose_stage_btn_place">
+
+
+
+    </LinearLayout>
 
     <RelativeLayout
-        android:layout_width="0dip"
-        android:layout_height="fill_parent"
-        android:layout_weight="0.2" />
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <RelativeLayout
-        android:layout_width="0dip"
-        android:layout_height="fill_parent"
-        android:layout_weight="0.6">
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:orientation="vertical"
-            android:id="@+id/linearLayout">
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal">
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <ListView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/stageListView"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="50dp"
-            android:choiceMode="singleChoice"
-            android:listSelector="#666666" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Close"
+            android:text="Cancel"
             android:id="@+id/close_stage_list"
-            android:layout_alignParentBottom="true"
+            android:layout_weight=".5"
+            android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true" />
-
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="0dip"
-        android:layout_height="fill_parent"
-        android:layout_weight="0.2" />
-
 </LinearLayout>
+
