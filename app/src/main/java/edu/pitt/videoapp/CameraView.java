@@ -121,7 +121,7 @@ public class CameraView extends ImageView implements PopupMenu.OnMenuItemClickLi
             case R.id.add_camera_label:
                 activateLabelDialog();
                 break;
-            case R.id.add_camera_photo:
+            case R.id.cam_angle:
                 Log.d(TAG, "add_camera_photo clicked.");
                 // Start camera intent
                 dispatchTakePictureIntent();
