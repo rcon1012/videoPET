@@ -1,6 +1,7 @@
 package edu.pitt.videoapp;
 
 import android.test.ActivityInstrumentationTestCase2;
+import android.test.UiThreadTest;
 import android.test.suitebuilder.annotation.SmallTest;
 import android.widget.ListView;
 
@@ -64,29 +65,23 @@ public class ProjectActivityTest extends ActivityInstrumentationTestCase2<Projec
         *       xCoord = 400
         *       yCoord = 500
          */
-    @SmallTest
+    @UiThreadTest
     public void testParseSetupFile() {
-        try {
-            runTestOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    pa.createTestFile();
-                    ListView lv = (ListView) pa.findViewById(R.id.setupListView);
-                    lv.performItemClick(lv.getAdapter().getView(0, null, null), 0, lv.getAdapter().getItemId(0));
-                    ArrayList<Camera> actual = pa.parseSetupFile();
-                    ArrayList<Camera> expected = new ArrayList<Camera>();
-                    Camera c1 = new Camera();                   //was Camera c1 = new Camera(200, 300); changed due to errors by Luke
-                    Camera c2 = new Camera();                   //was Camera c2 = new Camera(400, 500); changed due to errors by Luke
-                    expected.add(c1);
-                    expected.add(c2);
-                    assertTrue(expected.equals(actual));
-                }
-            });
-        }
-        catch (Throwable throwable)
-        {
-            throwable.printStackTrace();
-            assertTrue(false);
-        }
+        pa.createTestFile();
+        ListView lv = (ListView) pa.findViewById(R.id.setupListView);
+        lv.performItemClick(lv.getAdapter().getView(0, null, null), 0, lv.getAdapter().getItemId(0));
+        ArrayList<Camera> actual = pa.parseSetupFile();
+        ArrayList<Camera> expected = new ArrayList<Camera>();
+        Camera c1 = new Camera();                   //was Camera c1 = new Camera(200, 300); changed due to errors by Luke
+        c1.inactiveSetXY(200, 300);
+        c1.inactiveSetLabel("cam1");
+        c1.inactiveSetNotes("notes for camera 1");
+        Camera c2 = new Camera();                   //was Camera c2 = new Camera(400, 500); changed due to errors by Luke
+        c2.inactiveSetXY(400, 500);
+        c2.inactiveSetLabel("cam2");
+        c2.inactiveSetNotes("notes for camera 2");
+        expected.add(c1);
+        expected.add(c2);
+        assertTrue(expected.equals(actual));
     }
 }

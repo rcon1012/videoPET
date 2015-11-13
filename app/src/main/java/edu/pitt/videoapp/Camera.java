@@ -186,7 +186,6 @@ public class Camera implements Parcelable {
             return new Camera[size];
         }
     };
-    // END: parcel functions
 
     @Override
     public boolean equals(Object o) {
@@ -195,15 +194,22 @@ public class Camera implements Parcelable {
 
         Camera camera = (Camera) o;
 
-        if (xCoord != camera.xCoord) return false;
-        return yCoord == camera.yCoord;
+        if (Float.compare(camera.xCoord, xCoord) != 0) return false;
+        if (Float.compare(camera.yCoord, yCoord) != 0) return false;
+        if (camLabel != null ? !camLabel.equals(camera.camLabel) : camera.camLabel != null)
+            return false;
+        return !(desc != null ? !desc.equals(camera.desc) : camera.desc != null);
 
     }
 
     @Override
     public int hashCode() {
-        float result = xCoord;
-        result = 31 * result + yCoord;
-        return (int)result;
+        int result = (xCoord != +0.0f ? Float.floatToIntBits(xCoord) : 0);
+        result = 31 * result + (yCoord != +0.0f ? Float.floatToIntBits(yCoord) : 0);
+        result = 31 * result + (camLabel != null ? camLabel.hashCode() : 0);
+        result = 31 * result + (desc != null ? desc.hashCode() : 0);
+        return result;
     }
+    // END: parcel functions
+
 }
