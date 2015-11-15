@@ -45,7 +45,7 @@ public class StageActivity extends AppCompatActivity {
             for(Camera camera : loadCameras)
             {
                 Camera c = new Camera(this);
-                c.setXY((float)camera.getX(), (float)camera.getY());
+                //c.setXY((float)camera.getX(), (float)camera.getY());
                 c.setDesc(camera.getLabel());
                 c.setLabel(camera.getLabel());
                 cameraManager.addCamera(c);

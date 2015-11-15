@@ -46,6 +46,7 @@ public class Rig extends RelativeLayout {
     private TextView camera_text_label;
     private ImageButton playButton;
     private ImageButton stopButton;
+    private TextView desc ;
 
     // Stage that it draws a line to
     private Rig drawToThisStage;
@@ -113,6 +114,14 @@ public class Rig extends RelativeLayout {
 
     public String getLabel(){
         return camLabel.getText().toString();
+    }
+
+    public void setDesc ( String s) {
+        desc.setText(s);
+    }
+
+    public String getDesc() {
+        return desc.getText().toString();
     }
 
     public boolean getLock(){
@@ -199,6 +208,9 @@ public class Rig extends RelativeLayout {
         this.camera_text_label.setId(View.generateViewId());
         t=new Timer(camera_text_label,centerLayout);
 
+        this.desc = (TextView) activity.findViewById(R.id.cam_desc);
+        this.desc.setId(View.generateViewId());
+
         this.playButton = (ImageButton) activity.findViewById(R.id.playButton);
         this.playButton.setId(View.generateViewId());
 
@@ -230,12 +242,11 @@ public class Rig extends RelativeLayout {
                     // Animate the change in x and y
                     case MotionEvent.ACTION_MOVE:
 
-                        if ( drawToThisStage != null && rigType == CAMERA) {
+                        if (drawToThisStage != null && rigType == CAMERA) {
                             drawLine();
-                        }
-                        else if ( drawToThisStage != null && lineRigList.size() > 0 && rigType == STAGE ) {
-                            for (int i = 0; i < lineRigList.size();i++){
-                                if ( !lineRigList.get(i).wasDeleted() )
+                        } else if (drawToThisStage != null && lineRigList.size() > 0 && rigType == STAGE) {
+                            for (int i = 0; i < lineRigList.size(); i++) {
+                                if (!lineRigList.get(i).wasDeleted())
                                     lineRigList.get(i).drawLine();
                                 else
                                     lineRigList.remove(lineRigList.get(i));
@@ -265,8 +276,16 @@ public class Rig extends RelativeLayout {
                 // Creating the instance of PopupMenu
                 final PopupMenu popup = new PopupMenu(getContext(), view);
 
+
                 // Inflating the Popup using xml file
                 popup.getMenuInflater().inflate(R.menu.menu_camera, popup.getMenu());
+
+                if (rigType == STAGE) {
+                    popup.getMenu().removeItem(R.id.cam_angle);
+                    popup.getMenu().removeItem(R.id.add_camera_desc);
+
+                    popup.getMenu().findItem(R.id.cam_delete).setTitle("Delete Stage");
+                }
 
                 // Toggle the title of the lock/unlock option
                 if (lock) {
@@ -289,7 +308,7 @@ public class Rig extends RelativeLayout {
 
                             // Displays the description dialog
                             case R.id.add_camera_desc:
-                                //activateDescDialog();
+                                activateDescDialog();
                                 break;
 
                             // Pick a stage to point to
@@ -338,6 +357,29 @@ public class Rig extends RelativeLayout {
             }
         });
         final Button cancel_button = (Button) dialog.findViewById(R.id.dialog_cancel);
+        // If cancel is clicked, close dialog, do not change camera label
+        cancel_button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                dialog.hide();
+            }
+        });
+        dialog.show();
+        return dialog;
+    }
+
+    public Dialog activateDescDialog(){
+        final Dialog dialog = new Dialog(stageActivity);
+        dialog.setContentView(R.layout.camera_add_desc_dialog);
+        final Button ok_btn = (Button) dialog.findViewById(R.id.dialog_desc_ok);
+        // If okay is clicked, get text from EditText and set it to the camera's label
+        ok_btn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                EditText dedit = (EditText) dialog.findViewById(R.id.editdesc);
+                desc.setText(dedit.getText().toString());
+                dialog.hide();
+            }
+        });
+        final Button cancel_button = (Button) dialog.findViewById(R.id.dialog__desc_cancel);
         // If cancel is clicked, close dialog, do not change camera label
         cancel_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
