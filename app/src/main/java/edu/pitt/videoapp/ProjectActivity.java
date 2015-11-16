@@ -160,10 +160,6 @@ public class ProjectActivity extends AppCompatActivity {
                         line = br.readLine();
                         lineNumber++;
                         String[] labelLine = line.split("\\tLabel: ");
-                        if(labelLine.length <= 1) {
-                            Log.d(TAG, "Error parsing file at line " + lineNumber +
-                                    ":\n" + line);
-                        }
                         // parse label
                         try{
                             label = labelLine[1];
@@ -248,11 +244,6 @@ public class ProjectActivity extends AppCompatActivity {
                         line = br.readLine();
                         lineNumber++;
                         String[] labelLine = line.split("\\tLabel: ");
-                        if(labelLine.length <= 1) {
-                            Toast.makeText(ProjectActivity.this, "Error parsing file at line " + lineNumber +
-                                            ":\n" + line,
-                                    Toast.LENGTH_SHORT).show();
-                        }
                         // parse label
                         try{
                             label = labelLine[1];
@@ -265,13 +256,6 @@ public class ProjectActivity extends AppCompatActivity {
                         line = br.readLine();
                         lineNumber++;
                         String[] xLine = line.split("\\txCoord: ");
-                        // check xCoord line is properly formatted
-                        if(xLine.length <= 1)
-                        {
-                            Toast.makeText(ProjectActivity.this, "Error parsing file at line " + lineNumber +
-                                            ":\n" + line,
-                                    Toast.LENGTH_SHORT).show();
-                        }
                         // parse xCoord
                         try{
                             xCoord = Float.parseFloat(xLine[1]);
@@ -284,13 +268,6 @@ public class ProjectActivity extends AppCompatActivity {
                         line = br.readLine();
                         lineNumber++;
                         String[] yLine = line.split("\\tyCoord: ");
-                        // check yCoord line is properly formatted
-                        if(yLine.length <= 1)
-                        {
-                            Toast.makeText(ProjectActivity.this, "Error parsing file at line " + lineNumber +
-                                            ":\n" + line,
-                                    Toast.LENGTH_SHORT).show();
-                        }
                         // parse yCoord
                         try{
                             yCoord = Float.parseFloat(yLine[1]);
@@ -300,6 +277,7 @@ public class ProjectActivity extends AppCompatActivity {
                             Log.e(TAG, e.getMessage());
                         }
 
+                        /*
                         // notes
                         line = br.readLine();
                         lineNumber++;
@@ -317,17 +295,16 @@ public class ProjectActivity extends AppCompatActivity {
                         {
                             Log.e(TAG, e.getMessage());
                         }
+                        */
 
-                        // TO-DO: uncomment and refactor when camera and stage classes are finished
                         s.inactiveSetLabel(label);
                         s.inactiveSetXY(xCoord, yCoord);
                         s.inactiveSetNotes(notes);
                         stages.add(s);
                     }
                     else {
-                        Toast.makeText(ProjectActivity.this, "Error parsing file at line " + lineNumber +
-                                        ":\n" + line,
-                                Toast.LENGTH_SHORT).show();
+                        Log.e(TAG, "Error parsing file at line " + lineNumber +
+                                ":\n" + line);
                     }
                 }
                 br.close();
