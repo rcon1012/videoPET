@@ -142,10 +142,10 @@ public class ProjectActivity extends AppCompatActivity {
                         /*
                         *   Camera
                         *       Label: <label>
-                        *       xCoord = <x>
-                        *       yCoord = <y>
+                        *       xCoord: <x>
+                        *       yCoord: <y>
                         *       Notes: <notes>
-                        *
+                        *       On Stage: <stage target>
                         *
                         */
                         // parse camera data
@@ -161,9 +161,8 @@ public class ProjectActivity extends AppCompatActivity {
                         lineNumber++;
                         String[] labelLine = line.split("\\tLabel: ");
                         if(labelLine.length <= 1) {
-                            Toast.makeText(ProjectActivity.this, "Error parsing file at line " + lineNumber +
-                                            ":\n" + line,
-                                    Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, "Error parsing file at line " + lineNumber +
+                                    ":\n" + line);
                         }
                         // parse label
                         try{
@@ -171,53 +170,30 @@ public class ProjectActivity extends AppCompatActivity {
                         }
                         catch(Exception e)
                         {
-                            Toast.makeText(ProjectActivity.this, "Exception at line " + lineNumber +
-                                            ":\n" + line,
-                                    Toast.LENGTH_SHORT).show();
                             Log.e(TAG, e.getMessage());
                         }
 
                         line = br.readLine();
                         lineNumber++;
-                        String[] xLine = line.split("\\txCoord = ");
-                        // check xCoord line is properly formatted
-                        if(xLine.length <= 1)
-                        {
-                            Toast.makeText(ProjectActivity.this, "Error parsing file at line " + lineNumber +
-                                            ":\n" + line,
-                                    Toast.LENGTH_SHORT).show();
-                        }
+                        String[] xLine = line.split("\\txCoord: ");
                         // parse xCoord
                         try{
                             xCoord = Float.parseFloat(xLine[1]);
                         }
                         catch(NumberFormatException e)
                         {
-                            Toast.makeText(ProjectActivity.this, "Number format exception at line " + lineNumber +
-                                            ":\n" + line,
-                                    Toast.LENGTH_SHORT).show();
                             Log.e(TAG, e.getMessage());
                         }
 
                         line = br.readLine();
                         lineNumber++;
-                        String[] yLine = line.split("\\tyCoord = ");
-                        // check yCoord line is properly formatted
-                        if(yLine.length <= 1)
-                        {
-                            Toast.makeText(ProjectActivity.this, "Error parsing file at line " + lineNumber +
-                                            ":\n" + line,
-                                    Toast.LENGTH_SHORT).show();
-                        }
+                        String[] yLine = line.split("\\tyCoord: ");
                         // parse yCoord
                         try{
                             yCoord = Float.parseFloat(yLine[1]);
                         }
                         catch(NumberFormatException e)
                         {
-                            Toast.makeText(ProjectActivity.this, "Number format exception at line " + lineNumber +
-                                            ":\n" + line,
-                                    Toast.LENGTH_SHORT).show();
                             Log.e(TAG, e.getMessage());
                         }
 
@@ -225,45 +201,28 @@ public class ProjectActivity extends AppCompatActivity {
                         line = br.readLine();
                         lineNumber++;
                         String[] notesLine = line.split("\\tNotes: ");
-                        if(labelLine.length <= 1) {
-                            Toast.makeText(ProjectActivity.this, "Error parsing file at line " + lineNumber +
-                                            ":\n" + line,
-                                    Toast.LENGTH_SHORT).show();
-                        }
                         // parse notes
                         try{
                             notes = notesLine[1];
                         }
                         catch(Exception e)
                         {
-                            Toast.makeText(ProjectActivity.this, "Exception at line " + lineNumber +
-                                            ":\n" + line,
-                                    Toast.LENGTH_SHORT).show();
                             Log.e(TAG, e.getMessage());
                         }
 
-                        // stage targer
+                        // stage target
                         line = br.readLine();
                         lineNumber++;
                         String[] stageLine = line.split("\\tOn Stage: ");
-                        if(labelLine.length <= 1) {
-                            Toast.makeText(ProjectActivity.this, "Error parsing file at line " + lineNumber +
-                                            ":\n" + line,
-                                    Toast.LENGTH_SHORT).show();
-                        }
                         // parse stage target
-                        try{
+                        try {
                             stageTarget = stageLine[1];
                         }
                         catch(Exception e)
                         {
-                            Toast.makeText(ProjectActivity.this, "Exception at line " + lineNumber +
-                                            ":\n" + line,
-                                    Toast.LENGTH_SHORT).show();
                             Log.e(TAG, e.getMessage());
                         }
 
-                        // TO-DO: uncomment and refactor when camera and stage classes are finished
                         c.inactiveSetLabel(label);
                         c.inactiveSetXY(xCoord, yCoord);
                         c.inactiveSetNotes(notes);
@@ -273,8 +232,8 @@ public class ProjectActivity extends AppCompatActivity {
                     /**
                      *  Stage
                      *       Label: <label>
-                     *       xCoord = <x>
-                     *       yCoord = <y>
+                     *       xCoord: <x>
+                     *       yCoord: <y>
                      *       Notes: <notes>
                      */
                     else if(line.equals("Stage")) {
@@ -300,15 +259,12 @@ public class ProjectActivity extends AppCompatActivity {
                         }
                         catch(Exception e)
                         {
-                            Toast.makeText(ProjectActivity.this, "Exception at line " + lineNumber +
-                                            ":\n" + line,
-                                    Toast.LENGTH_SHORT).show();
                             Log.e(TAG, e.getMessage());
                         }
 
                         line = br.readLine();
                         lineNumber++;
-                        String[] xLine = line.split("\\txCoord = ");
+                        String[] xLine = line.split("\\txCoord: ");
                         // check xCoord line is properly formatted
                         if(xLine.length <= 1)
                         {
@@ -322,15 +278,12 @@ public class ProjectActivity extends AppCompatActivity {
                         }
                         catch(NumberFormatException e)
                         {
-                            Toast.makeText(ProjectActivity.this, "Number format exception at line " + lineNumber +
-                                            ":\n" + line,
-                                    Toast.LENGTH_SHORT).show();
                             Log.e(TAG, e.getMessage());
                         }
 
                         line = br.readLine();
                         lineNumber++;
-                        String[] yLine = line.split("\\tyCoord = ");
+                        String[] yLine = line.split("\\tyCoord: ");
                         // check yCoord line is properly formatted
                         if(yLine.length <= 1)
                         {
@@ -344,9 +297,6 @@ public class ProjectActivity extends AppCompatActivity {
                         }
                         catch(NumberFormatException e)
                         {
-                            Toast.makeText(ProjectActivity.this, "Number format exception at line " + lineNumber +
-                                            ":\n" + line,
-                                    Toast.LENGTH_SHORT).show();
                             Log.e(TAG, e.getMessage());
                         }
 
@@ -365,9 +315,6 @@ public class ProjectActivity extends AppCompatActivity {
                         }
                         catch(Exception e)
                         {
-                            Toast.makeText(ProjectActivity.this, "Exception at line " + lineNumber +
-                                            ":\n" + line,
-                                    Toast.LENGTH_SHORT).show();
                             Log.e(TAG, e.getMessage());
                         }
 
@@ -386,9 +333,6 @@ public class ProjectActivity extends AppCompatActivity {
                 br.close();
             }
             catch (IOException e) {
-                Toast.makeText(ProjectActivity.this, "IOException at line " + lineNumber +
-                                ":\n" + line,
-                        Toast.LENGTH_SHORT).show();
                 Log.e(TAG, e.getMessage());
             }
         }
@@ -441,29 +385,31 @@ public class ProjectActivity extends AppCompatActivity {
         /*
         *   Camera
         *       Label: cam 1
-        *       xCoord = 200
-        *       yCoord = 300
+        *       xCoord: 200
+        *       yCoord: 300
         *       Notes: notes for camera 1
+        *       On Stage: stage0
         *   Camera
         *       Label: cam2
-        *       xCoord = 400
-        *       yCoord = 500
+        *       xCoord: 400
+        *       yCoord: 500
         *       Notes: notes for camera 2
+        *       On Stage: stage 0
         *   Stage
         *       Label: stage0
-        *       xCoord = 600
-        *       yCoord = 600
+        *       xCoord: 600
+        *       yCoord: 600
         *       Notes: notes for stage 0
          */
         File file = new File(Environment.getExternalStorageDirectory() + "/" + setupsFolder, "test.txt");
         try {
             file.createNewFile();
-            String text = "Camera\n\tLabel: cam1\n\txCoord = 200\n\tyCoord = 300\n\tNotes: notes for camera 1\n\t" +
+            String text = "Camera\n\tLabel: cam1\n\txCoord: 200\n\tyCoord: 300\n\tNotes: notes for camera 1\n\t" +
                     "On Stage: stage0\n" +
-                    "Camera\n\tLabel: cam2\n\txCoord = 400\n\tyCoord = 500\n" +
+                    "Camera\n\tLabel: cam2\n\txCoord: 400\n\tyCoord: 500\n" +
                     "\tNotes: notes for camera 2\n\tOn Stage: stage0\n" +
-                    "Stage\n\tLabel: stage0\n\txCoord = 600\n" +
-                    "\tyCoord = 600\n" +
+                    "Stage\n\tLabel: stage0\n\txCoord: 600\n" +
+                    "\tyCoord: 600\n" +
                     "\tNotes: notes for stage 0\n";
             BufferedWriter bw = new BufferedWriter(new FileWriter(file));
             bw.write(text);
