@@ -87,6 +87,11 @@ public class Camera implements Parcelable {
         yCoord = y;
     }
 
+    // Gets the camera's rig
+    public Rig getCamRig() {
+        return camRig;
+    }
+
     /*
         These setters only set the value, they do not set
         the screen. Used for loading set-up configurations.

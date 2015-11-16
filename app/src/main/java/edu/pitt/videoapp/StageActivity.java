@@ -68,6 +68,17 @@ public class StageActivity extends AppCompatActivity {
                 c.setXY(camera.inActiveGetXY()[0], camera.inActiveGetXY()[1]);
                 c.setDesc(camera.inactiveGetNote());
                 c.setLabel(camera.inactiveGetLabel());
+
+                // draw line to camera's stage target
+                String stageT = camera.inactiveGetStageTarget();
+                for(Rig stageTarget: stageManager.stageArrayList) {
+                    if(stageTarget.getLabel().equals(stageT)) {
+                        c.getCamRig().setDrawToThisStage(stageTarget);
+                        stageTarget.setDrawToThisStage(c.getCamRig());
+                        stageTarget.addToLineRigList(c.getCamRig());
+                        c.getCamRig().drawLine();
+                    }
+                }
                 cameraManager.addCamera(c);
             }
         }

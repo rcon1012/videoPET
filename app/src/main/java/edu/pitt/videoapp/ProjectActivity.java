@@ -459,9 +459,9 @@ public class ProjectActivity extends AppCompatActivity {
         try {
             file.createNewFile();
             String text = "Camera\n\tLabel: cam1\n\txCoord = 200\n\tyCoord = 300\n\tNotes: notes for camera 1\n\t" +
-                    "On Stage: stage 0\n" +
+                    "On Stage: stage0\n" +
                     "Camera\n\tLabel: cam2\n\txCoord = 400\n\tyCoord = 500\n" +
-                    "\tNotes: notes for camera 2\n\tOn Stage: stage 0\n" +
+                    "\tNotes: notes for camera 2\n\tOn Stage: stage0\n" +
                     "Stage\n\tLabel: stage0\n\txCoord = 600\n" +
                     "\tyCoord = 600\n" +
                     "\tNotes: notes for stage 0\n";
