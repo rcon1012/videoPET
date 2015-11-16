@@ -35,7 +35,6 @@ public class StageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_stage);
 
         Rig stage = new Rig(this, Rig.STAGE);
-        stage.setLock(true);
         stage.setXY((float) screenWidth / 2 - 300 / 2 + 24, 10);
         stageManager.addStage(stage);
 
@@ -62,7 +61,7 @@ public class StageActivity extends AppCompatActivity {
         View v = menu.findItem(R.id.rename).getActionView();
         EditText txtrename = ( EditText ) v.findViewById(R.id.txt_rename);
 
-        return super.onCreateOptionsMenu( menu );
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -77,12 +76,18 @@ public class StageActivity extends AppCompatActivity {
 
 
                 // TODO Start / end sequence
-                MenuItem settingsItem = menu.findItem(R.id.pause_play_btn);
-                // Changes button icon to play/pause
-                //if ( settingsItem.getIcon().getConstantState().equals(getResources().getDrawable(R.drawable.ic_action_pause).getConstantState()))
-                 //   settingsItem.setIcon(getResources().getDrawable(R.drawable.ic_action_play));
-                //else
-                  //  settingsItem.setIcon(getResources().getDrawable(R.drawable.ic_action_pause));
+                MenuItem lockItem = menu.findItem(R.id.pause_play_btn);
+                // Changes button icon to lock/unlock
+                if ( lockItem.getIcon().getConstantState().equals(getResources().getDrawable(R.drawable.ic_lock_open_white_48dp).getConstantState())) {
+                    lockItem.setIcon(getResources().getDrawable(R.drawable.ic_lock_outline_white_48dp));
+                    stageManager.setAllLocks( true );
+                    cameraManager.setAllLocks ( true ) ;
+                }
+                else {
+                    lockItem.setIcon(getResources().getDrawable(R.drawable.ic_lock_open_white_48dp));
+                    stageManager.setAllLocks( false );
+                    cameraManager.setAllLocks ( false ) ;
+                }
                 return true;
             case R.id.add_camera:
                 // DO NOT COMMIT THIS

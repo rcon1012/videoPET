@@ -35,6 +35,12 @@ public class CameraManager  {
         return c;
     }
 
+    public void setAllLocks ( boolean lock ) {
+        for (Camera c : cameraArrayList ) {
+            c.setLock( lock );
+        }
+    }
+
     /**
      * Removes a camera from the camera list.
      * This does not remove it from the screen.

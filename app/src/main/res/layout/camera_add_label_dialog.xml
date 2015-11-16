@@ -19,8 +19,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginLeft="4dp"
         android:layout_marginRight="4dp"
-        android:layout_marginBottom="4dp"
-        android:hint="Camera_1" />
+        android:layout_marginBottom="4dp" />
 
     <LinearLayout
         android:orientation="horizontal"
