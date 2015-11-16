@@ -116,9 +116,11 @@ public class ProjectActivity extends AppCompatActivity {
      *   Parses the selected text file and returns a Setup object (currently ArrayList<Camera>)
      *   @return     the parsed object representation of the setup
      */
-    public ArrayList<Camera> parseSetupFile()
+    public ArrayList<ArrayList<Camera>> parseSetupFile()
     {
+        ArrayList<ArrayList<Camera>> setup = new ArrayList<ArrayList<Camera>>();
         ArrayList<Camera> cameras = new ArrayList<Camera>();
+        ArrayList<Camera> stages = new ArrayList<Camera>();
         // open file
         File file = new File(Environment.getExternalStorageDirectory() + "/" + setupsFolder, selectedFile);
 
@@ -149,6 +151,136 @@ public class ProjectActivity extends AppCompatActivity {
                         // parse camera data
                         // initialize x and y coordinates to default position
                         Camera c = new Camera();
+                        float xCoord = 100;
+                        float yCoord = 100;
+                        String label = "";
+                        String notes = "";
+                        String stageTarget = "";
+                        // label
+                        line = br.readLine();
+                        lineNumber++;
+                        String[] labelLine = line.split("\\tLabel: ");
+                        if(labelLine.length <= 1) {
+                            Toast.makeText(ProjectActivity.this, "Error parsing file at line " + lineNumber +
+                                            ":\n" + line,
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                        // parse label
+                        try{
+                            label = labelLine[1];
+                        }
+                        catch(Exception e)
+                        {
+                            Toast.makeText(ProjectActivity.this, "Exception at line " + lineNumber +
+                                            ":\n" + line,
+                                    Toast.LENGTH_SHORT).show();
+                            Log.e(TAG, e.getMessage());
+                        }
+
+                        line = br.readLine();
+                        lineNumber++;
+                        String[] xLine = line.split("\\txCoord = ");
+                        // check xCoord line is properly formatted
+                        if(xLine.length <= 1)
+                        {
+                            Toast.makeText(ProjectActivity.this, "Error parsing file at line " + lineNumber +
+                                            ":\n" + line,
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                        // parse xCoord
+                        try{
+                            xCoord = Float.parseFloat(xLine[1]);
+                        }
+                        catch(NumberFormatException e)
+                        {
+                            Toast.makeText(ProjectActivity.this, "Number format exception at line " + lineNumber +
+                                            ":\n" + line,
+                                    Toast.LENGTH_SHORT).show();
+                            Log.e(TAG, e.getMessage());
+                        }
+
+                        line = br.readLine();
+                        lineNumber++;
+                        String[] yLine = line.split("\\tyCoord = ");
+                        // check yCoord line is properly formatted
+                        if(yLine.length <= 1)
+                        {
+                            Toast.makeText(ProjectActivity.this, "Error parsing file at line " + lineNumber +
+                                            ":\n" + line,
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                        // parse yCoord
+                        try{
+                            yCoord = Float.parseFloat(yLine[1]);
+                        }
+                        catch(NumberFormatException e)
+                        {
+                            Toast.makeText(ProjectActivity.this, "Number format exception at line " + lineNumber +
+                                            ":\n" + line,
+                                    Toast.LENGTH_SHORT).show();
+                            Log.e(TAG, e.getMessage());
+                        }
+
+                        // notes
+                        line = br.readLine();
+                        lineNumber++;
+                        String[] notesLine = line.split("\\tNotes: ");
+                        if(labelLine.length <= 1) {
+                            Toast.makeText(ProjectActivity.this, "Error parsing file at line " + lineNumber +
+                                            ":\n" + line,
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                        // parse notes
+                        try{
+                            notes = notesLine[1];
+                        }
+                        catch(Exception e)
+                        {
+                            Toast.makeText(ProjectActivity.this, "Exception at line " + lineNumber +
+                                            ":\n" + line,
+                                    Toast.LENGTH_SHORT).show();
+                            Log.e(TAG, e.getMessage());
+                        }
+
+                        // stage targer
+                        line = br.readLine();
+                        lineNumber++;
+                        String[] stageLine = line.split("\\tOn Stage: ");
+                        if(labelLine.length <= 1) {
+                            Toast.makeText(ProjectActivity.this, "Error parsing file at line " + lineNumber +
+                                            ":\n" + line,
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                        // parse stage target
+                        try{
+                            stageTarget = stageLine[1];
+                        }
+                        catch(Exception e)
+                        {
+                            Toast.makeText(ProjectActivity.this, "Exception at line " + lineNumber +
+                                            ":\n" + line,
+                                    Toast.LENGTH_SHORT).show();
+                            Log.e(TAG, e.getMessage());
+                        }
+
+                        // TO-DO: uncomment and refactor when camera and stage classes are finished
+                        c.inactiveSetLabel(label);
+                        c.inactiveSetXY(xCoord, yCoord);
+                        c.inactiveSetNotes(notes);
+                        c.inactiveSetStageTarget(stageTarget);
+                        cameras.add(c);
+                    }
+                    /**
+                     *  Stage
+                     *       Label: <label>
+                     *       xCoord = <x>
+                     *       yCoord = <y>
+                     *       Notes: <notes>
+                     */
+                    else if(line.equals("Stage")) {
+                        // parse camera data
+                        // initialize x and y coordinates to default position
+                        Camera s = new Camera();
                         float xCoord = 100;
                         float yCoord = 100;
                         String label = "";
@@ -240,24 +372,15 @@ public class ProjectActivity extends AppCompatActivity {
                         }
 
                         // TO-DO: uncomment and refactor when camera and stage classes are finished
-                        c.inactiveSetLabel(label);
-                        c.inactiveSetXY(xCoord, yCoord);
-                        c.inactiveSetNotes(notes);
-                        cameras.add(c);
-                        Log.d(TAG, "Label: " + label + "xCoord = " + xCoord + " " + "yCoord = " + yCoord + "Notes: " + notes);
-                    }
-                    /**
-                     *  Stage
-                     *       Label: <label>
-                     *       xCoord = <x>
-                     *       yCoord = <y>
-                     *       Notes: <notes>
-                     */
-                    else if(line.equals("Stage")) {
-
+                        s.inactiveSetLabel(label);
+                        s.inactiveSetXY(xCoord, yCoord);
+                        s.inactiveSetNotes(notes);
+                        stages.add(s);
                     }
                     else {
-
+                        Toast.makeText(ProjectActivity.this, "Error parsing file at line " + lineNumber +
+                                        ":\n" + line,
+                                Toast.LENGTH_SHORT).show();
                     }
                 }
                 br.close();
@@ -274,7 +397,10 @@ public class ProjectActivity extends AppCompatActivity {
         {
             Toast.makeText(ProjectActivity.this, "Could not locate file " + selectedFile, Toast.LENGTH_SHORT).show();
         }
-        return cameras;
+
+        setup.add(0, stages);
+        setup.add(1, cameras);
+        return setup;
     }
 
     /**
@@ -290,12 +416,16 @@ public class ProjectActivity extends AppCompatActivity {
             return;
         }
         // parse the selected setup file
-        ArrayList<Camera> cameras = parseSetupFile();
+        // [0] = stages
+        // [1] = cameras
+        ArrayList<ArrayList<Camera>> setup = parseSetupFile();
 
         // set intent to change to stage activity
         Intent intent = new Intent(ProjectActivity.this, StageActivity.class);
-        // add arraylist of 'Camera' to bundle
-        intent.putParcelableArrayListExtra("cameras", cameras);
+        // add arraylist of 'stages' to bundle
+        intent.putParcelableArrayListExtra("stages", setup.get(0));
+        // add arraylist of 'cameras' to bundle
+        intent.putParcelableArrayListExtra("cameras", setup.get(1));
         // change to stage activity
         startActivity(intent);
         finish();
@@ -328,9 +458,10 @@ public class ProjectActivity extends AppCompatActivity {
         File file = new File(Environment.getExternalStorageDirectory() + "/" + setupsFolder, "test.txt");
         try {
             file.createNewFile();
-            String text = "Camera\n\tLabel: cam1\n\txCoord = 200\n\tyCoord = 300\n\tNotes: notes for camera 1\n" +
+            String text = "Camera\n\tLabel: cam1\n\txCoord = 200\n\tyCoord = 300\n\tNotes: notes for camera 1\n\t" +
+                    "On Stage: stage 0\n" +
                     "Camera\n\tLabel: cam2\n\txCoord = 400\n\tyCoord = 500\n" +
-                    "\tNotes: notes for camera 2\n" +
+                    "\tNotes: notes for camera 2\n\tOn Stage: stage 0\n" +
                     "Stage\n\tLabel: stage0\n\txCoord = 600\n" +
                     "\tyCoord = 600\n" +
                     "\tNotes: notes for stage 0\n";

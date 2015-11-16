@@ -1,6 +1,5 @@
 package edu.pitt.videoapp;
 
-import android.app.Activity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -18,6 +17,7 @@ public class Camera implements Parcelable {
     private boolean active;
     private CameraManager manager;
     private String camLabel; // remove
+    private String stageTarget;
 
     private Rig camRig;
     private String desc = "";
@@ -85,6 +85,7 @@ public class Camera implements Parcelable {
     public void setCoordinates(int x, int y) {
         xCoord = x;
         yCoord = y;
+    }
 
     /*
         These setters only set the value, they do not set
@@ -111,6 +112,13 @@ public class Camera implements Parcelable {
     }
     public String inactiveGetNote() {
         return this.desc;
+    }
+
+    public void inactiveSetStageTarget(String stageTarget) {
+        this.stageTarget = stageTarget;
+    }
+    public String inactiveGetStageTarget() {
+        return this.stageTarget;
     }
 
     /*
@@ -150,6 +158,7 @@ public class Camera implements Parcelable {
         yCoord = in.readFloat();
         camLabel = in.readString();
         desc = in.readString();
+        stageTarget = in.readString();
     }
 
     @Override
@@ -163,6 +172,7 @@ public class Camera implements Parcelable {
         dest.writeFloat(yCoord);
         dest.writeString(camLabel);
         dest.writeString(desc);
+        dest.writeString(stageTarget);
     }
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
         public Camera createFromParcel(Parcel in) {

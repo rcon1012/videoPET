@@ -6,7 +6,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -34,18 +33,38 @@ public class StageActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_stage);
 
-        Rig stage = new Rig(this, Rig.STAGE);
-        stage.setLock(true);
-        stage.setXY((float) screenWidth / 2 - 300 / 2 + 24, 10);
-        stageManager.addStage(stage);
-
+        // load setup
         Bundle bundle = getIntent().getExtras();
+
+        // if not loading setup
+        if(bundle == null) {
+            Rig stage = new Rig(this, Rig.STAGE);
+            stage.setLock(true);
+            stage.setXY((float) screenWidth / 2 - 300 / 2 + 24, 10);
+            stageManager.addStage(stage);
+        }
+
+        // load stages
+        ArrayList<Camera> loadStages = bundle.getParcelableArrayList("stages");
+        if(loadStages != null)
+        {
+            for(Camera st : loadStages)
+            {
+                Rig s = new Rig(this, Rig.STAGE);
+                s.setXY(st.inActiveGetXY()[0], st.inActiveGetXY()[1]);
+                s.setLabel(st.inactiveGetLabel());
+                //s.setDesc;
+                stageManager.addStage(s);
+            }
+        }
+
+        // load cameras
         ArrayList<Camera> loadCameras = bundle.getParcelableArrayList("cameras");
         if(loadCameras != null)
         {
             for(Camera camera : loadCameras)
             {
-                Camera c = new Camera(this, cameraManager);
+                Camera c = new Camera(this);
                 c.setXY(camera.inActiveGetXY()[0], camera.inActiveGetXY()[1]);
                 c.setDesc(camera.inactiveGetNote());
                 c.setLabel(camera.inactiveGetLabel());
