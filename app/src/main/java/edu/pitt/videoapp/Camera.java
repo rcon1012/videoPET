@@ -8,12 +8,12 @@ import android.os.Parcelable;
  * Created by Christopher on 10/3/2015.
  */
 public class Camera implements Parcelable {
-    final int DEFAULT_X_COORDINATE = 0;
-    final int DEFAULT_Y_COORDINATE = 0;
+    final float DEFAULT_X_COORDINATE = 0;
+    final float DEFAULT_Y_COORDINATE = 0;
     private static final String TAG = Camera.class.getSimpleName();
 
-    private int xCoord; // remove
-    private int yCoord; // remove
+    private float xCoord; // remove
+    private float yCoord; // remove
     //private CameraView cameraView;
     private boolean active;
     private CameraManager manager;
@@ -85,14 +85,32 @@ public class Camera implements Parcelable {
     public void setCoordinates(int x, int y) {
         xCoord = x;
         yCoord = y;
+
+    /*
+        These setters only set the value, they do not set
+        the screen. Used for loading set-up configurations.
+     */
+    public void inactiveSetXY(float xCoord, float yCoord) {
+        this.xCoord = xCoord;
+        this.yCoord = yCoord;
     }
 
-    public int getX() {
-        return xCoord;
+    public float[]inActiveGetXY() {
+        return new float[] {this.xCoord, this.yCoord};
     }
 
-    public int getY() {
-        return yCoord;
+    public void inactiveSetLabel(String label) {
+        this.camLabel = label;
+    }
+    public String inactiveGetLabel() {
+        return this.camLabel;
+    }
+
+    public void inactiveSetNotes(String notes) {
+        this.desc = notes;
+    }
+    public String inactiveGetNote() {
+        return this.desc;
     }
 
     /*
@@ -128,8 +146,10 @@ public class Camera implements Parcelable {
 
     // Parcel functions for Camera object so it can be passed to other Activites
     public Camera(Parcel in){
-        xCoord = in.readInt();
-        yCoord = in.readInt();
+        xCoord = in.readFloat();
+        yCoord = in.readFloat();
+        camLabel = in.readString();
+        desc = in.readString();
     }
 
     @Override
@@ -139,8 +159,10 @@ public class Camera implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(xCoord);
-        dest.writeInt(yCoord);
+        dest.writeFloat(xCoord);
+        dest.writeFloat(yCoord);
+        dest.writeString(camLabel);
+        dest.writeString(desc);
     }
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
         public Camera createFromParcel(Parcel in) {
@@ -151,7 +173,6 @@ public class Camera implements Parcelable {
             return new Camera[size];
         }
     };
-    // END: parcel functions
 
     @Override
     public boolean equals(Object o) {
@@ -160,15 +181,22 @@ public class Camera implements Parcelable {
 
         Camera camera = (Camera) o;
 
-        if (xCoord != camera.xCoord) return false;
-        return yCoord == camera.yCoord;
+        if (Float.compare(camera.xCoord, xCoord) != 0) return false;
+        if (Float.compare(camera.yCoord, yCoord) != 0) return false;
+        if (camLabel != null ? !camLabel.equals(camera.camLabel) : camera.camLabel != null)
+            return false;
+        return !(desc != null ? !desc.equals(camera.desc) : camera.desc != null);
 
     }
 
     @Override
     public int hashCode() {
-        int result = xCoord;
-        result = 31 * result + yCoord;
+        int result = (xCoord != +0.0f ? Float.floatToIntBits(xCoord) : 0);
+        result = 31 * result + (yCoord != +0.0f ? Float.floatToIntBits(yCoord) : 0);
+        result = 31 * result + (camLabel != null ? camLabel.hashCode() : 0);
+        result = 31 * result + (desc != null ? desc.hashCode() : 0);
         return result;
     }
+    // END: parcel functions
+
 }

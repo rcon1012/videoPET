@@ -79,7 +79,7 @@ public class CameraView extends ImageView implements PopupMenu.OnMenuItemClickLi
                     params.topMargin = yCoord;
                     Log.d(TAG, "onTouch x = " + xCoord + "; y = " + yCoord);
 
-                    cam.setCoordinates(xCoord, yCoord);
+                    cam.setXY(xCoord, yCoord);
 
                     cameraView.setLayoutParams(params);
                     break;
