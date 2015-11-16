@@ -57,8 +57,6 @@ public class ProjectActivity extends AppCompatActivity {
                 selectedFile = ((TextView) view).getText().toString();
             }
         });
-
-        createTestFile();
     }
 
     /**
@@ -277,7 +275,7 @@ public class ProjectActivity extends AppCompatActivity {
                             Log.e(TAG, e.getMessage());
                         }
 
-                        /*
+
                         // notes
                         line = br.readLine();
                         lineNumber++;
@@ -295,7 +293,6 @@ public class ProjectActivity extends AppCompatActivity {
                         {
                             Log.e(TAG, e.getMessage());
                         }
-                        */
 
                         s.inactiveSetLabel(label);
                         s.inactiveSetXY(xCoord, yCoord);

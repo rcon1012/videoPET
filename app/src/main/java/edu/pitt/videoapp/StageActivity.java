@@ -212,6 +212,7 @@ public class StageActivity extends AppCompatActivity {
         alertDialogBuilder.setTitle("Save Set-up");
         // set input
         final EditText input = new EditText(this);
+        input.setId(779441);
         input.setInputType(InputType.TYPE_CLASS_TEXT);
         alertDialogBuilder.setView(input);
         // set buttons
