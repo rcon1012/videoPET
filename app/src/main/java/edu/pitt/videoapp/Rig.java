@@ -1,7 +1,6 @@
 package edu.pitt.videoapp;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.os.Build;
@@ -9,7 +8,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -18,7 +16,6 @@ import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -150,6 +147,9 @@ public class Rig extends RelativeLayout {
 
     public void setDrawToThisStage(Rig r){
         this.drawToThisStage = r;
+    }
+    public Rig getDrawToThisStage() {
+        return this.drawToThisStage;
     }
 
     public void drawLine () {
