@@ -2,6 +2,7 @@ package edu.pitt.videoapp;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +21,10 @@ import java.util.ArrayList;
 
 public class StageActivity extends AppCompatActivity {
 
+    public Menu getMenu() {
+        return menu;
+    }
+
     private Menu menu;
 
     private int screenWidth;
@@ -28,6 +33,7 @@ public class StageActivity extends AppCompatActivity {
     private CameraManager cameraManager;
     private StageManager stageManager;
 
+    public int setupInputId = 779441;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,6 +150,9 @@ public class StageActivity extends AppCompatActivity {
                 stageManager.addStage(stage);
                 return true;
             case R.id.return_home:
+                Intent intent = new Intent(StageActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
                 return true;
             case R.id.save_setup:
                 showSaveSetupDialog();
@@ -212,7 +221,7 @@ public class StageActivity extends AppCompatActivity {
         alertDialogBuilder.setTitle("Save Set-up");
         // set input
         final EditText input = new EditText(this);
-        input.setId(779441);
+        input.setId(setupInputId);
         input.setInputType(InputType.TYPE_CLASS_TEXT);
         alertDialogBuilder.setView(input);
         // set buttons

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.UiThreadTest;
-import android.test.ViewAsserts;
 import android.test.suitebuilder.annotation.SmallTest;
 import android.view.Menu;
 
@@ -213,12 +212,6 @@ public class StageActivityTest extends ActivityInstrumentationTestCase2<StageAct
         r.setLock(lock);
         boolean result2 = r.getLock();
         assertEquals(result2, lock);
-    }
-
-    @UiThreadTest
-    public void testSaveSetupDialog() {
-        stageActivity.onOptionsItemSelected(menu.findItem(R.id.save_setup));
-        ViewAsserts.assertOnScreen(stageActivity.findViewById(779441).getRootView(), stageActivity.findViewById(779441));
     }
 
     /*
