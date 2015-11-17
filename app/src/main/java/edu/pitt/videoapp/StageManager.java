@@ -31,7 +31,8 @@ public class StageManager  {
      *          and passed in.
      */
     public void deleteStage () {
-            counter--;
+            stageArrayList.remove((counter-1));
+        --counter;
     }
 
     public void addStage (Rig r) {
