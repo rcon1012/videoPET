@@ -9,17 +9,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Add a label to your camera:"
-        android:id="@+id/textView" />
+        android:text="Add a description to your camera:"
+        android:id="@+id/add_desc_label" />
 
     <EditText
-        android:id="@+id/change_camera_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginRight="4dp"
-        android:layout_marginBottom="4dp" />
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:id="@+id/editdesc" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -30,14 +28,14 @@
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:text="Ok"
-            android:id="@+id/dialog_ok"
+            android:id="@+id/dialog_desc_ok"
             android:layout_weight="1"/>
 
         <Button
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:text="Cancel"
-            android:id="@+id/dialog_cancel"
+            android:id="@+id/dialog__desc_cancel"
             android:layout_weight="1"/>
 
     </LinearLayout>

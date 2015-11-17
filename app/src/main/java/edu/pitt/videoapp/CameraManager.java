@@ -35,6 +35,12 @@ public class CameraManager  {
         return c;
     }
 
+    public void setAllLocks ( boolean lock ) {
+        for (Camera c : cameraArrayList ) {
+            c.setLock( lock );
+        }
+    }
+
     /**
      * Removes a camera from the camera list.
      * This does not remove it from the screen.
@@ -43,5 +49,12 @@ public class CameraManager  {
      */
     public void removeCamera ( Camera c ) {
         cameraArrayList.remove(c);
+    }
+
+    public void removeActive() {
+        for (Camera c : cameraArrayList ) {
+            if ( c.isActive() )
+                c.removeActive();
+        }
     }
 }

@@ -52,4 +52,10 @@ public class StageManager  {
     public Rig get ( int index ) {
         return stageArrayList.get(index);
     }
+
+    public void setAllLocks ( boolean lock ) {
+        for (Rig r : stageArrayList ) {
+            r.setLock( lock );
+        }
+    }
 }
