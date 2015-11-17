@@ -17,7 +17,7 @@ public class EDLConverter {
      * This method takes a list of cuts stored in a camera manager, retrieves them, and writes them
      * to a properly formatted CMX3600 EDL file
      *
-     * @param cm The camera manager holding the camera data
+     * @param cm The CameraManager holding the list of cuts to be exported
      * @return The file that was written to
      * @throws IOException in the event of an error writing to the SD card
      */
@@ -25,7 +25,18 @@ public class EDLConverter {
         return convert(cm, defaultPath);
     }
 
+    /**
+     * A version of the above function with a path parameter for testing. This function is called
+     * by that one with the path provided. It's function overloading.
+     *
+     * @param cm The CameraManager holding the list of cuts to be exported
+     * @param path The path to which the file should be written
+     * @return
+     * @throws IOException
+     */
     private static File convert(CameraManager cm, String path) throws IOException {
+        // Monotonically increasing edit counter. Each line should have a unique edit number
+        int edit = 1;
 
         File file = new File(path);
         BufferedWriter writer = new BufferedWriter(new FileWriter(file));
@@ -33,7 +44,8 @@ public class EDLConverter {
         ArrayList<Cut> cutlist = cm.getCutlist();
 
         for(Cut cut: cutlist) {
-            writer.write("format" + cut.getTimestamp());
+            writer.write("format");
+            edit++;
         }
         return file;
     }

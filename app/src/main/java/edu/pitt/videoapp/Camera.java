@@ -129,13 +129,19 @@ public class Camera implements Parcelable {
         return this.stageTarget;
     }
 
-    public void setActive(boolean active) {
-        this.active = active;
+    public void activate() {
+        this.active = true;
 
         long cutTime = System.currentTimeMillis();
-        long timestamp = cutTime - startTime;
+        long recordTime = cutTime - startTime;
+        // TODO: after rebase, change this to cutTime - stage_activity.getCameraManager().recordStart
+        long sourceTime = cutTime - startTime;
 
-        cutList.add(new Cut(timestamp));
+        cutList.add(new Cut(sourceTime, recordTime));
+    }
+
+    public void deactivate() {
+        this.active = false;
     }
 
     public CameraManager getManager() {

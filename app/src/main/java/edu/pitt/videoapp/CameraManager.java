@@ -17,7 +17,9 @@ import android.util.Log;
  */
 public class CameraManager  {
 
-    ArrayList<Camera> cameraArrayList;
+    private ArrayList<Camera> cameraArrayList;
+    private long sequenceStartTime;
+    private long sequenceEndTime;
     private static final String TAG = CameraManager.class.getSimpleName();
 
     public CameraManager (){
@@ -65,6 +67,21 @@ public class CameraManager  {
             cuts.addAll(c.getAllCuts());
         }
         Collections.sort(cuts);
+        for(int i = 1; i < cuts.size(); i++) {
+            long recordOut = cuts.get(i).getRecordIn();
+            long sourceOut = cuts.get(i).getSourceIn();
+
+            cuts.get(i - 1).setOutTimes(sourceOut, recordOut);
+        }
+        Cut lastCut = cuts.get(cuts.size() - 1);
+        long lastRecordIn = lastCut.getRecordIn();
+        long lastSourceIn = lastCut.getSourceIn();
+        long delta = (sequenceEndTime - sequenceStartTime) - lastRecordIn;
+        lastCut.setOutTimes(lastSourceIn + delta, lastRecordIn + delta);
         return cuts;
+    }
+
+    public long getSequenceStartTime() {
+        return sequenceStartTime;
     }
 }

@@ -4,28 +4,61 @@ package edu.pitt.videoapp;
  * Created by jake on 11/7/15.
  */
 public class Cut implements Comparable<Cut> {
-    private long timestamp;
+    private long sourceIn;
+    private long sourceOut;
+    private long recordIn;
+    private long recordOut;
 
-    public Cut(long timestamp) {
-        this.timestamp = timestamp;
+    /**
+     * Constructor that takes the camera and sequence timestamps
+     * @param sourceIn Camera specific timestamp
+     * @param recordIn Sequence timestamp
+     */
+    public Cut(long sourceIn, long recordIn) {
+        this.sourceIn = sourceIn;
+        this.recordIn = recordIn;
     }
 
+    /**
+     * Comparator that returns the difference
+     * @param another The Cut object being compared to
+     * @return The difference in milliseconds between the cuts, capped at MIN and MAX int values
+     */
     @Override
     public int compareTo(Cut another) {
-        if(timestamp < another.timestamp) {
-            return -1;
-        } else if(timestamp > another.timestamp) {
-            return 1;
+        long comp = this.recordIn - another.getRecordIn();
+        if(comp > Integer.MAX_VALUE) {
+            return Integer.MAX_VALUE;
+        } else if (comp < Integer.MIN_VALUE) {
+            return Integer.MIN_VALUE;
         } else {
-            return 0;
+            return (int) comp;
         }
     }
 
-    public long getTimestamp() {
-        return timestamp;
+    public long getRecordIn() {
+        return recordIn;
     }
 
-    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
+    public long getSourceIn() {
+        return sourceIn;
+    }
+
+    public String getTimecodes() {
+        String sIn = formatTimecode(sourceIn);
+        String sOut = formatTimecode(sourceOut);
+        String rIn = formatTimecode(recordIn);
+        String rOut = formatTimecode(recordOut);
+
+        return String.format("%s %s %s %s", sIn, sOut, rIn, rOut);
+    }
+
+    private static String formatTimecode(long timecode) {
+        return String.format("%2ld:%2ld:%2ld:%2ld", timecode);
+    }
+
+    public void setOutTimes(long sourceOut, long recordOut) {
+        this.sourceOut = sourceOut;
+        this.recordOut = recordOut;
     }
 }
