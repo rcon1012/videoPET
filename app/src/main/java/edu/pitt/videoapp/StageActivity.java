@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -62,7 +63,7 @@ public class StageActivity extends AppCompatActivity {
         View v = menu.findItem(R.id.rename).getActionView();
         EditText txtrename = ( EditText ) v.findViewById(R.id.txt_rename);
 
-        return super.onCreateOptionsMenu( menu );
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -97,7 +98,12 @@ public class StageActivity extends AppCompatActivity {
             case R.id.add_stage:
                 Rig stage = new Rig(this, Rig.STAGE);
                 stage.setXY((float)screenWidth/2 - 300/2 + 24, 10);
-                stageManager.addStage(stage);
+                //if(stageManager.size()>2){
+                //    Toast.makeText(StageActivity.this, "3 STAGE MAX", Toast.LENGTH_SHORT).show();
+                //}
+                //else {
+                    stageManager.addStage(stage);
+                //}
                 return true;
             case R.id.return_home:
                 return true;

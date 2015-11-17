@@ -28,6 +28,10 @@ public class StageManager  {
      *          and passed in.
      */
     public void addStage (Rig r) {
+        //if (stageArrayList.size()>2){
+        //    return;
+        //}
+        //else
         stageArrayList.add(r);
     }
 
