@@ -16,22 +16,30 @@ import android.util.Log;
 public class StageManager  {
 
     ArrayList<Rig> stageArrayList;
-
+    int counter;
+    int size;
     public StageManager (){
         stageArrayList = new ArrayList<Rig>();
+        counter=0;
+        size=2;
     }
 
     /**
      * Creates and adds a new camera object to the list of cameras.
      *
-     * @param r The camera instance created outside of the class
+     //* @param r The camera instance created outside of the class
      *          and passed in.
      */
+    public void deleteStage () {
+            counter--;
+    }
+
     public void addStage (Rig r) {
-        //if (stageArrayList.size()>2){
-        //    return;
-        //}
-        //else
+        if (counter>size){
+            return;
+        }
+        else
+        counter++;
         stageArrayList.add(r);
     }
 
@@ -46,7 +54,7 @@ public class StageManager  {
     }
 
     public int size () {
-        return stageArrayList.size();
+        return counter;
     }
 
     public Rig get ( int index ) {

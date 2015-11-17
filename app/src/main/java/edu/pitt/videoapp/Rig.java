@@ -296,11 +296,11 @@ public class Rig extends RelativeLayout {
         this.activeImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if ( !active ) {
+                if (!active) {
 
                     stageActivity.getCameraManager().removeActive();
 
-                    active = true ;
+                    active = true;
                     activeImage.setImageResource(R.drawable.ic_room_black_48dp);
                     final TranslateAnimation breathUpTranslateAnimation =
                             new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0F, Animation.RELATIVE_TO_SELF, 0.0F,
@@ -310,8 +310,7 @@ public class Rig extends RelativeLayout {
                     breathUpTranslateAnimation.setRepeatMode(Animation.REVERSE);
                     breathUpTranslateAnimation.setInterpolator(new DecelerateInterpolator());
                     activeImage.startAnimation(breathUpTranslateAnimation);
-                }
-                else {
+                } else {
                     removeActive();
                 }
 
@@ -377,6 +376,9 @@ public class Rig extends RelativeLayout {
                             // Deletes the camera
                             case R.id.cam_delete:
                                 // Ask before delete
+                                if (rigType == STAGE) {
+                                    stageActivity.removeStage();
+                                }
                                 mainView.setVisibility(View.GONE);
                                 RelativeLayout screen = (RelativeLayout) stageActivity.findViewById(R.id.stageActivityLayout);
                                 screen.removeView(previousLine);
