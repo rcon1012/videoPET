@@ -9,10 +9,14 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.TranslateAnimation;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
@@ -47,6 +51,7 @@ public class Rig extends RelativeLayout {
     private ImageButton playButton;
     private ImageButton stopButton;
     private TextView desc ;
+    private ImageView activeImage ;
 
     // Stage that it draws a line to
     private Rig drawToThisStage;
@@ -56,11 +61,13 @@ public class Rig extends RelativeLayout {
     // misc
     private boolean lock;
     private boolean deleted;
+    private boolean active;
 
     public Rig(StageActivity activity) {
         super(activity);
         init(activity);
         setupDrag();
+        setupClick();
         setupLongClick();
         setupPlayClick();
         setupStopClick();
@@ -81,6 +88,7 @@ public class Rig extends RelativeLayout {
             this.rigType = CAMERA;
             init(activity);
             setupDrag();
+            setupClick();
             setupLongClick();
             setupPlayClick();
             setupStopClick();
@@ -178,6 +186,10 @@ public class Rig extends RelativeLayout {
         return this.rigType;
     }
 
+    public boolean isActive(){
+        return this.active;
+    }
+
     // Initializes the rig
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void init(StageActivity activity){
@@ -217,11 +229,24 @@ public class Rig extends RelativeLayout {
         this.stopButton = (ImageButton) activity.findViewById(R.id.stopButton);
         this.stopButton.setId(View.generateViewId());
 
+        this.activeImage = (ImageView) activity.findViewById(R.id.active_image);
+        this.activeImage.setImageResource(R.drawable.ic_movie_black_48dp);
+        this.activeImage.setId(View.generateViewId());
+
         // Sets the starting lock to UNLOCKED
         this.lock = false;
 
         // Used to check if the camera has been removed
         this.deleted = false;
+
+        // Used to designate if the camera is the one running
+        this.active = false;
+    }
+
+    public void removeActive () {
+        active = false ;
+        activeImage.clearAnimation();
+        activeImage.setImageResource(R.drawable.ic_movie_black_48dp);
     }
 
     // Sets the drag listener
@@ -262,6 +287,34 @@ public class Rig extends RelativeLayout {
                         return false;
                 }
                 return true;
+            }
+        });
+    }
+
+    // Sets the click listener
+    private void setupClick() {
+        this.activeImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if ( !active ) {
+
+                    stageActivity.getCameraManager().removeActive();
+
+                    active = true ;
+                    activeImage.setImageResource(R.drawable.ic_room_black_48dp);
+                    final TranslateAnimation breathUpTranslateAnimation =
+                            new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0F, Animation.RELATIVE_TO_SELF, 0.0F,
+                                    Animation.RELATIVE_TO_PARENT, 0.2F, Animation.RELATIVE_TO_SELF, -0.05F);
+                    breathUpTranslateAnimation.setDuration(300);
+                    breathUpTranslateAnimation.setRepeatCount(Animation.INFINITE);
+                    breathUpTranslateAnimation.setRepeatMode(Animation.REVERSE);
+                    breathUpTranslateAnimation.setInterpolator(new DecelerateInterpolator());
+                    activeImage.startAnimation(breathUpTranslateAnimation);
+                }
+                else {
+                    removeActive();
+                }
+
             }
         });
     }

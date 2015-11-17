@@ -80,6 +80,14 @@ public class Camera implements Parcelable {
         return camRig.getId();
     }
 
+    public boolean isActive () {
+        return camRig.isActive ();
+    }
+
+    public void removeActive () {
+        camRig.removeActive();
+    }
+
     // Parcel functions for Camera object so it can be passed to other Activites
     public Camera(Parcel in){
         xCoord = in.readInt();

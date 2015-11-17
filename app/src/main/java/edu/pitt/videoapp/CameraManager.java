@@ -50,4 +50,11 @@ public class CameraManager  {
     public void removeCamera ( Camera c ) {
         cameraArrayList.remove(c);
     }
+
+    public void removeActive() {
+        for (Camera c : cameraArrayList ) {
+            if ( c.isActive() )
+                c.removeActive();
+        }
+    }
 }

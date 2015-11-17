@@ -2,12 +2,18 @@ package edu.pitt.videoapp;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.AttributeSet;
+import android.util.Xml;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.xmlpull.v1.XmlPullParser;
+
+import java.text.AttributedCharacterIterator;
 import java.util.ArrayList;
 
 
@@ -20,6 +26,8 @@ public class StageActivity extends AppCompatActivity {
 
     private CameraManager cameraManager;
     private StageManager stageManager;
+
+    private ImageView activeCamIcon;
 
 
     @Override
@@ -37,6 +45,9 @@ public class StageActivity extends AppCompatActivity {
         Rig stage = new Rig(this, Rig.STAGE);
         stage.setXY((float) screenWidth / 2 - 300 / 2 + 24, 10);
         stageManager.addStage(stage);
+
+        Camera cameraStart = new Camera(this);
+        cameraManager.addCamera(cameraStart);
 
         if(savedInstanceState != null)
         {
