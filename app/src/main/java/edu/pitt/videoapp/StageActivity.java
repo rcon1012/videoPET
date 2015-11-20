@@ -6,16 +6,30 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
+<<<<<<< HEAD
+import android.util.AttributeSet;
+import android.util.Xml;
+=======
 import android.text.InputType;
+>>>>>>> dev
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+<<<<<<< HEAD
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import org.xmlpull.v1.XmlPullParser;
+
+import java.text.AttributedCharacterIterator;
+=======
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+>>>>>>> dev
 import java.util.ArrayList;
 
 
@@ -33,7 +47,10 @@ public class StageActivity extends AppCompatActivity {
     private CameraManager cameraManager;
     private StageManager stageManager;
 
+    private ImageView activeCamIcon;
+
     public int setupInputId = 779441;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +63,14 @@ public class StageActivity extends AppCompatActivity {
         stageManager = new StageManager();
 
         setContentView(R.layout.activity_stage);
+
+
+        Rig stage = new Rig(this, Rig.STAGE);
+        stage.setXY((float) screenWidth / 2 - 300 / 2 + 24, 10);
+        stageManager.addStage(stage);
+
+        Camera cameraStart = new Camera(this);
+        cameraManager.addCamera(cameraStart);
 
         // get set-up data
         Bundle bundle = getIntent().getExtras();
@@ -127,12 +152,18 @@ public class StageActivity extends AppCompatActivity {
 
 
                 // TODO Start / end sequence
-                MenuItem settingsItem = menu.findItem(R.id.pause_play_btn);
-                // Changes button icon to play/pause
-                //if ( settingsItem.getIcon().getConstantState().equals(getResources().getDrawable(R.drawable.ic_action_pause).getConstantState()))
-                 //   settingsItem.setIcon(getResources().getDrawable(R.drawable.ic_action_play));
-                //else
-                  //  settingsItem.setIcon(getResources().getDrawable(R.drawable.ic_action_pause));
+                MenuItem lockItem = menu.findItem(R.id.pause_play_btn);
+                // Changes button icon to lock/unlock
+                if ( lockItem.getIcon().getConstantState().equals(getResources().getDrawable(R.drawable.ic_lock_open_white_48dp).getConstantState())) {
+                    lockItem.setIcon(getResources().getDrawable(R.drawable.ic_lock_outline_white_48dp));
+                    stageManager.setAllLocks( true );
+                    cameraManager.setAllLocks ( true ) ;
+                }
+                else {
+                    lockItem.setIcon(getResources().getDrawable(R.drawable.ic_lock_open_white_48dp));
+                    stageManager.setAllLocks( false );
+                    cameraManager.setAllLocks ( false ) ;
+                }
                 return true;
             case R.id.add_camera:
                 // DO NOT COMMIT THIS

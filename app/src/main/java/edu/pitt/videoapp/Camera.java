@@ -10,17 +10,12 @@ public class Camera implements Parcelable {
     final float DEFAULT_X_COORDINATE = 0;
     final float DEFAULT_Y_COORDINATE = 0;
     private static final String TAG = Camera.class.getSimpleName();
-
-    private float xCoord; // remove
-    private float yCoord; // remove
-    //private CameraView cameraView;
     private boolean active;
     private CameraManager manager;
     private String camLabel; // remove
     private String stageTarget;
 
     private Rig camRig;
-    private String desc = "";
 
     public StageActivity stage_activity;
 
@@ -54,12 +49,12 @@ public class Camera implements Parcelable {
 
     // New set desc -final
     public void setDesc(String s){
-        this.desc = s;
+        camRig.setDesc(s);
     }
 
     // get desc -final
     public String getDesc(){
-        return this.desc;
+        return camRig.getDesc();
     }
 
     // get lock -final
@@ -82,9 +77,12 @@ public class Camera implements Parcelable {
         return camRig.getId();
     }
 
-    public void setCoordinates(int x, int y) {
-        xCoord = x;
-        yCoord = y;
+    public boolean isActive () {
+        return camRig.isActive ();
+    }
+
+    public void removeActive () {
+        camRig.removeActive();
     }
 
     // Gets the camera's rig
@@ -135,27 +133,6 @@ public class Camera implements Parcelable {
         return cameraView;
     }
     */
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public CameraManager getManager() {
-        return manager;
-    }
-
-    public void setCamLabel(String newLabel){
-        this.camLabel = newLabel;
-    }
-
-    public String getCamLabel(){
-        return this.camLabel;
-    }
-
 
     // Parcel functions for Camera object so it can be passed to other Activites
     public Camera(Parcel in){

@@ -8,9 +8,14 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.TranslateAnimation;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
@@ -43,6 +48,8 @@ public class Rig extends RelativeLayout {
     private TextView camera_text_label;
     private ImageButton playButton;
     private ImageButton stopButton;
+    private TextView desc ;
+    private ImageView activeImage ;
 
     // Stage that it draws a line to
     private Rig drawToThisStage;
@@ -52,11 +59,13 @@ public class Rig extends RelativeLayout {
     // misc
     private boolean lock;
     private boolean deleted;
+    private boolean active;
 
     public Rig(StageActivity activity) {
         super(activity);
         init(activity);
         setupDrag();
+        setupClick();
         setupLongClick();
         setupPlayClick();
         setupStopClick();
@@ -77,6 +86,7 @@ public class Rig extends RelativeLayout {
             this.rigType = CAMERA;
             init(activity);
             setupDrag();
+            setupClick();
             setupLongClick();
             setupPlayClick();
             setupStopClick();
@@ -110,6 +120,14 @@ public class Rig extends RelativeLayout {
 
     public String getLabel(){
         return camLabel.getText().toString();
+    }
+
+    public void setDesc ( String s) {
+        desc.setText(s);
+    }
+
+    public String getDesc() {
+        return desc.getText().toString();
     }
 
     public boolean getLock(){
@@ -169,6 +187,10 @@ public class Rig extends RelativeLayout {
         return this.rigType;
     }
 
+    public boolean isActive(){
+        return this.active;
+    }
+
     // Initializes the rig
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void init(StageActivity activity){
@@ -199,17 +221,33 @@ public class Rig extends RelativeLayout {
         this.camera_text_label.setId(View.generateViewId());
         t=new Timer(camera_text_label,centerLayout);
 
+        this.desc = (TextView) activity.findViewById(R.id.cam_desc);
+        this.desc.setId(View.generateViewId());
+
         this.playButton = (ImageButton) activity.findViewById(R.id.playButton);
         this.playButton.setId(View.generateViewId());
 
         this.stopButton = (ImageButton) activity.findViewById(R.id.stopButton);
         this.stopButton.setId(View.generateViewId());
 
+        this.activeImage = (ImageView) activity.findViewById(R.id.active_image);
+        this.activeImage.setImageResource(R.drawable.ic_movie_black_48dp);
+        this.activeImage.setId(View.generateViewId());
+
         // Sets the starting lock to UNLOCKED
         this.lock = false;
 
         // Used to check if the camera has been removed
         this.deleted = false;
+
+        // Used to designate if the camera is the one running
+        this.active = false;
+    }
+
+    public void removeActive () {
+        active = false ;
+        activeImage.clearAnimation();
+        activeImage.setImageResource(R.drawable.ic_movie_black_48dp);
     }
 
     // Sets the drag listener
@@ -230,12 +268,11 @@ public class Rig extends RelativeLayout {
                     // Animate the change in x and y
                     case MotionEvent.ACTION_MOVE:
 
-                        if ( drawToThisStage != null && rigType == CAMERA) {
+                        if (drawToThisStage != null && rigType == CAMERA) {
                             drawLine();
-                        }
-                        else if ( drawToThisStage != null && lineRigList.size() > 0 && rigType == STAGE ) {
-                            for (int i = 0; i < lineRigList.size();i++){
-                                if ( !lineRigList.get(i).wasDeleted() )
+                        } else if (drawToThisStage != null && lineRigList.size() > 0 && rigType == STAGE) {
+                            for (int i = 0; i < lineRigList.size(); i++) {
+                                if (!lineRigList.get(i).wasDeleted())
                                     lineRigList.get(i).drawLine();
                                 else
                                     lineRigList.remove(lineRigList.get(i));
@@ -255,6 +292,34 @@ public class Rig extends RelativeLayout {
         });
     }
 
+    // Sets the click listener
+    private void setupClick() {
+        this.activeImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if ( !active ) {
+
+                    stageActivity.getCameraManager().removeActive();
+
+                    active = true ;
+                    activeImage.setImageResource(R.drawable.ic_room_black_48dp);
+                    final TranslateAnimation breathUpTranslateAnimation =
+                            new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0F, Animation.RELATIVE_TO_SELF, 0.0F,
+                                    Animation.RELATIVE_TO_PARENT, 0.2F, Animation.RELATIVE_TO_SELF, -0.05F);
+                    breathUpTranslateAnimation.setDuration(300);
+                    breathUpTranslateAnimation.setRepeatCount(Animation.INFINITE);
+                    breathUpTranslateAnimation.setRepeatMode(Animation.REVERSE);
+                    breathUpTranslateAnimation.setInterpolator(new DecelerateInterpolator());
+                    activeImage.startAnimation(breathUpTranslateAnimation);
+                }
+                else {
+                    removeActive();
+                }
+
+            }
+        });
+    }
+
     // Sets the long click listener
     private void setupLongClick(){
         this.centerLayout.setOnLongClickListener(new View.OnLongClickListener() {
@@ -265,8 +330,16 @@ public class Rig extends RelativeLayout {
                 // Creating the instance of PopupMenu
                 final PopupMenu popup = new PopupMenu(getContext(), view);
 
+
                 // Inflating the Popup using xml file
                 popup.getMenuInflater().inflate(R.menu.menu_camera, popup.getMenu());
+
+                if (rigType == STAGE) {
+                    popup.getMenu().removeItem(R.id.cam_angle);
+                    popup.getMenu().removeItem(R.id.add_camera_desc);
+
+                    popup.getMenu().findItem(R.id.cam_delete).setTitle("Delete Stage");
+                }
 
                 // Toggle the title of the lock/unlock option
                 if (lock) {
@@ -289,7 +362,7 @@ public class Rig extends RelativeLayout {
 
                             // Displays the description dialog
                             case R.id.add_camera_desc:
-                                //activateDescDialog();
+                                activateDescDialog();
                                 break;
 
                             // Pick a stage to point to
@@ -338,6 +411,29 @@ public class Rig extends RelativeLayout {
             }
         });
         final Button cancel_button = (Button) dialog.findViewById(R.id.dialog_cancel);
+        // If cancel is clicked, close dialog, do not change camera label
+        cancel_button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                dialog.hide();
+            }
+        });
+        dialog.show();
+        return dialog;
+    }
+
+    public Dialog activateDescDialog(){
+        final Dialog dialog = new Dialog(stageActivity);
+        dialog.setContentView(R.layout.camera_add_desc_dialog);
+        final Button ok_btn = (Button) dialog.findViewById(R.id.dialog_desc_ok);
+        // If okay is clicked, get text from EditText and set it to the camera's label
+        ok_btn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                EditText dedit = (EditText) dialog.findViewById(R.id.editdesc);
+                desc.setText(dedit.getText().toString());
+                dialog.hide();
+            }
+        });
+        final Button cancel_button = (Button) dialog.findViewById(R.id.dialog__desc_cancel);
         // If cancel is clicked, close dialog, do not change camera label
         cancel_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
