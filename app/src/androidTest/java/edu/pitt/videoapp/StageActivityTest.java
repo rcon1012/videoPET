@@ -1,17 +1,11 @@
 package edu.pitt.videoapp;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
-import android.support.test.espresso.Espresso;
-import android.support.test.espresso.matcher.ViewMatchers;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.UiThreadTest;
-import android.test.suitebuilder.annotation.MediumTest;
 import android.test.suitebuilder.annotation.SmallTest;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
+import android.view.Menu;
 
 import org.junit.Before;
 
@@ -23,6 +17,7 @@ public class StageActivityTest extends ActivityInstrumentationTestCase2<StageAct
     private StageActivity stageActivity;
     private CameraManager cm;
     private Context ctx;
+    private Menu menu;
 
     public StageActivityTest() {
         super(StageActivity.class);

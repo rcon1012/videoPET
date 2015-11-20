@@ -1,12 +1,9 @@
 package edu.pitt.videoapp;
 
-import android.app.Activity;
-
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Created by jake on 10/8/15.
@@ -27,7 +24,7 @@ public class CameraTest {
         int test_x = 100;
         int test_y = 99;
 
-        camera.setCoordinates(test_x, test_y);
+        camera.setXY(test_x, test_y);
 
         int expectedHash = 31 * test_x + test_y;
         assertEquals(expectedHash, camera.hashCode());

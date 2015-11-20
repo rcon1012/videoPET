@@ -1,23 +1,43 @@
 package edu.pitt.videoapp;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
+<<<<<<< HEAD
 import android.util.AttributeSet;
 import android.util.Xml;
+=======
+import android.text.InputType;
+>>>>>>> dev
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+<<<<<<< HEAD
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.xmlpull.v1.XmlPullParser;
 
 import java.text.AttributedCharacterIterator;
+=======
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+>>>>>>> dev
 import java.util.ArrayList;
 
 
 public class StageActivity extends AppCompatActivity {
+
+    public Menu getMenu() {
+        return menu;
+    }
 
     private Menu menu;
 
@@ -28,6 +48,8 @@ public class StageActivity extends AppCompatActivity {
     private StageManager stageManager;
 
     private ImageView activeCamIcon;
+
+    public int setupInputId = 779441;
 
 
     @Override
@@ -42,6 +64,7 @@ public class StageActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_stage);
 
+
         Rig stage = new Rig(this, Rig.STAGE);
         stage.setXY((float) screenWidth / 2 - 300 / 2 + 24, 10);
         stageManager.addStage(stage);
@@ -49,16 +72,58 @@ public class StageActivity extends AppCompatActivity {
         Camera cameraStart = new Camera(this);
         cameraManager.addCamera(cameraStart);
 
-        if(savedInstanceState != null)
-        {
-            ArrayList<Camera> loadCameras = savedInstanceState.getParcelableArrayList("cameras");
-            for(Camera camera : loadCameras)
-            {
-                Camera c = new Camera(this);
-                //c.setXY((float)camera.getX(), (float)camera.getY());
-                c.setDesc(camera.getLabel());
-                c.setLabel(camera.getLabel());
-                cameraManager.addCamera(c);
+        // get set-up data
+        Bundle bundle = getIntent().getExtras();
+
+        // if not loading setup
+        if(bundle == null) {
+            Rig stage = new Rig(this, Rig.STAGE);
+            stage.setLock(true);
+            stage.setXY((float) screenWidth / 2 - 300 / 2 + 24, 10);
+            stageManager.addStage(stage);
+        }
+
+        // load set-up
+        else {
+            // load stages
+            ArrayList<Camera> loadStages = bundle.getParcelableArrayList("stages");
+            if (loadStages != null) {
+                for (Camera st : loadStages) {
+                    Rig s = new Rig(this, Rig.STAGE);
+                    s.setXY(st.inActiveGetXY()[0], st.inActiveGetXY()[1]);
+                    s.setLabel(st.inactiveGetLabel());
+                    //s.setDesc;
+                    stageManager.addStage(s);
+                }
+            }
+
+            // load cameras
+            ArrayList<Camera> loadCameras = bundle.getParcelableArrayList("cameras");
+            if (loadCameras != null) {
+                for (Camera camera : loadCameras) {
+                    Camera c = new Camera(this);
+                    c.setXY(camera.inActiveGetXY()[0], camera.inActiveGetXY()[1]);
+                    if(camera.inactiveGetNote() != null && !camera.inactiveGetNote().equals("")) {
+                        c.setDesc(camera.inactiveGetNote());
+                    }
+                    if(camera.inactiveGetLabel() != null && !camera.inactiveGetLabel().equals("")) {
+                        c.setLabel(camera.inactiveGetLabel());
+                    }
+                    if(camera.inactiveGetStageTarget() != null && !camera.inactiveGetStageTarget().equals("")) {
+                        // draw line to camera's stage target
+                        String stageT = camera.inactiveGetStageTarget();
+                        for (Rig stageTarget : stageManager.stageArrayList) {
+                            if (stageTarget.getLabel().equals(stageT)) {
+                                c.getCamRig().setDrawToThisStage(stageTarget);
+                                stageTarget.setDrawToThisStage(c.getCamRig());
+                                stageTarget.addToLineRigList(c.getCamRig());
+                                c.getCamRig().drawLine();
+                            }
+                        }
+                    }
+
+                    cameraManager.addCamera(c);
+                }
             }
         }
     }
@@ -116,6 +181,12 @@ public class StageActivity extends AppCompatActivity {
                 stageManager.addStage(stage);
                 return true;
             case R.id.return_home:
+                Intent intent = new Intent(StageActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+                return true;
+            case R.id.save_setup:
+                showSaveSetupDialog();
                 return true;
 
         }
@@ -128,5 +199,76 @@ public class StageActivity extends AppCompatActivity {
 
     public StageManager getStageManager() {
         return stageManager;
+    }
+
+    /**
+     * Saves the current setup to 'set-ups' folder
+     */
+    public void saveSetup(String filename) {
+        String setup = "";
+        for(Camera camera : cameraManager.cameraArrayList) {
+            if(!camera.getCamRig().wasDeleted()) {
+                setup += "Camera\n\t";
+                setup += "Label: " + camera.getLabel() + "\n\t";
+                setup += "xCoord: " + camera.getXY()[0] + "\n\t";
+                setup += "yCoord: " + camera.getXY()[1] + "\n\t";
+                setup += "Notes: " + camera.getDesc() + "\n\t";
+                setup += "On Stage: ";
+                if(camera.getCamRig().getDrawToThisStage() != null) {
+                    setup += camera.getCamRig().getDrawToThisStage().getLabel();
+                }
+                setup += "\n";
+            }
+        }
+
+        for(Rig stage : stageManager.stageArrayList) {
+            if(!stage.wasDeleted()) {
+                setup += "Stage\n\t";
+                setup += "Label: " + stage.getLabel() + "\n\t";
+                setup += "xCoord: " + stage.getXY()[0] + "\n\t";
+                setup += "yCoord: " + stage.getXY()[1] + "\n\t";
+                //setup += "Notes: " + stage.getDesc() + "\n\t";
+            }
+        }
+
+        File file = new File(Environment.getExternalStorageDirectory() + "/" + "set-ups", filename + ".txt");
+        try {
+            file.createNewFile();
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+            bw.write(setup);
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Shows a dialog where the user can input what the current set-up
+     * should be saved as
+     */
+    public void showSaveSetupDialog() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        // set title
+        alertDialogBuilder.setTitle("Save Set-up");
+        // set input
+        final EditText input = new EditText(this);
+        input.setId(setupInputId);
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        alertDialogBuilder.setView(input);
+        // set buttons
+        alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                saveSetup(input.getText().toString());
+            }
+        });
+        alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        alertDialogBuilder.show();
     }
 }

@@ -11,6 +11,7 @@
     <string name="menu_add_camera">Add Camera</string>
     <string name="menu_add_stage">Add Stage</string>
     <string name="menu_return_home">Home</string>
+    <string name="menu_save_setup">Save Setup</string>
 
     <string name="title_activity_project">ProjectActivity</string>
     <string name="title_activity_xml">XMLActivity</string>

@@ -19,6 +19,9 @@
         android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/add_stage" android:title="@string/menu_add_stage"
         android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/save_setup" android:title="@string/menu_save_setup"
+        android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/return_home" android:title="@string/menu_return_home"
         android:orderInCategory="100" app:showAsAction="never" />
+
 </menu>
