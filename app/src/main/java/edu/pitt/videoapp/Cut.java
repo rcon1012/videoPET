@@ -8,15 +8,17 @@ public class Cut implements Comparable<Cut> {
     private long sourceOut;
     private long recordIn;
     private long recordOut;
+    private String sequenceName;
 
     /**
      * Constructor that takes the camera and sequence timestamps
      * @param sourceIn Camera specific timestamp
      * @param recordIn Sequence timestamp
      */
-    public Cut(long sourceIn, long recordIn) {
+    public Cut(long sourceIn, long recordIn, String sequenceName) {
         this.sourceIn = sourceIn;
         this.recordIn = recordIn;
+        this.sequenceName = sequenceName;
     }
 
     /**
@@ -60,5 +62,9 @@ public class Cut implements Comparable<Cut> {
     public void setOutTimes(long sourceOut, long recordOut) {
         this.sourceOut = sourceOut;
         this.recordOut = recordOut;
+    }
+
+    public String sequenceChar() {
+        return sequenceName;
     }
 }

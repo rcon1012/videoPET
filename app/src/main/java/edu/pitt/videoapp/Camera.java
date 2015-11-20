@@ -19,7 +19,10 @@ public class Camera implements Parcelable {
     private boolean active;
     private CameraManager manager;
     private String camLabel;
+
     private String stageTarget;
+
+    private String sequenceLabel;
 
     private Rig camRig;
 
@@ -137,7 +140,7 @@ public class Camera implements Parcelable {
         // TODO: after rebase, change this to cutTime - stage_activity.getCameraManager().recordStart
         long sourceTime = cutTime - startTime;
 
-        cutList.add(new Cut(sourceTime, recordTime));
+        cutList.add(new Cut(sourceTime, recordTime, camRig.getLabel()));
     }
 
     public void deactivate() {
@@ -148,12 +151,12 @@ public class Camera implements Parcelable {
         return manager;
     }
 
-    public void setCamLabel(String newLabel){
-        this.camLabel = newLabel;
+    public void setSequenceLabel(String newLabel){
+        this.sequenceLabel = newLabel;
     }
 
-    public String getCamLabel(){
-        return this.camLabel;
+    public String getSequenceLabel(){
+        return this.sequenceLabel;
     }
 
     // Parcel functions for Camera object so it can be passed to other Activites

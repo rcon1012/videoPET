@@ -44,7 +44,8 @@ public class EDLConverter {
         ArrayList<Cut> cutlist = cm.getCutlist();
 
         for(Cut cut: cutlist) {
-            writer.write("format");
+            String fmtString = String.format("%3d  %s       V     C        %s", edit, cut.sequenceChar(), cut.getTimecodes());
+            writer.write(fmtString);
             edit++;
         }
         return file;
