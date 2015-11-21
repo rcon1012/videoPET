@@ -44,7 +44,22 @@ public class EDLConverter {
         ArrayList<Cut> cutlist = cm.getCutlist();
 
         for(Cut cut: cutlist) {
-            String fmtString = String.format("%3d  %s       V     C        %s", edit, cut.sequenceChar(), cut.getTimecodes());
+            /*
+             Note on the format of a CMX 3600 EDL file:
+             The first three numbers are the "edit number". These increase monotonically and are used
+                to order the edits.
+             The second set of numbers are the "reel name". AX is a special reel name for external
+                sources like all-black or color bars. We want individual reel names, so that we can cut
+                back and forth between them
+             The next character is V for video, A for audio, AA for 2 channel audio, or AA/V for all audio
+                and the video track. We should probably do AA/V
+             Next comes a character to represent the type of edit. C is cut. D is dissolve. W is wipe.
+                for now we should just support the cut. The rest can be done in post
+             Finally we have the source in/out timecodes (the timestamps on the reel that we are getting
+                the footage from) and record in/out (the timestamps on the sequence where the footage is
+                being inserted). These are in the format hour:minute:second:frame.
+             */
+            String fmtString = String.format("%3d %s AA/V C %s", edit, cut.sequenceChar(), cut.getTimecodes());
             writer.write(fmtString);
             edit++;
         }
