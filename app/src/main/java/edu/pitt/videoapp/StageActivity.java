@@ -15,6 +15,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.util.Log;
 
 import org.xmlpull.v1.XmlPullParser;
 
@@ -171,9 +173,14 @@ public class StageActivity extends AppCompatActivity {
                 cameraManager.addCamera(c);
                 return true;
             case R.id.add_stage:
-                Rig stage = new Rig(this, Rig.STAGE);
-                stage.setXY((float)screenWidth/2 - 300/2 + 24, 10);
-                stageManager.addStage(stage);
+                if(stageManager.size()>2){
+                    Toast.makeText(StageActivity.this, "MAX OF 3 STAGES", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Rig stage = new Rig(this, Rig.STAGE);
+                    stage.setXY((float) screenWidth / 2 - 300 / 2 + 24, 10);
+                    stageManager.addStage(stage);
+                }
                 return true;
             case R.id.return_home:
                 Intent intent = new Intent(StageActivity.this, MainActivity.class);
@@ -186,6 +193,11 @@ public class StageActivity extends AppCompatActivity {
 
         }
     return super.onOptionsItemSelected(item);
+    }
+
+    public void removeStage() {
+        Log.d("Removing","java");
+        this.stageManager.deleteStage();
     }
 
     public CameraManager getCameraManager() {
