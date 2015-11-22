@@ -76,7 +76,6 @@ public class StageActivity extends AppCompatActivity {
                     Rig s = new Rig(this, Rig.STAGE);
                     s.setXY(st.inActiveGetXY()[0], st.inActiveGetXY()[1]);
                     s.setLabel(st.inactiveGetLabel());
-                    //s.setDesc;
                     stageManager.addStage(s);
                 }
             }
@@ -92,6 +91,9 @@ public class StageActivity extends AppCompatActivity {
                     }
                     if(camera.inactiveGetLabel() != null && !camera.inactiveGetLabel().equals("")) {
                         c.setLabel(camera.inactiveGetLabel());
+                    }
+                    if(camera.inactiveGetNote() != null && !camera.inactiveGetNote().equals("")) {
+                        c.setDesc(camera.inactiveGetNote());
                     }
                     if(camera.inactiveGetStageTarget() != null && !camera.inactiveGetStageTarget().equals("")) {
                         // draw line to camera's stage target
