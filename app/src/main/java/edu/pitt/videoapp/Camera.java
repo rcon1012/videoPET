@@ -9,10 +9,13 @@ import android.os.Parcelable;
 public class Camera implements Parcelable {
     final float DEFAULT_X_COORDINATE = 0;
     final float DEFAULT_Y_COORDINATE = 0;
+    float xCoord;
+    float yCoord;
+    String desc;
     private static final String TAG = Camera.class.getSimpleName();
     private boolean active;
     private CameraManager manager;
-    private String camLabel; // remove
+    private String camLabel;
     private String stageTarget;
 
     private Rig camRig;

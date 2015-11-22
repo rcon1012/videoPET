@@ -140,7 +140,7 @@ public class CameraView extends ImageView implements PopupMenu.OnMenuItemClickLi
             public void onClick(View v) {
                 EditText dedit = (EditText) dialog.findViewById(R.id.change_camera_label);
                 String new_camera_label = dedit.getText().toString();
-                cam.setCamLabel(new_camera_label);
+                cam.setLabel(new_camera_label);
                 dialog.hide();
             }
         });

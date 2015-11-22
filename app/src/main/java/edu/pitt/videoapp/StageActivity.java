@@ -6,21 +6,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
-import android.util.AttributeSet;
-import android.util.Xml;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
-import android.util.Log;
-
-import org.xmlpull.v1.XmlPullParser;
-
-import java.text.AttributedCharacterIterator;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -61,23 +54,17 @@ public class StageActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_stage);
 
-
-        Rig stage = new Rig(this, Rig.STAGE);
-        stage.setXY((float) screenWidth / 2 - 300 / 2 + 24, 10);
-        stageManager.addStage(stage);
-
-        Camera cameraStart = new Camera(this);
-        cameraManager.addCamera(cameraStart);
-
         // get set-up data
         Bundle bundle = getIntent().getExtras();
 
         // if not loading setup
         if(bundle == null) {
             Rig stage = new Rig(this, Rig.STAGE);
-            stage.setLock(true);
             stage.setXY((float) screenWidth / 2 - 300 / 2 + 24, 10);
             stageManager.addStage(stage);
+
+            Camera cameraStart = new Camera(this);
+            cameraManager.addCamera(cameraStart);
         }
 
         // load set-up
