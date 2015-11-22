@@ -29,4 +29,9 @@ public class CameraTest {
         int expectedHash = 31 * test_x + test_y;
         assertEquals(expectedHash, camera.hashCode());
     }
+
+    @Test
+    public void makeCut() {
+
+    }
 }

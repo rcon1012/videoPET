@@ -14,6 +14,8 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.*;
+
 /**
  * Created by jake on 10/27/15.
  */
@@ -66,11 +68,19 @@ public class CameraManagerTest {
     @Test
     public void getCutlist() {
         long faketime = 4707120;
-        cameraManager.setSequenceStartTime();
+        cameraManager.setSequenceStartTime(faketime);
         cameraManager.addCamera(mockCamera);
         cameraManager.addCamera(mockCamera);
         cameraManager.addCamera(mockCamera);
+        // End the sequence 300,000 ms (5 minutes) after start
+        cameraManager.setSequenceEndTime(faketime + 300000);
 
+        ArrayList<Cut> mockList = new ArrayList<Cut>();
+        mockList.add(mockCut);
+        mockList.add(mockCut);
+        mockList.add(mockCut);
 
+        when(mockCamera.getAllCuts()).thenReturn(mock(ArrayList.class));
+        cameraManager.getCutlist();
     }
 }
