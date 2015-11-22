@@ -56,7 +56,14 @@ public class Cut implements Comparable<Cut> {
     }
 
     private static String formatTimecode(long timecode) {
-        return String.format("%2ld:%2ld:%2ld:%2ld", timecode);
+        long justMilliseconds = timecode % 1000;
+        long frames = (justMilliseconds / 33) % 30;
+        long seconds = timecode/1000;
+        long minutes = seconds/60;
+        seconds = seconds % 60;
+        long hours = minutes/60;
+        minutes = minutes % 60;
+        return String.format("%02d:%02d:%02d:%02d", hours, minutes, seconds, frames);
     }
 
     public void setOutTimes(long sourceOut, long recordOut) {

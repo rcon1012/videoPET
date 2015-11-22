@@ -9,6 +9,9 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 /**
@@ -19,37 +22,41 @@ import static org.junit.Assert.assertTrue;
 public class CameraManagerTest {
 
     CameraManager cameraManager;
+    ArrayList<Camera> cameraArrayList;
 
     @Mock
     Camera mockCamera;
 
-    @Before public void setUp() {
+    @Before public void setUp() throws NoSuchFieldException, IllegalAccessException {
         cameraManager = new CameraManager();
+        Field cameraArrayListField = CameraManager.class.getDeclaredField("cameraArrayList");
+        cameraArrayListField.setAccessible(true);
+        cameraArrayList = (ArrayList<Camera>) cameraArrayListField.get(cameraManager);
     }
 
     @Test public void size() {
-        assertEquals(0, cameraManager.cameraArrayList.size());
+        assertEquals(0, cameraArrayList.size());
 
         cameraManager.addCamera(mockCamera);
         cameraManager.addCamera(mockCamera);
         cameraManager.addCamera(mockCamera);
-        assertEquals(3, cameraManager.cameraArrayList.size());
+        assertEquals(3, cameraArrayList.size());
     }
 
     @Test public void delete() {
         cameraManager.addCamera(mockCamera);
         cameraManager.addCamera(mockCamera);
         cameraManager.addCamera(mockCamera);
-        assertEquals(3, cameraManager.cameraArrayList.size());
+        assertEquals(3, cameraArrayList.size());
 
         cameraManager.removeCamera(mockCamera);
-        assertEquals(2, cameraManager.cameraArrayList.size());
+        assertEquals(2, cameraArrayList.size());
 
         cameraManager.removeCamera(mockCamera);
         cameraManager.removeCamera(mockCamera);
-        assertEquals(0, cameraManager.cameraArrayList.size());
+        assertEquals(0, cameraArrayList.size());
 
         cameraManager.removeCamera(mockCamera);
-        assertEquals(0, cameraManager.cameraArrayList.size());
+        assertEquals(0, cameraArrayList.size());
     }
 }
