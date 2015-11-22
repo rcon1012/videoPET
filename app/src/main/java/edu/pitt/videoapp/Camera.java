@@ -26,13 +26,24 @@ public class Camera implements Parcelable {
 
     private Rig camRig;
 
-    public StageActivity stage_activity;
+    public StageActivity stageActivity;
     private ArrayList<Cut> cutList;
     private long startTime;
 
     // New Camera constructor -final
     public Camera(StageActivity activity){
         this.camRig = new Rig(activity);
+    }
+
+    /* This constructor has to be used when loading a project, because the StageActivity doesn't
+        exist at the time of camera instantiation. Instead, we have to add a reference and create
+        the rig in the onCreate method of the StageActivity
+    */
+    public Camera() {
+    }
+
+    public void setStageActivity(StageActivity sa) {
+        stageActivity = sa;
     }
 
     // New get position -final
@@ -136,7 +147,7 @@ public class Camera implements Parcelable {
         this.active = true;
 
         long cutTime = System.currentTimeMillis();
-        // TODO: after rebase, change this to cutTime - stage_activity.getCameraManager().recordStart
+        // TODO: after rebase, change this to cutTime - stageActivity.getCameraManager().recordStart
         long recordTime = cutTime - startTime;
         long sourceTime = cutTime - startTime;
 
