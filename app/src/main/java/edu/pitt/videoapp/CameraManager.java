@@ -6,6 +6,7 @@ import android.widget.PopupMenu;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 
 import android.util.Log;
 /**
@@ -15,7 +16,7 @@ import android.util.Log;
  *
  * @author christopher
  */
-public class CameraManager  {
+public class CameraManager implements Iterable<Camera> {
 
     private ArrayList<Camera> cameraArrayList;
     private long sequenceStartTime;
@@ -97,5 +98,7 @@ public class CameraManager  {
         this.sequenceEndTime = sequenceEndTime;
     }
 
-
+    public Iterator<Camera> iterator() {
+        return cameraArrayList.iterator();
+    }
 }
