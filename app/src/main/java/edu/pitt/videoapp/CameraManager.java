@@ -84,4 +84,18 @@ public class CameraManager  {
     public long getSequenceStartTime() {
         return sequenceStartTime;
     }
+
+    public void setSequenceStartTime(long sequenceStartTime) {
+        this.sequenceStartTime = sequenceStartTime;
+    }
+
+    public long getSequenceEndTime() {
+        return sequenceEndTime;
+    }
+
+    public void setSequenceEndTime(long sequenceEndTime) {
+        this.sequenceEndTime = sequenceEndTime;
+    }
+
+
 }

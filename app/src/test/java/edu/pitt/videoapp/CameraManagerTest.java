@@ -27,6 +27,9 @@ public class CameraManagerTest {
     @Mock
     Camera mockCamera;
 
+    @Mock
+    Cut mockCut;
+
     @Before public void setUp() throws NoSuchFieldException, IllegalAccessException {
         cameraManager = new CameraManager();
         Field cameraArrayListField = CameraManager.class.getDeclaredField("cameraArrayList");
@@ -58,5 +61,16 @@ public class CameraManagerTest {
 
         cameraManager.removeCamera(mockCamera);
         assertEquals(0, cameraArrayList.size());
+    }
+
+    @Test
+    public void getCutlist() {
+        long faketime = 4707120;
+        cameraManager.setSequenceStartTime();
+        cameraManager.addCamera(mockCamera);
+        cameraManager.addCamera(mockCamera);
+        cameraManager.addCamera(mockCamera);
+
+
     }
 }
