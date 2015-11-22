@@ -6,30 +6,24 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
-<<<<<<< HEAD
 import android.util.AttributeSet;
 import android.util.Xml;
-=======
 import android.text.InputType;
->>>>>>> dev
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-<<<<<<< HEAD
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.xmlpull.v1.XmlPullParser;
 
 import java.text.AttributedCharacterIterator;
-=======
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
->>>>>>> dev
 import java.util.ArrayList;
 
 
@@ -50,6 +44,7 @@ public class StageActivity extends AppCompatActivity {
     private ImageView activeCamIcon;
 
     public int setupInputId = 779441;
+
 
 
     @Override
@@ -203,6 +198,7 @@ public class StageActivity extends AppCompatActivity {
 
     /**
      * Saves the current setup to 'set-ups' folder
+     * @param filename name of the set-up file being saved
      */
     public void saveSetup(String filename) {
         String setup = "";
@@ -252,7 +248,6 @@ public class StageActivity extends AppCompatActivity {
         alertDialogBuilder.setTitle("Save Set-up");
         // set input
         final EditText input = new EditText(this);
-        input.setId(setupInputId);
         input.setInputType(InputType.TYPE_CLASS_TEXT);
         alertDialogBuilder.setView(input);
         // set buttons
@@ -270,5 +265,49 @@ public class StageActivity extends AppCompatActivity {
         });
 
         alertDialogBuilder.show();
+    }
+
+    /**
+     * shows the save sequence dialog
+     */
+    public void showSaveSequenceDialog() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        // set title
+        alertDialogBuilder.setTitle("Save Sequence");
+        // set input
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        alertDialogBuilder.setView(input);
+        // set buttons
+        alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                saveSequence(input.getText().toString());
+            }
+        });
+        alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        alertDialogBuilder.show();
+    }
+
+    /**
+     * saves the sequence with the given filename
+     * @param filename the name of the file the sequence will be saved as
+     */
+    public void saveSequence(String filename) {
+        File file = new File(Environment.getExternalStorageDirectory() + "/" + "sequences", filename + ".edl");
+        try {
+            file.createNewFile();
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+            bw.write("");
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
