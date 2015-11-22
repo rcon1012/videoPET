@@ -147,8 +147,7 @@ public class Camera implements Parcelable {
         this.active = true;
 
         long cutTime = System.currentTimeMillis();
-        // TODO: after rebase, change this to cutTime - stageActivity.getCameraManager().recordStart
-        long recordTime = cutTime - startTime;
+        long recordTime = cutTime - stageActivity.getCameraManager().getSequenceStartTime();
         long sourceTime = cutTime - startTime;
 
         cutList.add(new Cut(sourceTime, recordTime, camRig.getLabel()));
