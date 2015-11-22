@@ -35,11 +35,18 @@ public class CutTest {
         Method formatMethod = Cut.class.getDeclaredMethod("formatTimecode", long.class);
         formatMethod.setAccessible(true);
         String formatString = (String) formatMethod.invoke(null, c.getRecordIn());
-        assertTrue("Expected \"" + expectedRecordString + "\"; Got \"" + formatString + "\".", formatString.equals(expectedRecordString));
+        assertEquals(expectedRecordString, formatString);
 
         formatString = (String) formatMethod.invoke(null, c.getSourceIn());
-        assertTrue("Expected \"" + expectedSourceString + "\"; Got \"" + formatString + "\".", formatString.equals(expectedSourceString));
+        assertEquals(expectedSourceString, formatString);
     }
 
+    @Test
+    public void testTimecodesFormat() {
+        c.setOutTimes(fakeTime + 2000, fakeTime*2 + 2000);
+        String expectedString = "01:18:27:03 01:18:29:03 02:36:54:07 02:36:56:07";
+        String formatString = c.getTimecodes();
+        assertEquals(expectedString, formatString);
+    }
 
 }
