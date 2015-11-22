@@ -2,8 +2,8 @@
     <string name="app_name">VideoPET</string>
 
     <string name="main_string_1">New</string>
-    <string name="main_string_2">Load XML</string>
-    <string name="main_string_3">Project</string>
+    <string name="main_string_2">Sequences</string>
+    <string name="main_string_3">Set-ups</string>
 
     <string name="blank"></string>
     <string name="rename_hint">Name Stage</string>
