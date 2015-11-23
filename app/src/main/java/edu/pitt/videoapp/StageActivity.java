@@ -265,6 +265,7 @@ public class StageActivity extends AppCompatActivity {
         });
 
         alertDialogBuilder.show();
+
     }
 
     /**

@@ -2,9 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="400dp"
-    android:layout_height="220dp"
-    android:padding="20dp">
-
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:background="@drawable/dialog">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,6 +17,8 @@
         android:id="@+id/change_camera_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:layout_marginBottom="5dp"
         android:textSize="40sp" />
 
     <LinearLayout
@@ -25,16 +27,12 @@
         android:layout_height="wrap_content">
 
         <Button
-            android:layout_width="0px"
-            android:layout_height="wrap_content"
             android:text="Ok"
             android:id="@+id/dialog_ok"
             android:layout_weight="1"
             style="@style/ButtonStyle"/>
 
         <Button
-            android:layout_width="0px"
-            android:layout_height="wrap_content"
             android:text="Cancel"
             android:id="@+id/dialog_cancel"
             android:layout_weight="1"

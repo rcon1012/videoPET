@@ -3,7 +3,8 @@
     android:orientation="vertical"
     android:layout_width="400dp"
     android:layout_height="wrap_content"
-    android:padding="20dp">
+    android:padding="20dp"
+    android:background="@drawable/dialog">
 
     <TextView
         android:layout_width="wrap_content"
@@ -20,7 +21,10 @@
         android:lines="5"
         android:gravity="top|left"
         android:textSize="40sp"
-        android:id="@+id/editdesc" />
+        android:id="@+id/editdesc"
+        android:background="#FFFFFF"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"/>
 
     <LinearLayout
         android:orientation="horizontal"

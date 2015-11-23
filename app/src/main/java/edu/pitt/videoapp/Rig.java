@@ -2,6 +2,7 @@ package edu.pitt.videoapp;
 
 import android.annotation.TargetApi;
 import android.app.Dialog;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -424,6 +425,7 @@ public class Rig extends RelativeLayout {
             }
         });
         dialog.show();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(getContext(), android.R.color.transparent)));
         return dialog;
     }
 
@@ -454,6 +456,7 @@ public class Rig extends RelativeLayout {
                 dialog.hide();
             }
         });
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(getContext(), android.R.color.transparent)));
         dialog.show();
         return dialog;
     }

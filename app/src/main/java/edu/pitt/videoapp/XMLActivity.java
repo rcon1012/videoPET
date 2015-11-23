@@ -2,9 +2,11 @@ package edu.pitt.videoapp;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,6 +73,7 @@ public class XMLActivity extends AppCompatActivity {
         final View textEntryView = factory.inflate(R.layout.email_dialog, null);
         final AlertDialog emailDialog = builder.create();
         emailDialog.setView(textEntryView);
+        emailDialog.getWindow().setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(getApplicationContext(), android.R.color.transparent)));
         // send email on click of "Send" button
         Button emailSendButton = (Button) textEntryView.findViewById(R.id.emailSendButton);
         emailSendButton.setOnClickListener(new View.OnClickListener() {
