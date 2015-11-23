@@ -72,7 +72,7 @@ public class EDLConverter {
                 the footage from) and record in/out (the timestamps on the sequence where the footage is
                 being inserted). These are in the format hour:minute:second:frame.
              */
-            String fmtString = String.format("%3d %s AA/V C %s", edit, cut.sequenceChar(), cut.getTimecodes());
+            String fmtString = String.format("%03d %s AA/V C %s", edit, cut.sequenceChar(), cut.getTimecodes());
             writer.write(fmtString);
             edit++;
         }
