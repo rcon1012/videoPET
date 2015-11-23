@@ -10,7 +10,8 @@
     <RelativeLayout
         android:layout_width="0dip"
         android:layout_height="fill_parent"
-        android:layout_weight="0.6">
+        android:layout_weight="0.6"
+        android:layout_marginBottom="10dp">
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -31,36 +32,38 @@
 
         <ListView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="fill_parent"
             android:id="@+id/setupListView"
             android:layout_centerHorizontal="true"
             android:layout_above="@+id/deleteSetupButton"
-            android:layout_marginTop="50dp"
             android:choiceMode="singleChoice"
-            android:listSelector="#666666" />
+            android:listSelector="#6885fc"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="50dp"
+            android:divider="#9399ad"
+            android:dividerHeight="1dp"
+            android:clickable="false"
+            android:background="@drawable/border"/>
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="Load"
             android:id="@+id/loadSetupButton"
             android:layout_weight="0.1"
-            android:layout_marginBottom="61dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:onClick="loadSetup" />
+            android:onClick="loadSetup"
+            style="@style/ButtonStyle"/>
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="Delete"
             android:id="@+id/deleteSetupButton"
             android:layout_weight="0.1"
             android:onClick="deleteSetup"
             android:layout_alignTop="@+id/loadSetupButton"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true"
+            style="@style/ButtonStyle"/>
 
     </RelativeLayout>
 

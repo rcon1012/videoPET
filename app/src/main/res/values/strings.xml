@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name">VideoPET</string>
+    <string name="app_name">Video PET</string>
 
-    <string name="main_string_1">New</string>
-    <string name="main_string_2">Load XML</string>
-    <string name="main_string_3">Project</string>
+    <string name="main_string_1">New Project</string>
+    <string name="main_string_2">Sequences</string>
+    <string name="main_string_3">Set-ups</string>
 
     <string name="blank"></string>
     <string name="rename_hint">Name Stage</string>
@@ -11,8 +11,8 @@
     <string name="menu_add_camera">Add Camera</string>
     <string name="menu_add_stage">Add Stage</string>
     <string name="menu_return_home">Home</string>
-    <string name="menu_save_setup">Save Setup</string>
+    <string name="menu_save_setup">Save Set-up</string>
 
-    <string name="title_activity_project">ProjectActivity</string>
-    <string name="title_activity_xml">XMLActivity</string>
+    <string name="title_activity_project">Projects</string>
+    <string name="title_activity_xml">Sequences</string>
 </resources>

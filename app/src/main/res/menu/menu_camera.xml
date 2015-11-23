@@ -2,11 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/add_camera_label"
-        android:title="Modify Label" />
+        android:title="Edit Label" />
     <item android:id="@+id/add_camera_desc"
-        android:title="Add Description" />
+        android:title="Edit Description" />
     <item android:id="@+id/cam_angle"
-        android:title="Camera Angle" />
+        android:title="Set Camera Subject" />
     <item android:id="@+id/cam_lock"
         android:title="Lock" />
     <item android:id="@+id/cam_delete"

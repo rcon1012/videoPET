@@ -24,7 +24,7 @@
         <activity
             android:name=".StageActivity"
             android:screenOrientation="landscape"
-            android:label="@string/blank">
+            android:label="Project">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.pitt.videoapp.MainActivity" />

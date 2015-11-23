@@ -2,8 +2,8 @@ package edu.pitt.videoapp;
 
 import android.annotation.TargetApi;
 import android.app.Dialog;
-import android.graphics.Color;
 import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.TranslateAnimation;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -49,6 +48,7 @@ public class Rig extends RelativeLayout {
     private ImageButton playButton;
     private ImageButton stopButton;
     private TextView desc ;
+    private LinearLayout desc_container;
     private ImageView activeImage ;
 
     // Stage that it draws a line to
@@ -123,6 +123,7 @@ public class Rig extends RelativeLayout {
     }
 
     public void setDesc ( String s) {
+        this.desc_container.setVisibility(View.VISIBLE);
         desc.setText(s);
     }
 
@@ -223,6 +224,8 @@ public class Rig extends RelativeLayout {
 
         this.desc = (TextView) activity.findViewById(R.id.cam_desc);
         this.desc.setId(View.generateViewId());
+        this.desc_container = (LinearLayout) activity.findViewById(R.id.desc_holder);
+        this.desc_container.setVisibility(View.GONE);
 
         this.playButton = (ImageButton) activity.findViewById(R.id.playButton);
         this.playButton.setId(View.generateViewId());
@@ -231,7 +234,7 @@ public class Rig extends RelativeLayout {
         this.stopButton.setId(View.generateViewId());
 
         this.activeImage = (ImageView) activity.findViewById(R.id.active_image);
-        this.activeImage.setImageResource(R.drawable.ic_movie_black_48dp);
+        //this.activeImage.setImageResource(R.drawable.ic_movie_black_48dp);
         this.activeImage.setId(View.generateViewId());
 
         // Sets the starting lock to UNLOCKED
@@ -247,7 +250,8 @@ public class Rig extends RelativeLayout {
     public void removeActive () {
         active = false ;
         activeImage.clearAnimation();
-        activeImage.setImageResource(R.drawable.ic_movie_black_48dp);
+        activeImage.setVisibility(View.GONE);
+        //activeImage.setImageResource(R.drawable.ic_movie_black_48dp);
     }
 
     // Sets the drag listener
@@ -294,7 +298,7 @@ public class Rig extends RelativeLayout {
 
     // Sets the click listener
     private void setupClick() {
-        this.activeImage.setOnClickListener(new View.OnClickListener() {
+        this.centerLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!active) {
@@ -431,6 +435,14 @@ public class Rig extends RelativeLayout {
         ok_btn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 EditText dedit = (EditText) dialog.findViewById(R.id.editdesc);
+                // hide description if none
+                if(dedit.getText().toString().equals("")) {
+                    desc_container.setVisibility(View.GONE);
+                }
+                // else show
+                else {
+                    desc_container.setVisibility(View.VISIBLE);
+                }
                 desc.setText(dedit.getText().toString());
                 dialog.hide();
             }
@@ -489,6 +501,7 @@ public class Rig extends RelativeLayout {
         return dialog;
     }
 
+    @TargetApi(16)
     private void setupPlayClick() {
         this.playButton.setOnClickListener(new View.OnClickListener() {
             //Timer t=new Timer();
@@ -500,13 +513,14 @@ public class Rig extends RelativeLayout {
              */
             @Override
             public void onClick(View v) {
-                centerLayout.setBackgroundColor(Color.parseColor("#FF0000"));
+                centerLayout.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.camera_active));
                 //Timer t=new Timer();
                 t.start();
             }
         });
     }
 
+    @TargetApi(16)
     private void setupStopClick() {
         this.stopButton.setOnClickListener(new View.OnClickListener() {
 
@@ -517,7 +531,7 @@ public class Rig extends RelativeLayout {
              */
             @Override
             public void onClick(View v) {
-                centerLayout.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                centerLayout.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.camera));
                 t.cancel();
             }
         });

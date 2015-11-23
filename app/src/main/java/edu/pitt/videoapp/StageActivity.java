@@ -10,7 +10,6 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -120,8 +119,8 @@ public class StageActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_stage, menu);
 
-        View v = menu.findItem(R.id.rename).getActionView();
-        EditText txtrename = ( EditText ) v.findViewById(R.id.txt_rename);
+        //View v = menu.findItem(R.id.rename).getActionView();
+        //EditText txtrename = ( EditText ) v.findViewById(R.id.txt_rename);
 
         return super.onCreateOptionsMenu(menu);
     }

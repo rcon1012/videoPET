@@ -1,22 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="400dp"
+    android:layout_height="wrap_content"
     android:padding="20dp">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Add a description to your camera:"
+        android:text="Description:"
+        android:textSize="40sp"
         android:id="@+id/add_desc_label" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textMultiLine"
-        android:ems="10"
+        android:lines="5"
+        android:gravity="top|left"
+        android:textSize="40sp"
         android:id="@+id/editdesc" />
 
     <LinearLayout
@@ -29,14 +32,16 @@
             android:layout_height="wrap_content"
             android:text="Ok"
             android:id="@+id/dialog_desc_ok"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            style="@style/ButtonStyle"/>
 
         <Button
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:text="Cancel"
             android:id="@+id/dialog__desc_cancel"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            style="@style/ButtonStyle"/>
 
     </LinearLayout>
 

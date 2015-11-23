@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Choose a stage to set the angle:"
+        android:text="Select a stage :"
         android:id="@+id/choose_stage_label" />
 
     <LinearLayout
@@ -36,7 +36,8 @@
             android:id="@+id/close_stage_list"
             android:layout_weight=".5"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            style="@style/ButtonStyle"/>
 
     </RelativeLayout>
 
