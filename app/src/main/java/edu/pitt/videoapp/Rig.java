@@ -489,6 +489,7 @@ public class Rig extends RelativeLayout {
         return dialog;
     }
 
+    @TargetApi(16)
     private void setupPlayClick() {
         this.playButton.setOnClickListener(new View.OnClickListener() {
             //Timer t=new Timer();
@@ -507,6 +508,7 @@ public class Rig extends RelativeLayout {
         });
     }
 
+    @TargetApi(16)
     private void setupStopClick() {
         this.stopButton.setOnClickListener(new View.OnClickListener() {
 
