@@ -23,7 +23,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
-            android:textColor="#C0C0C0"
+            android:textColor="#ffffffff"
             android:textSize="50sp"
             android:gravity="center" />
 
