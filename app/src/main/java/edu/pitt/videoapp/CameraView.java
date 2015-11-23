@@ -132,7 +132,7 @@ public class CameraView extends ImageView implements PopupMenu.OnMenuItemClickLi
 
     public Dialog activateLabelDialog() {
         // Create a new dialog to get new camera label
-        final Dialog dialog = new Dialog(cam.stage_activity);
+        final Dialog dialog = new Dialog(cam.stageActivity);
         dialog.setContentView(R.layout.camera_add_label_dialog);
         final Button ok_button = (Button) dialog.findViewById(R.id.dialog_ok);
         // If okay is clicked, get text from EditText and set it to the camera's label
@@ -159,8 +159,8 @@ public class CameraView extends ImageView implements PopupMenu.OnMenuItemClickLi
      */
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(cam.stage_activity.getPackageManager()) != null) {
-            cam.stage_activity.startActivityForResult(takePictureIntent, 1);
+        if (takePictureIntent.resolveActivity(cam.stageActivity.getPackageManager()) != null) {
+            cam.stageActivity.startActivityForResult(takePictureIntent, 1);
         }
     }
 

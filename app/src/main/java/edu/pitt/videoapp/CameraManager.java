@@ -5,6 +5,9 @@ import android.view.MenuItem;
 import android.widget.PopupMenu;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+
 import android.util.Log;
 /**
  * A singleton class for holding all instances of the camera objects.
@@ -13,9 +16,11 @@ import android.util.Log;
  *
  * @author christopher
  */
-public class CameraManager  {
+public class CameraManager implements Iterable<Camera> {
 
-    ArrayList<Camera> cameraArrayList;
+    private ArrayList<Camera> cameraArrayList;
+    private long sequenceStartTime;
+    private long sequenceEndTime;
     private static final String TAG = CameraManager.class.getSimpleName();
 
     public CameraManager (){
@@ -52,9 +57,48 @@ public class CameraManager  {
     }
 
     public void removeActive() {
-        for (Camera c : cameraArrayList ) {
-            if ( c.isActive() )
+        for (Camera c : cameraArrayList) {
+            if (c.isActive())
                 c.removeActive();
         }
+    }
+    public ArrayList<Cut> getCutlist() {
+        ArrayList<Cut> cuts = new ArrayList<Cut>();
+        for(Camera c: cameraArrayList) {
+            cuts.addAll(c.getAllCuts());
+        }
+        Collections.sort(cuts);
+        for(int i = 1; i < cuts.size(); i++) {
+            long recordOut = cuts.get(i).getRecordIn();
+            long sourceOut = cuts.get(i).getSourceIn();
+
+            cuts.get(i - 1).setOutTimes(sourceOut, recordOut);
+        }
+        Cut lastCut = cuts.get(cuts.size() - 1);
+        long lastRecordIn = lastCut.getRecordIn();
+        long lastSourceIn = lastCut.getSourceIn();
+        long delta = (sequenceEndTime - sequenceStartTime) - lastRecordIn;
+        lastCut.setOutTimes(lastSourceIn + delta, lastRecordIn + delta);
+        return cuts;
+    }
+
+    public long getSequenceStartTime() {
+        return sequenceStartTime;
+    }
+
+    public void setSequenceStartTime(long sequenceStartTime) {
+        this.sequenceStartTime = sequenceStartTime;
+    }
+
+    public long getSequenceEndTime() {
+        return sequenceEndTime;
+    }
+
+    public void setSequenceEndTime(long sequenceEndTime) {
+        this.sequenceEndTime = sequenceEndTime;
+    }
+
+    public Iterator<Camera> iterator() {
+        return cameraArrayList.iterator();
     }
 }

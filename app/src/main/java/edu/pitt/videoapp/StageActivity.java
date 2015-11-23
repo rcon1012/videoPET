@@ -202,7 +202,7 @@ public class StageActivity extends AppCompatActivity {
      */
     public void saveSetup(String filename) {
         String setup = "";
-        for(Camera camera : cameraManager.cameraArrayList) {
+        for(Camera camera : cameraManager) {
             if(!camera.getCamRig().wasDeleted()) {
                 setup += "Camera\n\t";
                 setup += "Label: " + camera.getLabel() + "\n\t";

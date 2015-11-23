@@ -3,6 +3,9 @@ package edu.pitt.videoapp;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 /**
  * Created by Christopher on 10/3/2015.
  */
@@ -16,18 +19,31 @@ public class Camera implements Parcelable {
     private boolean active;
     private CameraManager manager;
     private String camLabel;
+
     private String stageTarget;
+
+    private String sequenceLabel;
 
     private Rig camRig;
 
-    public StageActivity stage_activity;
-
-    public Camera() {
-    }
+    public StageActivity stageActivity;
+    private ArrayList<Cut> cutList;
+    private long startTime;
 
     // New Camera constructor -final
     public Camera(StageActivity activity){
         this.camRig = new Rig(activity);
+    }
+
+    /* This constructor has to be used when loading a project, because the StageActivity doesn't
+        exist at the time of camera instantiation. Instead, we have to add a reference and create
+        the rig in the onCreate method of the StageActivity
+    */
+    public Camera() {
+    }
+
+    public void setStageActivity(StageActivity sa) {
+        stageActivity = sa;
     }
 
     // New get position -final
@@ -65,7 +81,7 @@ public class Camera implements Parcelable {
         return camRig.getLock();
     }
 
-    // set lick -final
+    // set lock -final
     public void setLock(boolean lock){
         camRig.setLock(lock);
     }
@@ -127,15 +143,31 @@ public class Camera implements Parcelable {
         return this.stageTarget;
     }
 
-    /*
-    public void setCameraView(CameraView cv) {
-        cameraView = cv;
+    public void activate() {
+        this.active = true;
+
+        long cutTime = System.currentTimeMillis();
+        long recordTime = cutTime - stageActivity.getCameraManager().getSequenceStartTime();
+        long sourceTime = cutTime - startTime;
+
+        cutList.add(new Cut(sourceTime, recordTime, camRig.getLabel()));
     }
 
-    public CameraView getCameraView() {
-        return cameraView;
+    public void deactivate() {
+        this.active = false;
     }
-    */
+
+    public CameraManager getManager() {
+        return manager;
+    }
+
+    public void setSequenceLabel(String newLabel){
+        this.sequenceLabel = newLabel;
+    }
+
+    public String getSequenceLabel(){
+        return this.sequenceLabel;
+    }
 
     // Parcel functions for Camera object so it can be passed to other Activites
     public Camera(Parcel in){
@@ -192,6 +224,8 @@ public class Camera implements Parcelable {
         result = 31 * result + (desc != null ? desc.hashCode() : 0);
         return result;
     }
-    // END: parcel functions
 
+    public Collection<? extends Cut> getAllCuts() {
+        return cutList;
+    }
 }
