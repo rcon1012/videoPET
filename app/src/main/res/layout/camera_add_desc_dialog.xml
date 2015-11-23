@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Add a description to your camera:"
+        android:text="Description:"
         android:id="@+id/add_desc_label" />
 
     <EditText

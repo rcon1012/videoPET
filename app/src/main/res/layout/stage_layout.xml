@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="300dp"
-    android:layout_height="100dp">
+    android:layout_height="75dp">
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -10,19 +10,22 @@
         android:id="@+id/stage_center_layout">
 
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="252dp"
-            android:layout_height="fill_parent"
-            android:background="#006AD4">
+            android:layout_width="250dp"
+            android:layout_height="75dp"
+            android:background="@drawable/stage">
 
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Stage"
+            android:text="STAGE"
             android:id="@+id/stage_label"
             android:layout_gravity="center_horizontal"
             android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:textColor="#C0C0C0"
+            android:textSize="50sp"
+            android:gravity="center" />
 
         </RelativeLayout>
 
@@ -34,10 +37,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/ic_open_with_black_48dp"
+            android:id="@+id/moveStageButton"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:id="@+id/moveStageButton"/>
+            android:layout_alignParentStart="true" />
 
         </RelativeLayout>
 
