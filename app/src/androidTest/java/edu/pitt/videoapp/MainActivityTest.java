@@ -23,6 +23,11 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
     }
 
     @MediumTest
+    public void testTitle() {
+        ViewAsserts.assertOnScreen(getActivity().getWindow().getDecorView(), getActivity().findViewById(R.id.videopet));
+    }
+
+    @MediumTest
      public void testNewProjectButton() {
         ViewAsserts.assertOnScreen(getActivity().getWindow().getDecorView(), getActivity().findViewById(R.id.main_button_1));
     }
