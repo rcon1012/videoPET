@@ -35,10 +35,15 @@ public class ProjectActivity extends AppCompatActivity {
         setContentView(R.layout.activity_project);
 
         // open setups file directory
-        File sequencesDir = new File(Environment.getExternalStorageDirectory(), setupsFolder);
+        File videoPET = new File(Environment.getExternalStorageDirectory(), "VideoPET");
         // create directory if does not exist
-        if (!sequencesDir.exists()) {
-            sequencesDir.mkdirs();
+        if (!videoPET.exists()) {
+            videoPET.mkdirs();
+        }
+        File setupsDir = new File(Environment.getExternalStorageDirectory() + "/VideoPET", setupsFolder);
+        // create directory if does not exist
+        if (!setupsDir.exists()) {
+            setupsDir.mkdirs();
         }
 
         // setup list view skeleton
@@ -48,7 +53,7 @@ public class ProjectActivity extends AppCompatActivity {
         // so add/remove operations are enabled
         lvAdapter = new ArrayAdapter<String>(ProjectActivity.this,
                 android.R.layout.simple_list_item_1,
-                new ArrayList<String>(Arrays.asList(sequencesDir.list())));
+                new ArrayList<String>(Arrays.asList(setupsDir.list())));
         lv.setAdapter(lvAdapter);
         // set on click listener for each item
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -72,7 +77,7 @@ public class ProjectActivity extends AppCompatActivity {
             return;
         }
 
-        File file = new File(Environment.getExternalStorageDirectory() + "/" + setupsFolder, selectedFile);
+        File file = new File(Environment.getExternalStorageDirectory() + "/VideoPet/" + setupsFolder, selectedFile);
         if(file.exists())
         {
             if(file.delete())
@@ -88,10 +93,10 @@ public class ProjectActivity extends AppCompatActivity {
                 *   reinitialize listview from directory
                 *   this is necessary for testing
                 */
-                File sequencesDir = new File(Environment.getExternalStorageDirectory(), setupsFolder);
+                File setupsDir = new File(Environment.getExternalStorageDirectory() + "/VideoPet", setupsFolder);
                 lvAdapter = new ArrayAdapter<String>(ProjectActivity.this,
                         android.R.layout.simple_list_item_1,
-                        new ArrayList<String>(Arrays.asList(sequencesDir.list())));
+                        new ArrayList<String>(Arrays.asList(setupsDir.list())));
                 lv.setAdapter(lvAdapter);
 
                 // reset selectedFile to empty string
@@ -120,7 +125,7 @@ public class ProjectActivity extends AppCompatActivity {
         ArrayList<Camera> cameras = new ArrayList<Camera>();
         ArrayList<Camera> stages = new ArrayList<Camera>();
         // open file
-        File file = new File(Environment.getExternalStorageDirectory() + "/" + setupsFolder, selectedFile);
+        File file = new File(Environment.getExternalStorageDirectory() + "/VideoPET/" + setupsFolder, selectedFile);
 
         // parse text file for set-up data (cameras and stage\s)
         if(file.exists())
@@ -375,7 +380,7 @@ public class ProjectActivity extends AppCompatActivity {
         *       yCoord: 600
         *       Notes: notes for stage 0
          */
-        File file = new File(Environment.getExternalStorageDirectory() + "/" + setupsFolder, "test.txt");
+        File file = new File(Environment.getExternalStorageDirectory() + "/VideoPET/" + setupsFolder, "test.txt");
         try {
             file.createNewFile();
             String text = "Camera\n\tLabel: cam1\n\txCoord: 200\n\tyCoord: 300\n\tNotes: notes for camera 1\n\t" +

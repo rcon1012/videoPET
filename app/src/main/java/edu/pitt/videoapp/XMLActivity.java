@@ -36,7 +36,13 @@ public class XMLActivity extends AppCompatActivity {
         setContentView(R.layout.activity_xml);
 
         // open xml file directory
-        File sequencesDir = new File(Environment.getExternalStorageDirectory(), xmlFolder);
+        File videoPetDir = new File(Environment.getExternalStorageDirectory(), "VideoPET");
+        // create directory if does not exist
+        if (!videoPetDir.exists()) {
+            videoPetDir.mkdirs();
+        }
+        // open xml file directory
+        File sequencesDir = new File(Environment.getExternalStorageDirectory() + "/VideoPET", xmlFolder);
         // create directory if does not exist
         if (!sequencesDir.exists()) {
             sequencesDir.mkdirs();
@@ -55,9 +61,10 @@ public class XMLActivity extends AppCompatActivity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                selectedFile = ((TextView)view).getText().toString();
+                selectedFile = ((TextView) view).getText().toString();
             }
         });
+
     }
 
     /**
@@ -90,7 +97,7 @@ public class XMLActivity extends AppCompatActivity {
                 i.putExtra(Intent.EXTRA_SUBJECT, subject);
                 i.putExtra(Intent.EXTRA_TEXT, body);
                 // to attach files to email
-                Uri uri = Uri.fromFile(new File(Environment.getExternalStorageDirectory() + "/" + xmlFolder, selectedFile));
+                Uri uri = Uri.fromFile(new File(Environment.getExternalStorageDirectory() + "/VideoPET/" + xmlFolder, selectedFile));
                 i.putExtra(Intent.EXTRA_STREAM, uri);
                 try {
                     startActivity(Intent.createChooser(i, "Send"));
@@ -116,7 +123,7 @@ public class XMLActivity extends AppCompatActivity {
             return;
         }
 
-        File file = new File(Environment.getExternalStorageDirectory() + "/" + xmlFolder, selectedFile);
+        File file = new File(Environment.getExternalStorageDirectory() + "/VideoPET/" + xmlFolder, selectedFile);
         if(file.exists())
         {
             if(file.delete())
@@ -130,7 +137,8 @@ public class XMLActivity extends AppCompatActivity {
                 *   reinitialize listview from directory
                 *   this is necessary for testing
                 */
-                File xmlDir = new File(Environment.getExternalStorageDirectory(), xmlFolder);
+
+                File xmlDir = new File(Environment.getExternalStorageDirectory() + "/VideoPET", xmlFolder);
                 lvAdapter = new ArrayAdapter<String>(XMLActivity.this,
                         android.R.layout.simple_list_item_1,
                         new ArrayList<String>(Arrays.asList(xmlDir.list())));
@@ -159,7 +167,18 @@ public class XMLActivity extends AppCompatActivity {
     public void creatTestFile()
     {
         // this file is for testing purposes only
-        File file = new File(Environment.getExternalStorageDirectory() + "/" + xmlFolder, "test.xml");
+        File file = new File(Environment.getExternalStorageDirectory() + "/VideoPET/" + xmlFolder, "test.xml");
+        try {
+            file.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // end test file
+    }
+    public void creatTestFile2()
+    {
+        // this file is for testing purposes only
+        File file = new File(Environment.getExternalStorageDirectory() + "/VideoPET/" + xmlFolder, "test2.xml");
         try {
             file.createNewFile();
         } catch (IOException e) {

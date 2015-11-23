@@ -18,31 +18,6 @@
             android:orientation="vertical"
             android:id="@+id/linearLayout2">
 
-            <Button
-                android:text="@string/main_string_1"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/main_button_1"
-                android:onClick="newProject"
-                style="@style/ButtonStyle">
-            </Button>
-            <Button
-                android:text="@string/main_string_2"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/main_button_2"
-                android:onClick="loadXML"
-                style="@style/ButtonStyle">
-            </Button>
-            <Button
-                android:text="@string/main_string_3"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/main_button_3"
-                android:onClick="project"
-                style="@style/ButtonStyle">
-            </Button>
-
         </LinearLayout>
 
         <TextView
@@ -51,21 +26,56 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Video PET"
             android:id="@+id/videopet"
-            android:layout_above="@+id/linearLayout2"
             android:textSize="100sp"
             android:textStyle="bold"
             android:singleLine="false"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
             android:gravity="center_vertical|center_horizontal"
             android:elegantTextHeight="false"
             android:textColor="#6885fc"
             android:shadowColor="#000000"
             android:shadowDy="2.0"
             android:shadowRadius="2.0"
-            android:shadowDx="2.0" />
+            android:shadowDx="2.0"
+            android:layout_alignParentTop="true"
+            android:layout_alignLeft="@+id/main_button_2"
+            android:layout_alignStart="@+id/main_button_2"
+            android:layout_marginTop="100dp" />
+
+        <Button
+            android:text="@string/main_string_3"
+            android:layout_width="fill_parent"
+            android:layout_height="100dp"
+            android:id="@+id/main_button_3"
+            android:onClick="project"
+            style="@style/ButtonStyle"
+            android:layout_below="@+id/main_button_2"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp">
+        </Button>
+
+        <Button
+            android:text="@string/main_string_2"
+            android:layout_width="fill_parent"
+            android:layout_height="100dp"
+            android:id="@+id/main_button_2"
+            android:onClick="loadXML"
+            style="@style/ButtonStyle"
+            android:layout_below="@+id/linearLayout2"
+            android:layout_centerHorizontal="true">
+        </Button>
+
+        <Button
+            android:text="@string/main_string_1"
+            android:layout_width="fill_parent"
+            android:layout_height="100dp"
+            android:id="@+id/main_button_1"
+            android:onClick="newProject"
+            style="@style/ButtonStyle"
+            android:layout_above="@+id/linearLayout2"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
+        </Button>
 
     </RelativeLayout>
     <RelativeLayout

@@ -227,7 +227,18 @@ public class StageActivity extends AppCompatActivity {
             }
         }
 
-        File file = new File(Environment.getExternalStorageDirectory() + "/" + "set-ups", filename + ".txt");
+        // open setups file directory
+        File videoPET = new File(Environment.getExternalStorageDirectory(), "VideoPET");
+        // create directory if does not exist
+        if (!videoPET.exists()) {
+            videoPET.mkdirs();
+        }
+        File setupsDir = new File(Environment.getExternalStorageDirectory() + "/VideoPET", "set-ups");
+        // create directory if does not exist
+        if (!setupsDir.exists()) {
+            setupsDir.mkdirs();
+        }
+        File file = new File(Environment.getExternalStorageDirectory() + "/VideoPET/" + "set-ups", filename + ".txt");
         try {
             file.createNewFile();
             BufferedWriter bw = new BufferedWriter(new FileWriter(file));
@@ -302,7 +313,7 @@ public class StageActivity extends AppCompatActivity {
      */
     public void saveSequence(String filename) {
         // TODO: change from File constructor to EDLConverter
-        File file = new File(Environment.getExternalStorageDirectory() + "/" + "sequences", filename + ".edl");
+        File file = new File(Environment.getExternalStorageDirectory() + "VideoPET/" + "sequences", filename + ".edl");
         try {
             file.createNewFile();
             BufferedWriter bw = new BufferedWriter(new FileWriter(file));
