@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 
 /**
@@ -21,25 +22,37 @@ public class EDLConverter {
      * @return The file that was written to
      * @throws IOException in the event of an error writing to the SD card
      */
-    public static File convert(CameraManager cm) throws IOException{
+    public static File convert(CameraManager cm) throws IOException {
         return convert(cm, defaultPath);
     }
 
-    /**
+     /**
      * A version of the above function with a path parameter for testing. This function is called
      * by that one with the path provided. It's function overloading.
      *
      * @param cm The CameraManager holding the list of cuts to be exported
      * @param path The path to which the file should be written
-     * @return
+     * @return file, with contents written out
      * @throws IOException
      */
-    private static File convert(CameraManager cm, String path) throws IOException {
-        // Monotonically increasing edit counter. Each line should have a unique edit number
-        int edit = 1;
-
+    public static File convert(CameraManager cm, String path) throws IOException {
         File file = new File(path);
         BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+        convert(cm, writer);
+        return file;
+    }
+
+
+    /**
+     * Version of the above function with a File parameter so that the file object can be mocked
+     * @param cm CameraManager holding the list of cuts to be exported
+     * @param writer The write stream that data will be output on
+     * @return file, with contents written out
+     * @throws IOException
+     */
+    public static void convert(CameraManager cm, Writer writer) throws IOException {
+        // Monotonically increasing edit counter. Each line should have a unique edit number
+        int edit = 1;
 
         ArrayList<Cut> cutlist = cm.getCutlist();
 
@@ -63,6 +76,5 @@ public class EDLConverter {
             writer.write(fmtString);
             edit++;
         }
-        return file;
     }
 }
