@@ -4,7 +4,7 @@
     <item android:id="@+id/add_camera_label"
         android:title="Edit Label" />
     <item android:id="@+id/add_camera_desc"
-        android:title="Add Description" />
+        android:title="Edit Description" />
     <item android:id="@+id/cam_angle"
         android:title="Set Camera Subject" />
     <item android:id="@+id/cam_lock"

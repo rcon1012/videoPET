@@ -48,6 +48,7 @@ public class Rig extends RelativeLayout {
     private ImageButton playButton;
     private ImageButton stopButton;
     private TextView desc ;
+    private LinearLayout desc_container;
     private ImageView activeImage ;
 
     // Stage that it draws a line to
@@ -122,6 +123,7 @@ public class Rig extends RelativeLayout {
     }
 
     public void setDesc ( String s) {
+        this.desc_container.setVisibility(View.VISIBLE);
         desc.setText(s);
     }
 
@@ -222,6 +224,8 @@ public class Rig extends RelativeLayout {
 
         this.desc = (TextView) activity.findViewById(R.id.cam_desc);
         this.desc.setId(View.generateViewId());
+        this.desc_container = (LinearLayout) activity.findViewById(R.id.desc_holder);
+        this.desc_container.setVisibility(View.GONE);
 
         this.playButton = (ImageButton) activity.findViewById(R.id.playButton);
         this.playButton.setId(View.generateViewId());
@@ -431,6 +435,14 @@ public class Rig extends RelativeLayout {
         ok_btn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 EditText dedit = (EditText) dialog.findViewById(R.id.editdesc);
+                // hide description if none
+                if(dedit.getText().toString().equals("")) {
+                    desc_container.setVisibility(View.GONE);
+                }
+                // else show
+                else {
+                    desc_container.setVisibility(View.VISIBLE);
+                }
                 desc.setText(dedit.getText().toString());
                 dialog.hide();
             }
