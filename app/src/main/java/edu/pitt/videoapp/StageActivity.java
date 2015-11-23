@@ -300,6 +300,7 @@ public class StageActivity extends AppCompatActivity {
      * @param filename the name of the file the sequence will be saved as
      */
     public void saveSequence(String filename) {
+        // TODO: change from File constructor to EDLConverter
         File file = new File(Environment.getExternalStorageDirectory() + "/" + "sequences", filename + ".edl");
         try {
             file.createNewFile();
