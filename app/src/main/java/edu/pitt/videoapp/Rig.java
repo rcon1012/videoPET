@@ -2,8 +2,8 @@ package edu.pitt.videoapp;
 
 import android.annotation.TargetApi;
 import android.app.Dialog;
-import android.graphics.Color;
 import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.TranslateAnimation;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -231,7 +230,7 @@ public class Rig extends RelativeLayout {
         this.stopButton.setId(View.generateViewId());
 
         this.activeImage = (ImageView) activity.findViewById(R.id.active_image);
-        this.activeImage.setImageResource(R.drawable.ic_movie_black_48dp);
+        //this.activeImage.setImageResource(R.drawable.ic_movie_black_48dp);
         this.activeImage.setId(View.generateViewId());
 
         // Sets the starting lock to UNLOCKED
@@ -247,7 +246,8 @@ public class Rig extends RelativeLayout {
     public void removeActive () {
         active = false ;
         activeImage.clearAnimation();
-        activeImage.setImageResource(R.drawable.ic_movie_black_48dp);
+        activeImage.setVisibility(View.GONE);
+        //activeImage.setImageResource(R.drawable.ic_movie_black_48dp);
     }
 
     // Sets the drag listener
@@ -294,7 +294,7 @@ public class Rig extends RelativeLayout {
 
     // Sets the click listener
     private void setupClick() {
-        this.activeImage.setOnClickListener(new View.OnClickListener() {
+        this.centerLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!active) {
@@ -500,7 +500,7 @@ public class Rig extends RelativeLayout {
              */
             @Override
             public void onClick(View v) {
-                centerLayout.setBackgroundColor(Color.parseColor("#FF0000"));
+                centerLayout.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.camera_active));
                 //Timer t=new Timer();
                 t.start();
             }
@@ -517,7 +517,7 @@ public class Rig extends RelativeLayout {
              */
             @Override
             public void onClick(View v) {
-                centerLayout.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                centerLayout.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.camera));
                 t.cancel();
             }
         });
