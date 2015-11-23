@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.mipmap.video_pet);
+        getSupportActionBar().setIcon(R.mipmap.video_pet_outlined);
         setContentView(R.layout.activity_main);
     }
 
