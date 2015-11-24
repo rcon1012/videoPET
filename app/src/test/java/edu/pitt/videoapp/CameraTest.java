@@ -20,4 +20,8 @@ public class CameraTest {
         cameraManager = mock(CameraManager.class);
         camera = new Camera();                  //Was camera=new Camera(100,100); changed due to errors
     }
+
+    @Test public void makeCut() {
+
+    }
 }

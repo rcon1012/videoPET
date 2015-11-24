@@ -39,6 +39,7 @@ public class EDLConverter {
         File file = new File(path);
         BufferedWriter writer = new BufferedWriter(new FileWriter(file));
         convert(cm, writer);
+        writer.close();
         return file;
     }
 
@@ -54,9 +55,9 @@ public class EDLConverter {
         // Monotonically increasing edit counter. Each line should have a unique edit number
         int edit = 1;
 
-        ArrayList<Cut> cutlist = cm.getCutlist();
+        ArrayList<Cut> cutList = cm.getCutlist();
 
-        for(Cut cut: cutlist) {
+        for(Cut cut: cutList) {
             /*
              Note on the format of a CMX 3600 EDL file:
              The first three numbers are the "edit number". These increase monotonically and are used
