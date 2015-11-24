@@ -176,7 +176,7 @@ public class Rig extends RelativeLayout {
         CameraLine cameraLine = new CameraLine( stageActivity, this, drawToThisStage );
         RelativeLayout screen = (RelativeLayout) stageActivity.findViewById(R.id.stageActivityLayout);
         screen.removeView(previousLine);
-        screen.addView(cameraLine);
+        screen.addView(cameraLine, 0);
         previousLine = cameraLine ;
         drawToThisStage.setPreviousLine(previousLine);
     }
@@ -283,9 +283,40 @@ public class Rig extends RelativeLayout {
                                     lineRigList.remove(lineRigList.get(i));
                             }
                         }
+
+                        float newX = event.getRawX() + dX ;
+                        float newY = event.getRawY() + dY ;
+
+                        if ( rigType == CAMERA ) {
+
+                            if (newX < -20)
+                                newX = -20;
+                            if (newX > stageActivity.screenWidth - mainView.getWidth())
+                                newX = stageActivity.screenWidth - mainView.getWidth();
+
+                            if (newY < -20)
+                                newY = -20;
+                            if (newY > stageActivity.screenHeight - mainView.getHeight())
+                                newY = stageActivity.screenHeight - mainView.getHeight();
+
+                        }
+                        else {
+
+                            if (newX < 0)
+                                newX = 0;
+                            if (newX > stageActivity.screenWidth - mainView.getWidth())
+                                newX = stageActivity.screenWidth - mainView.getWidth();
+
+                            if (newY < 0)
+                                newY = 0;
+                            if (newY > stageActivity.screenHeight - mainView.getHeight() - 40 )
+                                newY = stageActivity.screenHeight - mainView.getHeight() - 40 ;
+
+                        }
+
                         mainView.animate()
-                                .x(event.getRawX() + dX)
-                                .y(event.getRawY() + dY)
+                                .x(newX)
+                                .y(newY)
                                 .setDuration(0)
                                 .start();
                         break;

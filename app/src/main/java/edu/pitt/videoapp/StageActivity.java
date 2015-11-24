@@ -29,8 +29,8 @@ public class StageActivity extends AppCompatActivity {
 
     private Menu menu;
 
-    private int screenWidth;
-    private int screenHeight;
+    public int screenWidth;
+    public int screenHeight;
 
     private CameraManager cameraManager;
     private StageManager stageManager;

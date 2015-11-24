@@ -17,7 +17,7 @@ public class CameraLine extends View {
 
     public CameraLine ( Activity activity, Rig cam, Rig stage ) {
         super(activity);
-        paint.setColor(Color.BLACK);
+        paint.setColor(Color.DKGRAY);
         this.cam = cam;
         this.stage = stage;
     }
@@ -26,7 +26,8 @@ public class CameraLine extends View {
     public void onDraw(Canvas canvas) {
         float[] camxy = cam.getMidXY();
         float[] stagexy = stage.getMidXY();
-        canvas.drawLine(camxy[0], camxy[1], stagexy[0], stagexy[1], paint);
+        paint.setStrokeWidth(2);
+        canvas.drawLine(camxy[0], camxy[1], stagexy[0] - 24, stagexy[1], paint);
     }
 
 }
