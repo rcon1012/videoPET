@@ -21,7 +21,6 @@ public class Camera implements Parcelable {
     private String camLabel;
 
     private String stageTarget;
-
     private String sequenceLabel;
 
     private Rig camRig;
@@ -30,9 +29,21 @@ public class Camera implements Parcelable {
     private ArrayList<Cut> cutList;
     private long startTime;
 
+    public static int numCreated = 0;
+    private int camNum = 0;
+    private int timesStarted = 0;
+
     // New Camera constructor -final
     public Camera(StageActivity activity){
-        this.camRig = new Rig(activity);
+        this.stageActivity = activity;
+        this.camRig = new Rig(activity, this);
+        init();
+    }
+
+    private void init() {
+        Camera.numCreated++;
+        camNum = numCreated;
+        cutList = new ArrayList<Cut>();
     }
 
     /* This constructor has to be used when loading a project, because the StageActivity doesn't
@@ -40,6 +51,7 @@ public class Camera implements Parcelable {
         the rig in the onCreate method of the StageActivity
     */
     public Camera() {
+        init();
     }
 
     public void setStageActivity(StageActivity sa) {
@@ -150,7 +162,7 @@ public class Camera implements Parcelable {
         long recordTime = cutTime - stageActivity.getCameraManager().getSequenceStartTime();
         long sourceTime = cutTime - startTime;
 
-        cutList.add(new Cut(sourceTime, recordTime, camRig.getLabel()));
+        cutList.add(new Cut(sourceTime, recordTime, getSequenceLabel()));
     }
 
     public void deactivate() {
@@ -223,6 +235,19 @@ public class Camera implements Parcelable {
         result = 31 * result + (camLabel != null ? camLabel.hashCode() : 0);
         result = 31 * result + (desc != null ? desc.hashCode() : 0);
         return result;
+    }
+
+    public void tickStarted() {
+        startTime = System.currentTimeMillis();
+        timesStarted++;
+    }
+
+    public int getTimesStarted() {
+        return timesStarted;
+    }
+
+    public int getCamNum() {
+        return camNum;
     }
 
     public Collection<? extends Cut> getAllCuts() {

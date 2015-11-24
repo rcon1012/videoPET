@@ -58,7 +58,7 @@ public class StageActivity extends AppCompatActivity {
 
         // if not loading setup
         if(bundle == null) {
-            Rig stage = new Rig(this, Rig.STAGE);
+            Rig stage = new Rig(this, Rig.STAGE, null);
             stage.setXY((float) screenWidth / 2 - 300 / 2 + 24, 10);
             stageManager.addStage(stage);
 
@@ -72,7 +72,7 @@ public class StageActivity extends AppCompatActivity {
             ArrayList<Camera> loadStages = bundle.getParcelableArrayList("stages");
             if (loadStages != null) {
                 for (Camera st : loadStages) {
-                    Rig s = new Rig(this, Rig.STAGE);
+                    Rig s = new Rig(this, Rig.STAGE, null);
                     s.setXY(st.inActiveGetXY()[0], st.inActiveGetXY()[1]);
                     s.setLabel(st.inactiveGetLabel());
                     stageManager.addStage(s);
@@ -172,10 +172,7 @@ public class StageActivity extends AppCompatActivity {
                 }
                 return true;
             case R.id.add_camera:
-                // DO NOT COMMIT THIS
-                //Timer t = new Timer();
-                //t.start();
-                // DO NOT COMMIT ABOVE
+
                 Camera c = new Camera(this);
                 // 250 / 150 is width and height of rig... TODO getters for height and width of center of rig
                 c.setXY((float)screenWidth/2 - 250/2, (float)screenHeight/2 - 150/2);
@@ -186,7 +183,7 @@ public class StageActivity extends AppCompatActivity {
                     Toast.makeText(StageActivity.this, "MAX OF 3 STAGES", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    Rig stage = new Rig(this, Rig.STAGE);
+                    Rig stage = new Rig(this, Rig.STAGE, null);
                     stage.setXY((float) screenWidth / 2 - 300 / 2 + 24, 10);
                     stageManager.addStage(stage);
                 }
@@ -333,7 +330,7 @@ public class StageActivity extends AppCompatActivity {
      * @param filename the name of the file the sequence will be saved as
      */
     public void saveSequence(String filename) {
-        String path = Environment.getExternalStorageDirectory() + "/" + "sequences/" + filename + ".edl";
+        String path = Environment.getExternalStorageDirectory() + "/VideoPET/" + "sequences/" + filename + ".edl";
         try {
             EDLConverter.convert(cameraManager, path);
         } catch (IOException e) {

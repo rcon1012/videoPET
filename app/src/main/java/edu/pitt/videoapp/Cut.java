@@ -18,7 +18,7 @@ public class Cut implements Comparable<Cut> {
     public Cut(long sourceIn, long recordIn, String sequenceName) {
         this.sourceIn = sourceIn;
         this.recordIn = recordIn;
-        this.sequenceName = sequenceName;
+        this.sequenceName = new String(sequenceName);
     }
 
     /**
