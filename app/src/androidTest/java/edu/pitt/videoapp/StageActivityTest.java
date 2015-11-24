@@ -6,8 +6,14 @@ import android.test.ActivityInstrumentationTestCase2;
 import android.test.UiThreadTest;
 import android.test.suitebuilder.annotation.SmallTest;
 import android.view.Menu;
+import android.view.View;
+import android.view.ViewGroup;
 
 import org.junit.Before;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by jake on 10/9/15.
@@ -136,6 +142,19 @@ public class StageActivityTest extends ActivityInstrumentationTestCase2<StageAct
         assertEquals(result2, lock);
     }
 
+    @UiThreadTest
+    public void testCameraIsActive(){
+        Camera c = new Camera(stageActivity);
+        assertFalse(c.isActive());
+    }
+
+    @UiThreadTest
+    public void testCameraRemoveActive(){
+        Camera c = new Camera(stageActivity);
+        c.removeActive();
+        assertFalse(c.isActive());
+    }
+
     /*
         Rig functionality Tests
      */
@@ -212,5 +231,47 @@ public class StageActivityTest extends ActivityInstrumentationTestCase2<StageAct
         r.setLock(lock);
         boolean result2 = r.getLock();
         assertEquals(result2, lock);
+    }
+
+    @UiThreadTest
+    public void testGetRigType(){
+        Rig r1 = new Rig(stageActivity) ;
+        assertEquals(r1.getRigType(), Rig.CAMERA);
+
+        Camera c = new Camera (stageActivity);
+        assertEquals(c.getCamRig().getRigType(), Rig.CAMERA);
+
+        Rig r2 = new Rig(stageActivity, Rig.CAMERA) ;
+        assertEquals(r2.getRigType(), Rig.CAMERA);
+
+        Rig r3 = new Rig(stageActivity, Rig.STAGE) ;
+        assertEquals(r3.getRigType(), Rig.STAGE);
+    }
+
+    @UiThreadTest
+    public void testSetDrawToThisLine() {
+        Rig r = new Rig (stageActivity) ;
+        Rig s = new Rig (stageActivity, Rig.STAGE);
+        r.setDrawToThisStage(s);
+        Rig x = r.getDrawToThisStage();
+        assertEquals(s, x);
+    }
+
+    @UiThreadTest
+    public void testGetDrawToThisLine() {
+        Rig r = new Rig (stageActivity);
+        Rig s = new Rig (stageActivity, Rig.STAGE);
+        r.setDrawToThisStage(s);
+        assertEquals(r.getDrawToThisStage(), s);
+    }
+
+    @UiThreadTest
+    public void testDrawLine() {
+        Rig r = new Rig (stageActivity) ;
+        Rig s = new Rig (stageActivity, Rig.STAGE);
+        r.setDrawToThisStage(s);
+        r.drawLine();
+        s.addToLineRigList(r);
+        assertEquals( r, s.getLineRigList().get(0) ) ;
     }
 }

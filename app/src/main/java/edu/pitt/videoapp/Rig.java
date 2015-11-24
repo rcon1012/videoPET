@@ -193,6 +193,10 @@ public class Rig extends RelativeLayout {
         return this.active;
     }
 
+    public ArrayList<Rig> getLineRigList(){
+        return lineRigList;
+    }
+
     // Initializes the rig
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void init(StageActivity activity){
