@@ -5,6 +5,7 @@ import android.view.MenuItem;
 import android.widget.PopupMenu;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 
@@ -65,7 +66,10 @@ public class CameraManager implements Iterable<Camera> {
     public ArrayList<Cut> getCutlist() {
         ArrayList<Cut> cuts = new ArrayList<Cut>();
         for(Camera c: cameraArrayList) {
-            cuts.addAll(c.getAllCuts());
+            Collection<Cut> allCuts = (Collection<Cut>) c.getAllCuts();
+            if(allCuts != null) {
+                cuts.addAll(allCuts);
+            }
         }
         Collections.sort(cuts);
         for(int i = 1; i < cuts.size(); i++) {

@@ -58,7 +58,7 @@ public class StageActivity extends AppCompatActivity {
 
         // if not loading setup
         if(bundle == null) {
-            Rig stage = new Rig(this, Rig.STAGE);
+            Rig stage = new Rig(this, Rig.STAGE, null);
             stage.setXY((float) screenWidth / 2 - 300 / 2 + 24, 10);
             stageManager.addStage(stage);
 
@@ -72,7 +72,7 @@ public class StageActivity extends AppCompatActivity {
             ArrayList<Camera> loadStages = bundle.getParcelableArrayList("stages");
             if (loadStages != null) {
                 for (Camera st : loadStages) {
-                    Rig s = new Rig(this, Rig.STAGE);
+                    Rig s = new Rig(this, Rig.STAGE, null);
                     s.setXY(st.inActiveGetXY()[0], st.inActiveGetXY()[1]);
                     s.setLabel(st.inactiveGetLabel());
                     stageManager.addStage(s);
@@ -111,6 +111,8 @@ public class StageActivity extends AppCompatActivity {
                 }
             }
         }
+
+
     }
 
     @Override
@@ -122,6 +124,14 @@ public class StageActivity extends AppCompatActivity {
         //View v = menu.findItem(R.id.rename).getActionView();
         //EditText txtrename = ( EditText ) v.findViewById(R.id.txt_rename);
 
+
+        // These two blocks solve an insidious bug where the icon initially loaded is *not*
+        // one of the two options provided
+        MenuItem lockItem = menu.findItem(R.id.lock_btn);
+        lockItem.setIcon(getResources().getDrawable(R.drawable.ic_lock_open_white_48dp));
+
+        MenuItem playItem = menu.findItem(R.id.play_stop_btn);
+        playItem.setIcon(getResources().getDrawable(R.drawable.ic_play_arrow_black_48dp));
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -133,11 +143,22 @@ public class StageActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         switch(id){
-            case R.id.pause_play_btn:
-
-
+            case R.id.play_stop_btn:
+                MenuItem playItem = menu.findItem(R.id.play_stop_btn);
+                if(playItem.getIcon().getConstantState().equals(getResources().getDrawable(R.drawable.ic_play_arrow_black_48dp).getConstantState())) {
+                    playItem.setIcon(getResources().getDrawable(R.drawable.ic_stop_black_48dp));
+                    long now = System.currentTimeMillis();
+                    cameraManager.setSequenceStartTime(now);
+                }
+                else {
+                    long now = System.currentTimeMillis();
+                    cameraManager.setSequenceEndTime(now);
+                    showSaveSequenceDialog();
+                }
+                return true;
+            case R.id.lock_btn:
                 // TODO Start / end sequence
-                MenuItem lockItem = menu.findItem(R.id.pause_play_btn);
+                MenuItem lockItem = menu.findItem(R.id.lock_btn);
                 // Changes button icon to lock/unlock
                 if ( lockItem.getIcon().getConstantState().equals(getResources().getDrawable(R.drawable.ic_lock_open_white_48dp).getConstantState())) {
                     lockItem.setIcon(getResources().getDrawable(R.drawable.ic_lock_outline_white_48dp));
@@ -151,10 +172,7 @@ public class StageActivity extends AppCompatActivity {
                 }
                 return true;
             case R.id.add_camera:
-                // DO NOT COMMIT THIS
-                //Timer t = new Timer();
-                //t.start();
-                // DO NOT COMMIT ABOVE
+
                 Camera c = new Camera(this);
                 // 250 / 150 is width and height of rig... TODO getters for height and width of center of rig
                 c.setXY((float)screenWidth/2 - 250/2, (float)screenHeight/2 - 150/2);
@@ -165,7 +183,7 @@ public class StageActivity extends AppCompatActivity {
                     Toast.makeText(StageActivity.this, "MAX OF 3 STAGES", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    Rig stage = new Rig(this, Rig.STAGE);
+                    Rig stage = new Rig(this, Rig.STAGE, null);
                     stage.setXY((float) screenWidth / 2 - 300 / 2 + 24, 10);
                     stageManager.addStage(stage);
                 }
@@ -312,13 +330,9 @@ public class StageActivity extends AppCompatActivity {
      * @param filename the name of the file the sequence will be saved as
      */
     public void saveSequence(String filename) {
-        // TODO: change from File constructor to EDLConverter
-        File file = new File(Environment.getExternalStorageDirectory() + "VideoPET/" + "sequences", filename + ".edl");
+        String path = Environment.getExternalStorageDirectory() + "/VideoPET/" + "sequences/" + filename + ".edl";
         try {
-            file.createNewFile();
-            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
-            bw.write("");
-            bw.close();
+            EDLConverter.convert(cameraManager, path);
         } catch (IOException e) {
             e.printStackTrace();
         }

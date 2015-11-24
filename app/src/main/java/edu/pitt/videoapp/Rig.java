@@ -62,9 +62,12 @@ public class Rig extends RelativeLayout {
     private boolean deleted;
     private boolean active;
 
-    public Rig(StageActivity activity) {
+    // Camera
+    private Camera camera;
+
+    public Rig(StageActivity activity, Camera c) {
         super(activity);
-        init(activity);
+        init(activity, c);
         setupDrag();
         setupClick();
         setupLongClick();
@@ -72,7 +75,7 @@ public class Rig extends RelativeLayout {
         setupStopClick();
     }
 
-    public Rig(StageActivity activity, int type){
+    public Rig(StageActivity activity, int type, Camera c){
         super(activity);
         this.rigType = type;
         if (type == STAGE){
@@ -85,7 +88,7 @@ public class Rig extends RelativeLayout {
         else{
             // default to a camera rig
             this.rigType = CAMERA;
-            init(activity);
+            init(activity, c);
             setupDrag();
             setupClick();
             setupLongClick();
@@ -199,11 +202,12 @@ public class Rig extends RelativeLayout {
 
     // Initializes the rig
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-    private void init(StageActivity activity){
+    private void init(StageActivity activity, Camera c){
         RelativeLayout parent = (RelativeLayout) activity.findViewById(R.id.stageActivityLayout);
         this.stageActivity = activity;
         inflate(getContext(), R.layout.rig_layout, parent);
 
+        this.camera = c;
         // For every view
         // Generate a new id so the next rig can access default xml ids
 
@@ -256,6 +260,7 @@ public class Rig extends RelativeLayout {
         active = false ;
         activeImage.clearAnimation();
         activeImage.setVisibility(View.GONE);
+        camera.deactivate();
         //activeImage.setImageResource(R.drawable.ic_movie_black_48dp);
     }
 
@@ -338,7 +343,7 @@ public class Rig extends RelativeLayout {
             @Override
             public void onClick(View view) {
                 if (!active) {
-
+                    camera.activate();
                     stageActivity.getCameraManager().removeActive();
 
                     active = true;
@@ -542,6 +547,7 @@ public class Rig extends RelativeLayout {
     @TargetApi(16)
     private void setupPlayClick() {
         this.playButton.setOnClickListener(new View.OnClickListener() {
+
             //Timer t=new Timer();
 
             /**
@@ -551,6 +557,8 @@ public class Rig extends RelativeLayout {
              */
             @Override
             public void onClick(View v) {
+                camera.tickStarted();
+                camera.setSequenceLabel("C" + camera.getCamNum() + camera.getTimesStarted());
                 centerLayout.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.camera_active));
                 //Timer t=new Timer();
                 t.start();

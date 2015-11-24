@@ -2,7 +2,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context="edu.pitt.videoapp.StageActivity">
 
-    <item android:id="@+id/pause_play_btn"
+    <item android:id="@+id/play_stop_btn"
+        android:title="Start/Stop"
+        android:icon="@drawable/ic_play_arrow_black_48dp"
+        app:showAsAction="always"/>
+
+    <item android:id="@+id/lock_btn"
         android:title="Lock/Unlock"
         android:icon="@drawable/ic_lock_open_white_48dp"
         app:showAsAction="always"/>

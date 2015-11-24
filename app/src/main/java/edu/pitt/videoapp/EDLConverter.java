@@ -11,22 +11,9 @@ import java.util.ArrayList;
  * Created by jake on 11/7/15.
  */
 public class EDLConverter {
-    // Default path in the event that one is not passed to the function
-    private static final String defaultPath = "/sdcard/exportfile.edl";
-
     /**
      * This method takes a list of cuts stored in a camera manager, retrieves them, and writes them
      * to a properly formatted CMX3600 EDL file
-     *
-     * @param cm The CameraManager holding the list of cuts to be exported
-     * @return The file that was written to
-     * @throws IOException in the event of an error writing to the SD card
-     */
-    public static File convert(CameraManager cm) throws IOException {
-        return convert(cm, defaultPath);
-    }
-
-     /**
      * A version of the above function with a path parameter for testing. This function is called
      * by that one with the path provided. It's function overloading.
      *
@@ -39,6 +26,7 @@ public class EDLConverter {
         File file = new File(path);
         BufferedWriter writer = new BufferedWriter(new FileWriter(file));
         convert(cm, writer);
+        writer.close();
         return file;
     }
 
@@ -54,9 +42,12 @@ public class EDLConverter {
         // Monotonically increasing edit counter. Each line should have a unique edit number
         int edit = 1;
 
-        ArrayList<Cut> cutlist = cm.getCutlist();
+        ArrayList<Cut> cutList = cm.getCutlist();
 
-        for(Cut cut: cutlist) {
+        String header = "TITLE: VideoPET\n" +
+                "FCM: DROP FRAME\n\n";
+        writer.write(header);
+        for(Cut cut: cutList) {
             /*
              Note on the format of a CMX 3600 EDL file:
              The first three numbers are the "edit number". These increase monotonically and are used
@@ -72,7 +63,7 @@ public class EDLConverter {
                 the footage from) and record in/out (the timestamps on the sequence where the footage is
                 being inserted). These are in the format hour:minute:second:frame.
              */
-            String fmtString = String.format("%03d %s AA/V C %s", edit, cut.sequenceChar(), cut.getTimecodes());
+            String fmtString = String.format("%03d AX AA/V C %s\n* FROM CLIP NAME %s\n", edit, cut.getTimecodes(), cut.sequenceChar());
             writer.write(fmtString);
             edit++;
         }
