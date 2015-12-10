@@ -78,11 +78,13 @@ public class CameraManager implements Iterable<Camera> {
 
             cuts.get(i - 1).setOutTimes(sourceOut, recordOut);
         }
-        Cut lastCut = cuts.get(cuts.size() - 1);
-        long lastRecordIn = lastCut.getRecordIn();
-        long lastSourceIn = lastCut.getSourceIn();
-        long delta = (sequenceEndTime - sequenceStartTime) - lastRecordIn;
-        lastCut.setOutTimes(lastSourceIn + delta, lastRecordIn + delta);
+        if(cuts.size() > 0) {
+            Cut lastCut = cuts.get(cuts.size() - 1);
+            long lastRecordIn = lastCut.getRecordIn();
+            long lastSourceIn = lastCut.getSourceIn();
+            long delta = (sequenceEndTime - sequenceStartTime) - lastRecordIn;
+            lastCut.setOutTimes(lastSourceIn + delta, lastRecordIn + delta);
+        }
         return cuts;
     }
 

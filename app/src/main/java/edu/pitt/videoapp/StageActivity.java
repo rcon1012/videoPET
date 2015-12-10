@@ -151,9 +151,13 @@ public class StageActivity extends AppCompatActivity {
                     cameraManager.setSequenceStartTime(now);
                 }
                 else {
-                    long now = System.currentTimeMillis();
-                    cameraManager.setSequenceEndTime(now);
-                    showSaveSequenceDialog();
+                    if(cameraManager.getCutlist().size() != 0) {
+                        long now = System.currentTimeMillis();
+                        cameraManager.setSequenceEndTime(now);
+                        showSaveSequenceDialog();
+                    } else {
+                        Toast.makeText(this, "Can't save an empty sequence", Toast.LENGTH_LONG).show();
+                    }
                 }
                 return true;
             case R.id.lock_btn:
