@@ -342,7 +342,7 @@ public class Rig extends RelativeLayout {
         this.centerLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!active) {
+                if (!active && StageActivity.sequenceActive) {
                     camera.activate();
                     stageActivity.getCameraManager().removeActive();
 

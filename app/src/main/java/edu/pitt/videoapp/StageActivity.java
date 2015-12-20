@@ -37,8 +37,7 @@ public class StageActivity extends AppCompatActivity {
 
     private ImageView activeCamIcon;
 
-    public int setupInputId = 779441;
-
+    public static boolean sequenceActive;
 
 
     @Override
@@ -52,6 +51,8 @@ public class StageActivity extends AppCompatActivity {
         stageManager = new StageManager();
 
         setContentView(R.layout.activity_stage);
+
+        sequenceActive = false;
 
         // get set-up data
         Bundle bundle = getIntent().getExtras();
@@ -146,12 +147,14 @@ public class StageActivity extends AppCompatActivity {
             case R.id.play_stop_btn:
                 MenuItem playItem = menu.findItem(R.id.play_stop_btn);
                 if(playItem.getIcon().getConstantState().equals(getResources().getDrawable(R.drawable.ic_play_arrow_black_48dp).getConstantState())) {
+                    sequenceActive = true;
                     playItem.setIcon(getResources().getDrawable(R.drawable.ic_stop_black_48dp));
                     long now = System.currentTimeMillis();
                     cameraManager.setSequenceStartTime(now);
                 }
                 else {
                     playItem.setIcon(getResources().getDrawable(R.drawable.ic_play_arrow_black_48dp));
+                    sequenceActive = false;
                     if(cameraManager.getCutlist().size() != 0) {
                         long now = System.currentTimeMillis();
                         cameraManager.setSequenceEndTime(now);
