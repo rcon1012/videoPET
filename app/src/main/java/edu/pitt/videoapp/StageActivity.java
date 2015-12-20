@@ -62,8 +62,8 @@ public class StageActivity extends AppCompatActivity {
             stage.setXY((float) screenWidth / 2 - 300 / 2 + 24, 10);
             stageManager.addStage(stage);
 
-            Camera cameraStart = new Camera(this);
-            cameraManager.addCamera(cameraStart);
+            //Camera cameraStart = new Camera(this);
+            //cameraManager.addCamera(cameraStart);
         }
 
         // load set-up
@@ -151,12 +151,13 @@ public class StageActivity extends AppCompatActivity {
                     cameraManager.setSequenceStartTime(now);
                 }
                 else {
+                    playItem.setIcon(getResources().getDrawable(R.drawable.ic_play_arrow_black_48dp));
                     if(cameraManager.getCutlist().size() != 0) {
                         long now = System.currentTimeMillis();
                         cameraManager.setSequenceEndTime(now);
                         showSaveSequenceDialog();
                     } else {
-                        Toast.makeText(this, "Can't save an empty sequence", Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, "No sequence to save", Toast.LENGTH_LONG).show();
                     }
                 }
                 return true;
