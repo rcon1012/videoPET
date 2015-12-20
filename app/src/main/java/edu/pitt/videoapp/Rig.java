@@ -48,9 +48,12 @@ public class Rig extends RelativeLayout {
     private TextView camera_text_label;
     private ImageButton playButton;
     private ImageButton stopButton;
-    private TextView desc ;
+    private TextView desc;
     private LinearLayout desc_container;
-    private ImageView activeImage ;
+    private int desc_container_id;
+    private ImageView activeImage;
+    private ImageView expandDesc;
+    private LinearLayout rigView;
 
     // Stage that it draws a line to
     private Rig drawToThisStage;
@@ -95,6 +98,7 @@ public class Rig extends RelativeLayout {
             setupLongClick();
             setupPlayClick();
             setupStopClick();
+            setupExpand();
         }
     }
 
@@ -128,7 +132,6 @@ public class Rig extends RelativeLayout {
     }
 
     public void setDesc ( String s) {
-        this.desc_container.setVisibility(View.VISIBLE);
         desc.setText(s);
     }
 
@@ -233,9 +236,10 @@ public class Rig extends RelativeLayout {
         t=new Timer(camera_text_label,centerLayout);
 
         this.desc = (TextView) activity.findViewById(R.id.cam_desc);
-        this.desc.setId(View.generateViewId());
+        this.desc_container_id = View.generateViewId();
+        this.desc.setId(desc_container_id);
         this.desc_container = (LinearLayout) activity.findViewById(R.id.desc_holder);
-        this.desc_container.setVisibility(View.GONE);
+        //findViewById(desc_container_id).setVisibility(View.GONE);
 
         this.playButton = (ImageButton) activity.findViewById(R.id.playButton);
         this.playButton.setId(View.generateViewId());
@@ -246,6 +250,12 @@ public class Rig extends RelativeLayout {
         this.activeImage = (ImageView) activity.findViewById(R.id.active_image);
         //this.activeImage.setImageResource(R.drawable.ic_movie_black_48dp);
         this.activeImage.setId(View.generateViewId());
+
+        this.expandDesc = (ImageView) activity.findViewById(R.id.expand_desc);
+        this.expandDesc.setId(View.generateViewId());
+
+        this.rigView = (LinearLayout) activity.findViewById(R.id.rig);
+        this.rigView.setId(View.generateViewId());
 
         // Sets the starting lock to UNLOCKED
         this.lock = false;
@@ -297,10 +307,10 @@ public class Rig extends RelativeLayout {
                             }
                         }
 
-                        float newX = event.getRawX() + dX ;
-                        float newY = event.getRawY() + dY ;
+                        float newX = event.getRawX() + dX;
+                        float newY = event.getRawY() + dY;
 
-                        if ( rigType == CAMERA ) {
+                        if (rigType == CAMERA) {
 
                             if (newX < -20)
                                 newX = -20;
@@ -312,8 +322,7 @@ public class Rig extends RelativeLayout {
                             if (newY > stageActivity.screenHeight - mainView.getHeight())
                                 newY = stageActivity.screenHeight - mainView.getHeight();
 
-                        }
-                        else {
+                        } else {
 
                             if (newX < 0)
                                 newX = 0;
@@ -322,8 +331,8 @@ public class Rig extends RelativeLayout {
 
                             if (newY < 0)
                                 newY = 0;
-                            if (newY > stageActivity.screenHeight - mainView.getHeight() - 40 )
-                                newY = stageActivity.screenHeight - mainView.getHeight() - 40 ;
+                            if (newY > stageActivity.screenHeight - mainView.getHeight() - 40)
+                                newY = stageActivity.screenHeight - mainView.getHeight() - 40;
 
                         }
 
@@ -482,13 +491,6 @@ public class Rig extends RelativeLayout {
             public void onClick(View v) {
                 EditText dedit = (EditText) dialog.findViewById(R.id.editdesc);
                 // hide description if none
-                if(dedit.getText().toString().equals("")) {
-                    desc_container.setVisibility(View.GONE);
-                }
-                // else show
-                else {
-                    desc_container.setVisibility(View.VISIBLE);
-                }
                 desc.setText(dedit.getText().toString());
                 dialog.hide();
             }
@@ -505,12 +507,32 @@ public class Rig extends RelativeLayout {
         return dialog;
     }
 
+    /**
+     * sets up the expand onclick listener for the description
+     */
+    private void setupExpand() {
+        this.expandDesc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // collapse description
+                if (rigView.findViewById(desc_container_id).getVisibility() == View.VISIBLE) {
+                    rigView.findViewById(desc_container_id).setVisibility(View.GONE);
+                }
+                // show description
+                else {
+                    rigView.findViewById(desc_container_id).setVisibility(View.VISIBLE);
+                }
+            }
+        });
+    }
+
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     public Dialog activateStagePickerDialog() {
 
         // Create a new dialog to get stage picker
         final Dialog dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.angle_stage_chooser);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(getContext(), android.R.color.transparent)));
 
         LinearLayout list = (LinearLayout) dialog.findViewById(R.id.choose_stage_btn_place);
 
@@ -561,7 +583,7 @@ public class Rig extends RelativeLayout {
              */
             @Override
             public void onClick(View v) {
-                if(StageActivity.sequenceActive) {
+                if (StageActivity.sequenceActive) {
                     isPlay = true;
                     camera.tickStarted();
                     camera.setSequenceLabel("C" + camera.getCamNum() + camera.getTimesStarted());

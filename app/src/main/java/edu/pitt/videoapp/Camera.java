@@ -33,10 +33,12 @@ public class Camera implements Parcelable {
     private int camNum = 0;
     private int timesStarted = 0;
 
+    final static public int CAMERA = 0;
+
     // New Camera constructor -final
     public Camera(StageActivity activity){
         this.stageActivity = activity;
-        this.camRig = new Rig(activity, this);
+        this.camRig = new Rig(activity, CAMERA, this);
         init();
     }
 
