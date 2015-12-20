@@ -61,6 +61,7 @@ public class Rig extends RelativeLayout {
     private boolean lock;
     private boolean deleted;
     private boolean active;
+    private boolean isPlay;
 
     // Camera
     private Camera camera;
@@ -254,6 +255,9 @@ public class Rig extends RelativeLayout {
 
         // Used to designate if the camera is the one running
         this.active = false;
+
+        // Used to check if the camera is recording
+        this.isPlay = false;
     }
 
     public void removeActive () {
@@ -342,7 +346,7 @@ public class Rig extends RelativeLayout {
         this.centerLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!active && StageActivity.sequenceActive) {
+                if (!active && StageActivity.sequenceActive && isPlay) {
                     camera.activate();
                     stageActivity.getCameraManager().removeActive();
 
@@ -557,11 +561,14 @@ public class Rig extends RelativeLayout {
              */
             @Override
             public void onClick(View v) {
-                camera.tickStarted();
-                camera.setSequenceLabel("C" + camera.getCamNum() + camera.getTimesStarted());
-                centerLayout.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.camera_active));
-                //Timer t=new Timer();
-                t.start();
+                if(StageActivity.sequenceActive) {
+                    isPlay = true;
+                    camera.tickStarted();
+                    camera.setSequenceLabel("C" + camera.getCamNum() + camera.getTimesStarted());
+                    centerLayout.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.camera_active));
+                    //Timer t=new Timer();
+                    t.start();
+                }
             }
         });
     }
@@ -577,6 +584,7 @@ public class Rig extends RelativeLayout {
              */
             @Override
             public void onClick(View v) {
+                isPlay = false;
                 centerLayout.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.camera));
                 t.cancel();
             }
