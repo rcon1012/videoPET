@@ -248,7 +248,7 @@ public class StageActivity extends AppCompatActivity {
                 setup += "Stage\n\t";
                 setup += "Label: " + stage.getLabel() + "\n\t";
                 setup += "xCoord: " + stage.getXY()[0] + "\n\t";
-                setup += "yCoord: " + stage.getXY()[1] + "\n\t";
+                setup += "yCoord: " + stage.getXY()[1] + "\n";
                 //setup += "Notes: " + stage.getDesc() + "\n\t";
             }
         }

@@ -242,7 +242,6 @@ public class ProjectActivity extends AppCompatActivity {
                         float xCoord = 100;
                         float yCoord = 100;
                         String label = "";
-                        String notes = "";
                         // label
                         line = br.readLine();
                         lineNumber++;
@@ -280,28 +279,8 @@ public class ProjectActivity extends AppCompatActivity {
                             Log.e(TAG, e.getMessage());
                         }
 
-
-                        // notes
-                        line = br.readLine();
-                        lineNumber++;
-                        String[] notesLine = line.split("\\tNotes: ");
-                        if(labelLine.length <= 1) {
-                            Toast.makeText(ProjectActivity.this, "Error parsing file at line " + lineNumber +
-                                            ":\n" + line,
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                        // parse notes
-                        try{
-                            notes = notesLine[1];
-                        }
-                        catch(Exception e)
-                        {
-                            Log.e(TAG, e.getMessage());
-                        }
-
                         s.inactiveSetLabel(label);
                         s.inactiveSetXY(xCoord, yCoord);
-                        s.inactiveSetNotes(notes);
                         stages.add(s);
                     }
                     else {

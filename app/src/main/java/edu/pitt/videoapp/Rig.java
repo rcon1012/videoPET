@@ -50,7 +50,6 @@ public class Rig extends RelativeLayout {
     private ImageButton stopButton;
     private TextView desc;
     private LinearLayout desc_container;
-    private int desc_container_id;
     private ImageView activeImage;
     private ImageView expandDesc;
     private LinearLayout rigView;
@@ -236,10 +235,10 @@ public class Rig extends RelativeLayout {
         t=new Timer(camera_text_label,centerLayout);
 
         this.desc = (TextView) activity.findViewById(R.id.cam_desc);
-        this.desc_container_id = View.generateViewId();
-        this.desc.setId(desc_container_id);
+        this.desc.setId(View.generateViewId());
         this.desc_container = (LinearLayout) activity.findViewById(R.id.desc_holder);
-        //findViewById(desc_container_id).setVisibility(View.GONE);
+        this.desc_container.setId(View.generateViewId());
+        this.desc_container.setVisibility(View.GONE);
 
         this.playButton = (ImageButton) activity.findViewById(R.id.playButton);
         this.playButton.setId(View.generateViewId());
@@ -515,12 +514,14 @@ public class Rig extends RelativeLayout {
             @Override
             public void onClick(View v) {
                 // collapse description
-                if (rigView.findViewById(desc_container_id).getVisibility() == View.VISIBLE) {
-                    rigView.findViewById(desc_container_id).setVisibility(View.GONE);
+                if (desc_container.getVisibility() == View.VISIBLE) {
+                    expandDesc.setImageResource(R.drawable.expander_open_holo_light);
+                    desc_container.setVisibility(View.GONE);
                 }
                 // show description
                 else {
-                    rigView.findViewById(desc_container_id).setVisibility(View.VISIBLE);
+                    expandDesc.setImageResource(R.drawable.expander_close_holo_light);
+                    desc_container.setVisibility(View.VISIBLE);
                 }
             }
         });

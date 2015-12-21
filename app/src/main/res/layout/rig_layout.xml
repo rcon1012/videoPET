@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="250dp"
-    android:layout_height="320dp"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:id="@+id/rig">
 
@@ -53,7 +53,7 @@
             android:orientation="horizontal">
 
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="48dip"
+                android:layout_width="48dp"
                 android:layout_height="fill_parent"
                 android:orientation="vertical">
 
@@ -66,18 +66,14 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/playButton"
                         android:background="@drawable/ic_play_arrow_black_48dp"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true" />
+                        android:layout_alignParentTop="true" />
 
                     <ImageButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/stopButton"
                         android:background="@drawable/ic_stop_black_48dp"
-                        android:layout_alignParentBottom="true"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true" />
+                        android:layout_alignParentBottom="true"/>
 
                 </RelativeLayout>
 
@@ -85,7 +81,7 @@
 
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="155dp"
-                android:layout_height="95dp"
+                android:layout_height="100dp"
                 android:orientation="vertical"
                 android:id="@+id/center_layout"
                 android:background="@drawable/camera"
@@ -124,10 +120,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/moveButton"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true"
-                        android:background="@drawable/ic_open_with_black_48dp"/>
+                        android:background="@drawable/ic_open_with_black_48dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true" />
 
                 </RelativeLayout>
 
@@ -139,7 +135,7 @@
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
-        android:layout_height="30dp"
+        android:layout_height="55dp"
         android:orientation="vertical"
         android:layout_weight="0.2"
         android:id="@+id/desc_holder">
@@ -153,7 +149,7 @@
         <TextView
             android:inputType="textMultiLine"
             android:layout_width="match_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text=""
             android:id="@+id/cam_desc"
@@ -166,6 +162,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/expand_desc"
         android:layout_gravity="center_horizontal"
-        android:src="@drawable/ic_expand_more_black_48dp"/>
+        android:src="@drawable/expander_open_holo_light"
+        android:minHeight="48dp"
+        android:minWidth="48dp" />
 
 </LinearLayout>
