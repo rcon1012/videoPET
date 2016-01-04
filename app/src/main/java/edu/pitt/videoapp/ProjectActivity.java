@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -169,7 +168,7 @@ public class ProjectActivity extends AppCompatActivity {
                         }
                         catch(Exception e)
                         {
-                            Log.e(TAG, e.getMessage());
+                            //Log.e(TAG, e.getMessage());
                         }
 
                         line = br.readLine();
@@ -181,7 +180,7 @@ public class ProjectActivity extends AppCompatActivity {
                         }
                         catch(NumberFormatException e)
                         {
-                            Log.e(TAG, e.getMessage());
+                            //Log.e(TAG, e.getMessage());
                         }
 
                         line = br.readLine();
@@ -193,7 +192,7 @@ public class ProjectActivity extends AppCompatActivity {
                         }
                         catch(NumberFormatException e)
                         {
-                            Log.e(TAG, e.getMessage());
+                            //Log.e(TAG, e.getMessage());
                         }
 
                         // notes
@@ -206,7 +205,7 @@ public class ProjectActivity extends AppCompatActivity {
                         }
                         catch(Exception e)
                         {
-                            Log.e(TAG, e.getMessage());
+                            //Log.e(TAG, e.getMessage());
                         }
 
                         // stage target
@@ -219,7 +218,7 @@ public class ProjectActivity extends AppCompatActivity {
                         }
                         catch(Exception e)
                         {
-                            Log.e(TAG, e.getMessage());
+                            //Log.e(TAG, e.getMessage());
                         }
 
                         c.inactiveSetLabel(label);
@@ -252,7 +251,7 @@ public class ProjectActivity extends AppCompatActivity {
                         }
                         catch(Exception e)
                         {
-                            Log.e(TAG, e.getMessage());
+                            //Log.e(TAG, e.getMessage());
                         }
 
                         line = br.readLine();
@@ -264,7 +263,7 @@ public class ProjectActivity extends AppCompatActivity {
                         }
                         catch(NumberFormatException e)
                         {
-                            Log.e(TAG, e.getMessage());
+                            //Log.e(TAG, e.getMessage());
                         }
 
                         line = br.readLine();
@@ -276,7 +275,7 @@ public class ProjectActivity extends AppCompatActivity {
                         }
                         catch(NumberFormatException e)
                         {
-                            Log.e(TAG, e.getMessage());
+                            //Log.e(TAG, e.getMessage());
                         }
 
                         s.inactiveSetLabel(label);
@@ -284,14 +283,14 @@ public class ProjectActivity extends AppCompatActivity {
                         stages.add(s);
                     }
                     else {
-                        Log.e(TAG, "Error parsing file at line " + lineNumber +
-                                ":\n" + line);
+                        //Log.e(TAG, "Error parsing file at line " + lineNumber +
+                         //       ":\n" + line);
                     }
                 }
                 br.close();
             }
             catch (IOException e) {
-                Log.e(TAG, e.getMessage());
+                //Log.e(TAG, e.getMessage());
             }
         }
 

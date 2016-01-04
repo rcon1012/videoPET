@@ -16,8 +16,6 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 
-import edu.pitt.videoPET.R;
-
 /**
  * Created by jake on 10/11/15.
  */

@@ -210,7 +210,6 @@ public class StageActivity extends AppCompatActivity {
     }
 
     public void removeStage() {
-        Log.d("Removing","java");
         this.stageManager.deleteStage();
     }
 

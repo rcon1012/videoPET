@@ -381,7 +381,6 @@ public class Rig extends RelativeLayout {
         this.centerLayout.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                Log.d("Rig", "Long Clicked worked");
 
                 // Creating the instance of PopupMenu
                 final PopupMenu popup = new PopupMenu(getContext(), view);

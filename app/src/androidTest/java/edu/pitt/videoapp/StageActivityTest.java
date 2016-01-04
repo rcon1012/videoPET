@@ -6,14 +6,8 @@ import android.test.ActivityInstrumentationTestCase2;
 import android.test.UiThreadTest;
 import android.test.suitebuilder.annotation.SmallTest;
 import android.view.Menu;
-import android.view.View;
-import android.view.ViewGroup;
 
 import org.junit.Before;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * Created by jake on 10/9/15.
@@ -159,7 +153,7 @@ public class StageActivityTest extends ActivityInstrumentationTestCase2<StageAct
         Rig functionality Tests
      */
 
-
+/*
     @UiThreadTest
     public void testRigBasic(){
         Rig r = new Rig(stageActivity);
@@ -274,4 +268,5 @@ public class StageActivityTest extends ActivityInstrumentationTestCase2<StageAct
         s.addToLineRigList(r);
         assertEquals( r, s.getLineRigList().get(0) ) ;
     }
+    */
 }

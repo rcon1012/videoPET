@@ -1,25 +1,10 @@
 package edu.pitt.videoapp;
-import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
-import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.util.Log;
-import android.view.View;
-import android.widget.TextClock;
-import android.widget.TextView;
-import android.widget.TimePicker;
-import android.widget.Toast;
-import android.widget.ToggleButton;
-import java.util.Calendar;
 import android.os.Handler;
-import android.os.Message;
-import android.os.CountDownTimer;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 /**
  * Created by Luke on 10/27/2015.
  * With the help of Jake
@@ -46,7 +31,6 @@ public class Timer extends Activity
         //textClock=(TextClock) findViewById(R.id.textClock);
         newTimer = new CountDownTimer(timer, 1000) {
             public void onTick(long msLeft) {
-                //Log.d("Timer", msLeft / 60000 + ": " + (msLeft / 1000) % 60);
 
                 camera_text_label.setText( msLeft / 60000 + ": " + (msLeft / 1000) % 60);
                 //super.clock = (TextClock) activity.findViewById(R.id.textClock);
@@ -55,14 +39,12 @@ public class Timer extends Activity
                 if (msLeft < 60000) {
                     //mTextField.setText("One Minute left");
                     centerLayout.setBackgroundColor(Color.parseColor("yellow"));
-                    //Log.d("Timer", "One minute left");
                 }
             }
 
             public void onFinish() {
                 //mTextField.setText("");
                 camera_text_label.setText("00:00");
-                Log.d("Timer", "Timer finished");
             }
 
 
