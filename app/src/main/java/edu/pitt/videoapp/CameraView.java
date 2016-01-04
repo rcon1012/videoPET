@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -16,6 +15,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
+
+import edu.pitt.videoPET.R;
 
 /**
  * Created by jake on 10/11/15.
@@ -77,7 +78,6 @@ public class CameraView extends ImageView implements PopupMenu.OnMenuItemClickLi
 
                     params.leftMargin = xCoord;
                     params.topMargin = yCoord;
-                    Log.d(TAG, "onTouch x = " + xCoord + "; y = " + yCoord);
 
                     cam.setXY(xCoord, yCoord);
 
@@ -102,7 +102,6 @@ public class CameraView extends ImageView implements PopupMenu.OnMenuItemClickLi
 
         @Override
         public boolean onLongClick(View v) {
-            Log.d(TAG, "Long click worked!!!!");
             // Create a popup at camera location
             PopupMenu popup = new PopupMenu(activity, v);
             //popup.setOnMenuItemClickListener(cam.getCameraView());
@@ -122,7 +121,6 @@ public class CameraView extends ImageView implements PopupMenu.OnMenuItemClickLi
                 activateLabelDialog();
                 break;
             case R.id.cam_angle:
-                Log.d(TAG, "add_camera_photo clicked.");
                 // Start camera intent
                 dispatchTakePictureIntent();
                 break;
